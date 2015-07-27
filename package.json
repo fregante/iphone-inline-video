@@ -5,6 +5,7 @@
   "devDependencies": {
     "babelify": "latest",
     "browserify": "latest",
+    "normalize-css": "latest",
     "uglify-js": "latest"
   },
   "engines": {

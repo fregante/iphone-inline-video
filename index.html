@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Inline player test</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="../dist/inline-player.js"></script>
+	<link rel="stylesheet" href="../node_modules/normalize-css/normalize.css">
+	<style>
+	body {
+	  background: #000;
+	}
+	video {
+	  background: green;
+	  width: 100%;
+	}
+	video::-webkit-media-controls {
+	    display:none;
+	}
+	button {
+	  width: 100%;
+	  height: 3em;
+	}
+	</style>
+</head>
+<body>
+	<video preload="auto" src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"></video>
+	<button>Play/pause video</button>
+
+	<script>
+	'use strict';
+	var video = document.querySelector('video');
+	var button = document.querySelector('button');
+
+	// do it!
+	window.makeVideoPlayableInline(video);
+
+	// play the video when tapping the button
+	button.addEventListener('click', function () {
+		if(video.paused) {
+			video.play();
+		} else {
+			video.pause();
+		}
+	});
+
+	// go fullscreen when touching the video
+	video.addEventListener('touchstart', function () {
+		this._play();
+	});
+
+	// debug events
+	[
+	'loadstart',
+	'progress',
+	'suspend',
+	'abort',
+	'error',
+	'emptied',
+	'stalled',
+	'loadedmetadata',
+	'loadeddata',
+	'canplay',
+	'canplaythrough',
+	'playing', // fake events
+	'waiting',
+	'seeking', // triggered by player, never by the user
+	'seeked', // triggered by player, never by the user
+	'ended',
+	// 'durationchange',
+	'timeupdate',
+	'play', // fake events
+	'pause', // fake events
+	// 'ratechange',
+	// 'resize',
+	// 'volumechange'
+	].forEach(function (event) {
+		video.addEventListener(event, function () {
+			console.info('@', event);
+		});
+	});
+</script>
+</body>
+</html>
