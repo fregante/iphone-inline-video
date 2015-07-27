@@ -1,0 +1,23 @@
+{
+  "name": "inline-player",
+  "description": "",
+  "version": "0.5.0",
+  "devDependencies": {
+    "babelify": "latest",
+    "browserify": "latest",
+    "uglify-js": "latest"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "build": "npm run export && npm run minify",
+    "export": "browserify lib/index.js --standalone makeVideoPlayableInline > dist/inline-player.js",
+    "minify": "uglifyjs dist/inline-player.js > dist/inline-player.min.js"
+  },
+  "browserify": {
+    "transform": [
+      "babelify"
+    ]
+  }
+}
