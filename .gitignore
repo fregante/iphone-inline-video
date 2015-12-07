@@ -2,7 +2,6 @@
 bower_components
 node_modules
 build/
-dist/
 public/assets
 *.css.map
 
