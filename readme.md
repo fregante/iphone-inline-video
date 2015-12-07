@@ -11,6 +11,8 @@ const video = document.querySelector('video');
 // this enables the inline playback
 makeVideoPlayableInline(video);
 
-// once enabled, the video element is enabled to be played inline from anything else, but it still needs user interaction to start the download
+// the video element will be played inline through its standard methods,
+// but it still needs user interaction to start the download
+// fullscreen can still be achievable via the normal requestFullscreen() API
 video.addEventListener('touchstart', () => video.play());
 ```
