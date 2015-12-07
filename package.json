@@ -1,6 +1,6 @@
 {
-  "name": "inline-player",
-  "description": "",
+  "name": "iphone-inline-video",
+  "description": "Play videos inline on Safari iPhone",
   "version": "0.5.0",
   "devDependencies": {
     "babelify": "latest",
