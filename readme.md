@@ -4,6 +4,7 @@
 
 [![gzipped size](https://badges.herokuapp.com/size/github/bfred-it/iphone-inline-video/master/dist/iphone-inline-video.node.min.js?gzip=true&label=gzipped%20size)](https://github.com/bfred-it/iphone-inline-video/blob/master/index.js) [![iOS 8 supported](https://img.shields.io/badge/iOS%20Safari-8-brightgreen.svg)](#no-link) [![iOS 9 supported](https://img.shields.io/badge/iOS%20Safari-9-brightgreen.svg)](#no-link)
 
+Try the demo: http://bfred-it.github.io/iphone-inline-video/
 
 ## Usage
 

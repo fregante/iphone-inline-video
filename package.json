@@ -1,6 +1,6 @@
 {
   "name": "iphone-inline-video",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Make videos playable inline on the iPhone and iPod Touch.",
   "license": "MIT",
   "repository": "bfred-it/iphone-inline-video",
@@ -21,7 +21,7 @@
   },
   "scripts": {
     "build": "npm run build:bundles; npm run minify; npm run cleanup",
-    "build:bundles": "rollup-babel-lib-bundler --lib-name iphone-inline-video --moduleName makeVideoPlayableInline --format cjs,umd --dest ./dist ./index.js",
+    "build:bundles": "rollup-babel-lib-bundler --lib-name iphone-inline-video --module-name makeVideoPlayableInline --format cjs,umd --dest ./dist ./index.js",
     "cleanup": "rm dist/iphone-inline-video.umd.js; mv dist/iphone-inline-video.js dist/iphone-inline-video.node.js",
     "minify": "npm run minify:umd && npm run minify:node",
     "minify:umd": "uglifyjs dist/iphone-inline-video.umd.js > dist/iphone-inline-video.min.js",
@@ -30,7 +30,6 @@
   },
   "devDependencies": {
     "babel-preset-es2015-rollup": "^1.1.1",
-    "normalize-css": "latest",
     "rollup-babel-lib-bundler": "^2.3.6",
     "uglify-js": "latest"
   },
