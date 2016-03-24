@@ -1,24 +1,41 @@
 {
   "name": "iphone-inline-video",
-  "description": "Play videos inline on Safari iPhone",
-  "version": "0.5.0",
-  "devDependencies": {
-    "babelify": "latest",
-    "browserify": "latest",
-    "normalize-css": "latest",
-    "uglify-js": "latest"
-  },
-  "engines": {
-    "node": ">=0.10.0"
+  "version": "1.0.2",
+  "description": "Make videos playable inline on the iPhone and iPod Touch.",
+  "license": "MIT",
+  "repository": "bfred-it/iphone-inline-video",
+  "author": "Federico Brigante <bfred-it@users.noreply.github.com> (twitter.com/bfred_it)",
+  "keywords": [
+    "browser"
+  ],
+  "files": [
+    "index.js",
+    "dist/index.es5.js"
+  ],
+  "main": "dist/iphone-inline-video.node.js",
+  "jsnext:main": "index.js",
+  "babel": {
+    "presets": [
+      "es2015-rollup"
+    ]
   },
   "scripts": {
-    "build": "npm run export && npm run minify",
-    "export": "browserify lib/index.js --standalone makeVideoPlayableInline > dist/inline-player.js",
-    "minify": "uglifyjs dist/inline-player.js > dist/inline-player.min.js"
+    "build": "npm run build:bundles; npm run minify; npm run cleanup",
+    "build:bundles": "rollup-babel-lib-bundler --lib-name iphone-inline-video --moduleName makeVideoPlayableInline --format cjs,umd --dest ./dist ./index.js",
+    "cleanup": "rm dist/iphone-inline-video.umd.js; mv dist/iphone-inline-video.js dist/iphone-inline-video.node.js",
+    "minify": "npm run minify:umd && npm run minify:node",
+    "minify:umd": "uglifyjs dist/iphone-inline-video.umd.js > dist/iphone-inline-video.min.js",
+    "minify:node": "uglifyjs dist/iphone-inline-video.js > dist/iphone-inline-video.node.min.js",
+    "prepublish": "npm run build"
   },
-  "browserify": {
-    "transform": [
-      "babelify"
-    ]
-  }
+  "devDependencies": {
+    "babel-preset-es2015-rollup": "^1.1.1",
+    "normalize-css": "latest",
+    "rollup-babel-lib-bundler": "^2.3.6",
+    "uglify-js": "latest"
+  },
+  "bugs": {
+    "url": "https://github.com/bfred-it/iphone-inline-video/issues"
+  },
+  "homepage": "https://github.com/bfred-it/iphone-inline-video#readme"
 }

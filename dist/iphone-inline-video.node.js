@@ -1,8 +1,51 @@
 'use strict';
-import getIntervalometer from './intervalometer';
-import preventEvent from './prevent-event';
-import proxyProperty from './proxy-property';
 
+function getIntervalometer(cb) {
+	var raf = {
+		start: function start() {
+			if (!raf.lastCall) {
+				raf.lastCall = Date.now();
+			}
+			cb(Date.now() - raf.lastCall);
+			raf.lastCall = Date.now();
+			raf.id = requestAnimationFrame(raf.start);
+		},
+		stop: function stop() {
+			cancelAnimationFrame(raf.id);
+			delete raf.id;
+			delete raf.lastCall;
+		}
+	};
+	return raf;
+}
+
+function preventEvent(element, eventName, toggleProperty, preventWithProperty) {
+	var handler = function handler(e) {
+		var hasProperty = toggleProperty && element[toggleProperty];
+		delete element[toggleProperty];
+		if (!!hasProperty === !!preventWithProperty) {
+			e.stopImmediatePropagation();
+			// console.log(eventName, 'prevented on', element);
+		}
+	};
+	element.addEventListener(eventName, handler, false);
+	return {
+		forget: function forget() {
+			return element.removeEventListener(eventName, handler, false);
+		}
+	};
+}
+
+function proxyProperty(object, propertyName, sourceObject) {
+	Object.defineProperty(object, propertyName, {
+		get: function get() {
+			return sourceObject[propertyName];
+		},
+		set: function set(va) {
+			return sourceObject[propertyName] = va;
+		}
+	});
+}
 
 /**
  * known issues:
@@ -11,33 +54,33 @@ import proxyProperty from './proxy-property';
  * unknown behavior when no audio + slow connection
  */
 
-const isNeeded = /iPhone|iPod/i.test(navigator.userAgent);
+var isNeeded = /iPhone|iPod/i.test(navigator.userAgent);
 
 /**
  * UTILS
  */
 
-function getAudioFromVideo (video) {
-	const audio = new Audio();
+function getAudioFromVideo(video) {
+	var audio = new Audio();
 	audio.src = video.currentSrc || video.src;
 	return audio;
 }
-function update (timeDiff) {
-	console.log('update')
-	const player = this;
+function update(timeDiff) {
+	console.log('update');
+	var player = this;
 	if (player.audio) {
-		const audioTime = player.audio.currentTime;
+		var audioTime = player.audio.currentTime;
 		player.video.currentTime = audioTime;
 		// console.assert(player.video.currentTime === audioTime, 'Video not updating!')
 	} else {
-		let nextTime = player.video.currentTime + timeDiff/1000;
-		player.video.currentTime = Math.min(player.video.duration, nextTime);
-	}
+			var nextTime = player.video.currentTime + timeDiff / 1000;
+			player.video.currentTime = Math.min(player.video.duration, nextTime);
+		}
 	if (player.video.ended) {
 		player.video.pause();
 	}
 }
-function startVideoBuffering (video) {
+function startVideoBuffering(video) {
 	// this needs to be inside an event handler
 	video.iaAutomatedEvent = true;
 	video._play();
@@ -51,10 +94,10 @@ function startVideoBuffering (video) {
  * METHODS
  */
 
-function play () {
+function play() {
 	// console.log('play')
-	const video = this;
-	const player = video.__ivp;
+	var video = this;
+	var player = video.__ivp;
 	if (!video.buffered.length) {
 		// console.log('Video not ready. Buffering')
 		startVideoBuffering(video);
@@ -70,10 +113,10 @@ function play () {
 	video.dispatchEvent(new Event('play'));
 	video.dispatchEvent(new Event('playing'));
 }
-function pause () {
+function pause() {
 	// console.log('pause')
-	const video = this;
-	const player = video.__ivp;
+	var video = this;
+	var player = video.__ivp;
 	player.paused = true;
 	player.updater.stop();
 	if (player.audio) {
@@ -89,8 +132,8 @@ function pause () {
  * SETUP
  */
 
-function addPlayer (video, hasAudio) {
-	const player = video.__ivp = {};
+function addPlayer(video, hasAudio) {
+	var player = video.__ivp = {};
 	player.paused = true;
 	player.loop = video.loop;
 	player.muted = video.muted;
@@ -101,20 +144,22 @@ function addPlayer (video, hasAudio) {
 	player.updater = getIntervalometer(update.bind(player));
 
 	// stop programmatic player when OS takes over
-	video.addEventListener('webkitbeginfullscreen', function () {//@todo: should be on play?
+	video.addEventListener('webkitbeginfullscreen', function () {
+		//@todo: should be on play?
 		video.pause();
 	});
 	if (player.audio) {
 		// sync audio to new video position
-		video.addEventListener('webkitendfullscreen', function () {//@todo: should be on pause?
+		video.addEventListener('webkitendfullscreen', function () {
+			//@todo: should be on pause?
 			player.audio.currentTime = player.video.currentTime;
 			// console.assert(player.audio.currentTime === player.video.currentTime, 'Audio not synced');
 		});
 	}
 }
 
-function overloadAPI (video) {
-	const player = video.__ivp;
+function overloadAPI(video) {
+	var player = video.__ivp;
 	video._play = video.play;
 	video._pause = video.pause;
 	video.play = play;
@@ -129,7 +174,10 @@ function overloadAPI (video) {
 	preventEvent(video, 'pause', 'iaAutomatedEvent', true);
 }
 
-export default function makeVideoPlayableInline (video, hasAudio = true, onlyWhenNeeded = true) {
+function makeVideoPlayableInline(video) {
+	var hasAudio = arguments.length <= 1 || arguments[1] === undefined ? true : arguments[1];
+	var onlyWhenNeeded = arguments.length <= 2 || arguments[2] === undefined ? true : arguments[2];
+
 	if (onlyWhenNeeded && !isNeeded) {
 		return;
 	}
@@ -137,3 +185,5 @@ export default function makeVideoPlayableInline (video, hasAudio = true, onlyWhe
 	overloadAPI(video);
 	// console.log('Video will play inline');
 }
+
+module.exports = makeVideoPlayableInline;
