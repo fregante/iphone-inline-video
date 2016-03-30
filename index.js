@@ -27,6 +27,7 @@ function update(timeDiff) {
 	}
 	if (player.video.ended) {
 		player.video.pause();
+		return false;
 	}
 }
 function startVideoBuffering(video) {
@@ -73,6 +74,7 @@ function pause() {
 	}
 	video.dispatchEvent(new Event('pause'));
 	if (video.ended) {
+		video.iaAutomatedEvent = true;
 		video.dispatchEvent(new Event('ended'));
 	}
 }
@@ -119,6 +121,7 @@ function overloadAPI(video) {
 	preventEvent(video, 'play', 'iaAutomatedEvent', true);
 	preventEvent(video, 'playing', 'iaAutomatedEvent', true);
 	preventEvent(video, 'pause', 'iaAutomatedEvent', true);
+	preventEvent(video, 'ended', 'iaAutomatedEvent', false); // prevent occasional native ended events
 }
 
 export default function /* makeVideoPlayableInline*/ (video, hasAudio = true, onlyWhenNeeded = true) {
