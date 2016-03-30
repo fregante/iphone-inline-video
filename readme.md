@@ -21,13 +21,13 @@ makeVideoPlayableInline(video);
 video.addEventListener('touchstart', () => video.play());
 ```
 
-## Files
+In you don't use browserify/webpack/rollup/babel, include this:
 
-Here's an explanation of the files included in this repo:
+```html
+<script src="dist/iphone-inline-video.browser.js"></script>
+```
 
-* `index.js`: source file, in ES6, used by bundlers that support `jsnext:main`
-* `dist/iphone-inline-video.min.js`: browser-ready file with AMD or a global variable called `preventPopstateScroll`
-* `dist/iphone-inline-video.node.js`: used by node/browserify with `require('iphone-inline-video')`
+
 
 ## License
 

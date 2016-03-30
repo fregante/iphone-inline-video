@@ -9,29 +9,23 @@
     "browser"
   ],
   "files": [
-    "index.js",
-    "dist/index.es5.js"
+	  "dist/iphone-inline-video.common-js.js",
+	  "dist/iphone-inline-video.es-modules.js"
   ],
-  "main": "dist/iphone-inline-video.node.js",
-  "jsnext:main": "index.js",
+  "main": "dist/iphone-inline-video.common-js.js",
+  "jsnext:main": "dist/iphone-inline-video.es-modules.js",
   "babel": {
     "presets": [
       "es2015-rollup"
     ]
   },
   "scripts": {
-    "build": "npm run build:bundles; npm run minify; npm run cleanup",
-    "build:bundles": "rollup-babel-lib-bundler --lib-name iphone-inline-video --module-name makeVideoPlayableInline --format cjs,umd --dest ./dist ./index.js",
-    "cleanup": "rm dist/iphone-inline-video.umd.js; mv dist/iphone-inline-video.js dist/iphone-inline-video.node.js",
-    "minify": "npm run minify:umd && npm run minify:node",
-    "minify:umd": "uglifyjs dist/iphone-inline-video.umd.js > dist/iphone-inline-video.min.js",
-    "minify:node": "uglifyjs dist/iphone-inline-video.js > dist/iphone-inline-video.node.min.js",
+    "build": "bfred-npm-bundler iphone-inline-video makeVideoPlayableInline",
     "prepublish": "npm run build"
   },
   "devDependencies": {
     "babel-preset-es2015-rollup": "^1.1.1",
-    "rollup-babel-lib-bundler": "^2.3.6",
-    "uglify-js": "latest"
+    "bfred-npm-bundler": "^5.0.0"
   },
   "bugs": {
     "url": "https://github.com/bfred-it/iphone-inline-video/issues"

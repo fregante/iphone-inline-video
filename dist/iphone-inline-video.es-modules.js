@@ -1,5 +1,3 @@
-'use strict';
-
 function getIntervalometer(cb) {
 	var raf = {
 		start: function start() {
@@ -47,13 +45,6 @@ function proxyProperty(object, propertyName, sourceObject) {
 	});
 }
 
-/**
- * known issues:
- * it cannot go fullscreen before it's played inline first
- * it cannot keep playing when the src is changed
- * unknown behavior when no audio + slow connection
- */
-
 var isNeeded = /iPhone|iPod/i.test(navigator.userAgent);
 
 /**
@@ -66,7 +57,7 @@ function getAudioFromVideo(video) {
 	return audio;
 }
 function update(timeDiff) {
-	console.log('update');
+	// console.log('update')
 	var player = this;
 	if (player.audio) {
 		var audioTime = player.audio.currentTime;
@@ -174,7 +165,7 @@ function overloadAPI(video) {
 	preventEvent(video, 'pause', 'iaAutomatedEvent', true);
 }
 
-function makeVideoPlayableInline(video) {
+function index ( /*makeVideoPlayableInline*/video) {
 	var hasAudio = arguments.length <= 1 || arguments[1] === undefined ? true : arguments[1];
 	var onlyWhenNeeded = arguments.length <= 2 || arguments[2] === undefined ? true : arguments[2];
 
@@ -186,4 +177,4 @@ function makeVideoPlayableInline(video) {
 	// console.log('Video will play inline');
 }
 
-module.exports = makeVideoPlayableInline;
+export default index;
