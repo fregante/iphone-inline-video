@@ -25,6 +25,13 @@ In you don't use node/babel, include this:
 
 ## Usage
 
+You will need this CSS to hide the play button overlay:
+```css
+video::-webkit-media-controls {
+  display:none;
+}
+```
+
 ```js
 const video = document.querySelector('video');
 
