@@ -3,14 +3,6 @@ import getIntervalometer from './lib/intervalometer';
 import preventEvent from './lib/prevent-event';
 import proxyProperty from './lib/proxy-property';
 
-
-/**
- * known issues:
- * it cannot go fullscreen before it's played inline first
- * it cannot keep playing when the src is changed
- * unknown behavior when no audio + slow connection
- */
-
 const isNeeded = /iPhone|iPod/i.test(navigator.userAgent);
 
 /**

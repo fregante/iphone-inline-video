@@ -27,7 +27,11 @@ In you don't use browserify/webpack/rollup/babel, include this:
 <script src="dist/iphone-inline-video.browser.js"></script>
 ```
 
+## Known issues
 
+ * It cannot go fullscreen before it's played inline first
+ * It cannot keep playing when the src is changed
+ * Unknown behavior when no audio + slow connection
 
 ## License
 
