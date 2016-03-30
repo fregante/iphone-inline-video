@@ -8,10 +8,24 @@ This module doesn't use any canvas, it plays the video inline by seeking it manu
 
 Try the demo: http://bfred-it.github.io/iphone-inline-video/
 
+## Install
+
+```sh
+npm install --save iphone-inline-video
+```
+```js
+import makeVideoPlayableInline from 'iphone-inline-video';
+```
+
+In you don't use node/babel, include this:
+
+```html
+<script src="dist/iphone-inline-video.browser.js"></script>
+```
+
 ## Usage
 
 ```js
-import makeVideoPlayableInline from 'iphone-inline-video';
 const video = document.querySelector('video');
 
 // this enables the inline playback
@@ -21,12 +35,6 @@ makeVideoPlayableInline(video);
 // but it still needs user interaction to start the download
 // fullscreen can still be achievable via the normal requestFullscreen() API
 video.addEventListener('touchstart', () => video.play());
-```
-
-In you don't use browserify/webpack/rollup/babel, include this:
-
-```html
-<script src="dist/iphone-inline-video.browser.js"></script>
 ```
 
 ## Known issues
