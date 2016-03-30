@@ -21,11 +21,19 @@
   },
   "scripts": {
     "build": "bfred-npm-bundler iphone-inline-video makeVideoPlayableInline",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "test": "xo"
   },
   "devDependencies": {
     "babel-preset-es2015-rollup": "^1.1.1",
-    "bfred-npm-bundler": "^5.0.0"
+    "bfred-npm-bundler": "^5.0.0",
+    "xo": "^0.13.0"
+  },
+  "xo": {
+    "esnext": true,
+    "env": [
+      "browser"
+    ]
   },
   "bugs": {
     "url": "https://github.com/bfred-it/iphone-inline-video/issues"
