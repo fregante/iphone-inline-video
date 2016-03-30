@@ -1,12 +1,20 @@
 {
   "name": "iphone-inline-video",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Make videos playable inline on the iPhone and iPod Touch.",
   "license": "MIT",
   "repository": "bfred-it/iphone-inline-video",
   "author": "Federico Brigante <bfred-it@users.noreply.github.com> (twitter.com/bfred_it)",
   "keywords": [
-    "browser"
+    "browser",
+    "iphone",
+    "ios",
+    "play",
+    "video",
+    "inline",
+    "canvas",
+    "fullscreen",
+    "ipod"
   ],
   "files": [
     "dist/iphone-inline-video.common-js.js",
