@@ -9,12 +9,12 @@ const isNeeded = /iPhone|iPod/i.test(navigator.userAgent);
  * UTILS
  */
 
-function getAudioFromVideo (video) {
+function getAudioFromVideo(video) {
 	const audio = new Audio();
 	audio.src = video.currentSrc || video.src;
 	return audio;
 }
-function update (timeDiff) {
+function update(timeDiff) {
 	// console.log('update')
 	const player = this;
 	if (player.audio) {
@@ -22,18 +22,18 @@ function update (timeDiff) {
 		player.video.currentTime = audioTime;
 		// console.assert(player.video.currentTime === audioTime, 'Video not updating!')
 	} else {
-		let nextTime = player.video.currentTime + timeDiff/1000;
+		const nextTime = player.video.currentTime + timeDiff / 1000;
 		player.video.currentTime = Math.min(player.video.duration, nextTime);
 	}
 	if (player.video.ended) {
 		player.video.pause();
 	}
 }
-function startVideoBuffering (video) {
+function startVideoBuffering(video) {
 	// this needs to be inside an event handler
 	video.iaAutomatedEvent = true;
 	video._play();
-	setTimeout(function () {
+	setTimeout(() => {
 		video.iaAutomatedEvent = true;
 		video._pause();
 	}, 0);
@@ -43,7 +43,7 @@ function startVideoBuffering (video) {
  * METHODS
  */
 
-function play () {
+function play() {
 	// console.log('play')
 	const video = this;
 	const player = video.__ivp;
@@ -62,7 +62,7 @@ function play () {
 	video.dispatchEvent(new Event('play'));
 	video.dispatchEvent(new Event('playing'));
 }
-function pause () {
+function pause() {
 	// console.log('pause')
 	const video = this;
 	const player = video.__ivp;
@@ -81,7 +81,7 @@ function pause () {
  * SETUP
  */
 
-function addPlayer (video, hasAudio) {
+function addPlayer(video, hasAudio) {
 	const player = video.__ivp = {};
 	player.paused = true;
 	player.loop = video.loop;
@@ -93,19 +93,19 @@ function addPlayer (video, hasAudio) {
 	player.updater = getIntervalometer(update.bind(player));
 
 	// stop programmatic player when OS takes over
-	video.addEventListener('webkitbeginfullscreen', function () {//@todo: should be on play?
+	video.addEventListener('webkitbeginfullscreen', () => {// @todo: should be on play?
 		video.pause();
 	});
 	if (player.audio) {
 		// sync audio to new video position
-		video.addEventListener('webkitendfullscreen', function () {//@todo: should be on pause?
+		video.addEventListener('webkitendfullscreen', () => {// @todo: should be on pause?
 			player.audio.currentTime = player.video.currentTime;
 			// console.assert(player.audio.currentTime === player.video.currentTime, 'Audio not synced');
 		});
 	}
 }
 
-function overloadAPI (video) {
+function overloadAPI(video) {
 	const player = video.__ivp;
 	video._play = video.play;
 	video._pause = video.pause;
@@ -121,7 +121,7 @@ function overloadAPI (video) {
 	preventEvent(video, 'pause', 'iaAutomatedEvent', true);
 }
 
-export default function /*makeVideoPlayableInline*/ (video, hasAudio = true, onlyWhenNeeded = true) {
+export default function /* makeVideoPlayableInline*/ (video, hasAudio = true, onlyWhenNeeded = true) {
 	if (onlyWhenNeeded && !isNeeded) {
 		return;
 	}

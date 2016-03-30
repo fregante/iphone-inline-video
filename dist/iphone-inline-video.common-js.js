@@ -23,7 +23,7 @@ function preventEvent(element, eventName, toggleProperty, preventWithProperty) {
 	var handler = function handler(e) {
 		var hasProperty = toggleProperty && element[toggleProperty];
 		delete element[toggleProperty];
-		if (!!hasProperty === !!preventWithProperty) {
+		if (Boolean(hasProperty) === Boolean(preventWithProperty)) {
 			e.stopImmediatePropagation();
 			// console.log(eventName, 'prevented on', element);
 		}
@@ -42,7 +42,7 @@ function proxyProperty(object, propertyName, sourceObject) {
 			return sourceObject[propertyName];
 		},
 		set: function set(va) {
-			return sourceObject[propertyName] = va;
+			sourceObject[propertyName] = va;
 		}
 	});
 }
@@ -138,13 +138,13 @@ function addPlayer(video, hasAudio) {
 
 	// stop programmatic player when OS takes over
 	video.addEventListener('webkitbeginfullscreen', function () {
-		//@todo: should be on play?
+		// @todo: should be on play?
 		video.pause();
 	});
 	if (player.audio) {
 		// sync audio to new video position
 		video.addEventListener('webkitendfullscreen', function () {
-			//@todo: should be on pause?
+			// @todo: should be on pause?
 			player.audio.currentTime = player.video.currentTime;
 			// console.assert(player.audio.currentTime === player.video.currentTime, 'Audio not synced');
 		});
@@ -167,7 +167,7 @@ function overloadAPI(video) {
 	preventEvent(video, 'pause', 'iaAutomatedEvent', true);
 }
 
-function index ( /*makeVideoPlayableInline*/video) {
+function index ( /* makeVideoPlayableInline*/video) {
 	var hasAudio = arguments.length <= 1 || arguments[1] === undefined ? true : arguments[1];
 	var onlyWhenNeeded = arguments.length <= 2 || arguments[2] === undefined ? true : arguments[2];
 
