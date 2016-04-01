@@ -21,7 +21,7 @@ npm install --save iphone-inline-video
 import makeVideoPlayableInline from 'iphone-inline-video';
 ```
 
-In you don't use node/babel, include this:
+If you don't use node/babel, include this:
 
 ```html
 <script src="dist/iphone-inline-video.browser.js"></script>
