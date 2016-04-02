@@ -160,4 +160,7 @@ export default function (video, hasAudio = true, onlyWhenNeeded = true) {
 	}
 	addPlayer(video, hasAudio);
 	overloadAPI(video);
+	if (!hasAudio && video.autoplay) {
+		video.play();
+	}
 }

@@ -228,6 +228,9 @@ function index (video) {
 	}
 	addPlayer(video, hasAudio);
 	overloadAPI(video);
+	if (!hasAudio && video.autoplay) {
+		video.play();
+	}
 }
 
 export default index;

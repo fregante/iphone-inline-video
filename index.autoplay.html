@@ -43,13 +43,13 @@
 </head>
 <body>
 	<h2>
-		Inline video on the iPhone
+		Silent video with <code>autoplay</code>
 	</h2>
-	<video preload="auto" src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"></video>
+	<video autoplay preload="auto" src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"></video>
 	<button class='play'>Play/pause video</button>
 	<button class='fullscreen'>Go fullscreen</button>
 	<p>
-		It can also <a href="index.autoplay.html">autoplay silent videos</a>
+		Or <a href="index.html">play regular videos inline</a>
 	</p>
 	<p>
 		Made possible by <a href="https://github.com/bfred-it/iphone-inline-video">iphone-inline-video</a>
@@ -62,7 +62,7 @@
 	var fsBtn = document.querySelector('.fullscreen');
 
 	// do it!
-	window.makeVideoPlayableInline(video);
+	window.makeVideoPlayableInline(video, false);
 
 	// play the video when tapping the button
 	playBtn.addEventListener('touchstart', function () {
