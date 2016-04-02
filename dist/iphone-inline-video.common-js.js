@@ -114,6 +114,13 @@ function play() {
 	// console.log('play')
 	var video = this;
 	var player = video[ಠ];
+
+	// if it's fullscreen, the developer the native player
+	if (video.webkitDisplayingFullscreen) {
+		video[ಠplay]();
+		return;
+	}
+
 	if (!video.buffered.length) {
 		video.load();
 	}
@@ -121,6 +128,8 @@ function play() {
 	player.updater.start();
 
 	video.dispatchEvent(new Event('play'));
+
+	// TODO: should be fired later
 	video.dispatchEvent(new Event('playing'));
 }
 function pause() {
@@ -130,10 +139,18 @@ function pause() {
 	player.updater.stop();
 	player.driver.pause();
 
+	// TODO: should not fire again if the VIDEO was already paused/ended
 	video.dispatchEvent(new Event('pause'));
 	if (video.ended) {
 		video[ಠevent] = true;
 		video.dispatchEvent(new Event('ended'));
+	}
+
+	// if it's fullscreen, the developer the native player.pause()
+	// This is at the end of pause() because it also
+	// needs to make sure that the simulation is paused
+	if (video.webkitDisplayingFullscreen) {
+		video[ಠpause]();
 	}
 }
 
@@ -167,16 +184,25 @@ function addPlayer(video, hasAudio) {
 	}
 
 	// stop programmatic player when OS takes over
-	// TODO: should be on play?
 	video.addEventListener('webkitbeginfullscreen', function () {
-		video.pause();
+		if (!video.paused) {
+			// make sure that the <audio> and the syncer/updater are stopped
+			video.pause();
+
+			// play video natively
+			video[ಠplay]();
+		} else if (hasAudio && !player.driver.buffered.length) {
+			// if the first play is native,
+			// the <audio> needs to be buffered manually
+			// so when the fullscreen ends, it can be set to the same current time
+			player.driver.load();
+		}
 	});
 	if (hasAudio) {
-		// sync audio to new video position
-		// TODO: should be on pause?
 		video.addEventListener('webkitendfullscreen', function () {
-			player.audio.currentTime = player.video.currentTime;
-			// console.assert(player.audio.currentTime === player.video.currentTime, 'Audio not synced');
+			// sync audio to new video position
+			player.driver.currentTime = player.video.currentTime;
+			// console.assert(player.driver.currentTime === player.video.currentTime, 'Audio not synced');
 		});
 	}
 }

@@ -52,16 +52,16 @@ Once you enable the `video` element with that function, you can keep using it ju
 ```js
 video.addEventListener('touchstart', function () {
 	video.play();
-);
+});
 ```
 
-If at some point you want to open the video in fullscreen, use the standard `requestFullscreen()` API (which is still prefixed)
+If at some point you want to open the video in fullscreen, use the standard (but still prefixed) `webkitEnterFullScreen()` API.
 
 
 ## Known issues
 
 * Many events and other properties are still supported, but changing [`src` isn't yet](https://github.com/bfred-it/iphone-inline-video/issues/1), so you can't play videos back-to-back yet.
-* You need to `.play()` the video before `requestFullscreen()` if you still want that at some point.
+* You need to `.play()` the video before `webkitEnterFullScreen()` if you still want that at some point.
 * Unknown behavior when the video file has no audio track and the file is slow to load
 
 ## License

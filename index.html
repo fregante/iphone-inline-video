@@ -22,23 +22,27 @@
 	button {
 	  width: 100%;
 	  height: 3em;
+	  margin-top: 1em;
+	  font-size: 1em;
 	}
 	</style>
 </head>
 <body>
 	<video preload="auto" src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"></video>
-	<button>Play/pause video</button>
+	<button class='play'>Play/pause video</button>
+	<button class='fullscreen'>Go fullscreen</button>
 
 	<script>
 	'use strict';
 	var video = document.querySelector('video');
-	var button = document.querySelector('button');
+	var playBtn = document.querySelector('.play');
+	var fsBtn = document.querySelector('.fullscreen');
 
 	// do it!
 	window.makeVideoPlayableInline(video);
 
 	// play the video when tapping the button
-	button.addEventListener('click', function () {
+	playBtn.addEventListener('touchstart', function () {
 		if(video.paused) {
 			video.play();
 		} else {
@@ -47,8 +51,8 @@
 	});
 
 	// go fullscreen when touching the video
-	video.addEventListener('touchstart', function () {
-		this._play();
+	fsBtn.addEventListener('touchstart', function () {
+		video.webkitEnterFullScreen();
 	});
 
 	// debug events
@@ -75,7 +79,9 @@
 	'pause', // fake events
 	// 'ratechange',
 	// 'resize',
-	// 'volumechange'
+	// 'volumechange',
+	'webkitbeginfullscreen',
+	'webkitendfullscreen',
 	].forEach(function (event) {
 		video.addEventListener(event, function () {
 			console.info('@', event);
