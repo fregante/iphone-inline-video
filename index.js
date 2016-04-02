@@ -24,14 +24,15 @@ function getAudioFromVideo(video) {
 function update(timeDiff) {
 	// console.log('update')
 	const player = this;
-	if (player.audio) {
-		const audioTime = player.audio.currentTime;
-		player.video.currentTime = audioTime;
-		// console.assert(player.video.currentTime === audioTime, 'Video not updating!')
+	let nextTime;
+	if (player.hasAudio) {
+		nextTime = player.driver.currentTime;
 	} else {
-		const nextTime = player.video.currentTime + timeDiff / 1000;
-		player.video.currentTime = Math.min(player.video.duration, nextTime);
+		nextTime = player.video.currentTime + timeDiff / 1000;
 	}
+	player.video.currentTime = Math.min(player.video.duration, nextTime);
+	// console.assert(player.video.currentTime === nextTime, 'Video not updating!');
+
 	if (player.video.ended) {
 		player.video.pause();
 		return false;
@@ -60,12 +61,7 @@ function play() {
 		// console.log('Video not ready. Buffering')
 		startVideoBuffering(video);
 	}
-	player.paused = false;
-	if (player.audio) {
-		player.audio.play();
-	} else if (video.currentTime === video.duration) {
-		video.currentTime = 0;
-	}
+	player.driver.play();
 	player.updater.start();
 
 	video.dispatchEvent(new Event('play'));
@@ -75,11 +71,9 @@ function pause() {
 	// console.log('pause')
 	const video = this;
 	const player = video[ಠ];
-	player.paused = true;
 	player.updater.stop();
-	if (player.audio) {
-		player.audio.pause();
-	}
+	player.driver.pause();
+
 	video.dispatchEvent(new Event('pause'));
 	if (video.ended) {
 		video[ಠevent] = true;
@@ -93,21 +87,35 @@ function pause() {
 
 function addPlayer(video, hasAudio) {
 	const player = video[ಠ] = {};
-	player.paused = true;
-	player.loop = video.loop;
-	player.muted = video.muted;
+	player.hasAudio = hasAudio;
 	player.video = video;
-	if (hasAudio) {
-		player.audio = getAudioFromVideo(video);
-	}
 	player.updater = getIntervalometer(update.bind(player));
+
+	if (hasAudio) {
+		player.driver = getAudioFromVideo(video);
+	} else {
+		player.driver = {
+			muted: true,
+			paused: true,
+			pause: () => {
+				player.driver.paused = true;
+			},
+			play: () => {
+				player.driver.paused = false;
+				// media automatically goes to 0 if .play() is called when it's done
+				if (video.currentTime === video.duration) {
+					video.currentTime = 0;
+				}
+			}
+		};
+	}
 
 	// stop programmatic player when OS takes over
 	// TODO: should be on play?
 	video.addEventListener('webkitbeginfullscreen', () => {
 		video.pause();
 	});
-	if (player.audio) {
+	if (hasAudio) {
 		// sync audio to new video position
 		// TODO: should be on pause?
 		video.addEventListener('webkitendfullscreen', () => {
@@ -123,8 +131,8 @@ function overloadAPI(video) {
 	video[ಠpause] = video.pause;
 	video.play = play;
 	video.pause = pause;
-	proxyProperty(video, 'paused', player);
-	proxyProperty(video, 'muted', player);
+	proxyProperty(video, 'paused', player.driver);
+	proxyProperty(video, 'muted', player.driver);
 	preventEvent(video, 'seeking');
 	preventEvent(video, 'seeked');
 	preventEvent(video, 'play', ಠevent, true);
