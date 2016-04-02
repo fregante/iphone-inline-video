@@ -30,6 +30,7 @@ function update(timeDiff) {
 		return false;
 	}
 }
+
 function startVideoBuffering(video) {
 	// this needs to be inside an event handler
 	video.iaAutomatedEvent = true;

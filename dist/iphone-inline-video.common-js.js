@@ -6,9 +6,12 @@ function getIntervalometer(cb) {
 			if (!raf.lastCall) {
 				raf.lastCall = Date.now();
 			}
-			cb(Date.now() - raf.lastCall);
-			raf.lastCall = Date.now();
+			var timeDiffSinceLastCycle = Date.now() - raf.lastCall;
 			raf.id = requestAnimationFrame(raf.start);
+			raf.lastCall = Date.now();
+
+			// must be after raf() because it might call .stop()
+			cb(timeDiffSinceLastCycle);
 		},
 		stop: function stop() {
 			cancelAnimationFrame(raf.id);
@@ -71,8 +74,10 @@ function update(timeDiff) {
 		}
 	if (player.video.ended) {
 		player.video.pause();
+		return false;
 	}
 }
+
 function startVideoBuffering(video) {
 	// this needs to be inside an event handler
 	video.iaAutomatedEvent = true;
@@ -117,6 +122,7 @@ function pause() {
 	}
 	video.dispatchEvent(new Event('pause'));
 	if (video.ended) {
+		video.iaAutomatedEvent = true;
 		video.dispatchEvent(new Event('ended'));
 	}
 }
@@ -165,6 +171,7 @@ function overloadAPI(video) {
 	preventEvent(video, 'play', 'iaAutomatedEvent', true);
 	preventEvent(video, 'playing', 'iaAutomatedEvent', true);
 	preventEvent(video, 'pause', 'iaAutomatedEvent', true);
+	preventEvent(video, 'ended', 'iaAutomatedEvent', false); // prevent occasional native ended events
 }
 
 function index ( /* makeVideoPlayableInline*/video) {
