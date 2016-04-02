@@ -168,14 +168,14 @@ function addPlayer(video, hasAudio) {
 	player.updater = getIntervalometer(update.bind(player));
 
 	// stop programmatic player when OS takes over
+	// TODO: should be on play?
 	video.addEventListener('webkitbeginfullscreen', function () {
-		// @todo: should be on play?
 		video.pause();
 	});
 	if (player.audio) {
 		// sync audio to new video position
+		// TODO: should be on pause?
 		video.addEventListener('webkitendfullscreen', function () {
-			// @todo: should be on pause?
 			player.audio.currentTime = player.video.currentTime;
 			// console.assert(player.audio.currentTime === player.video.currentTime, 'Audio not synced');
 		});
@@ -189,7 +189,6 @@ function overloadAPI(video) {
 	video.play = play;
 	video.pause = pause;
 	proxyProperty(video, 'paused', player);
-	proxyProperty(video, 'loop', player);
 	proxyProperty(video, 'muted', player);
 	preventEvent(video, 'seeking');
 	preventEvent(video, 'seeked');
@@ -199,7 +198,8 @@ function overloadAPI(video) {
 	preventEvent(video, 'ended', ಠevent, false); // prevent occasional native ended events
 }
 
-function index ( /* makeVideoPlayableInline*/video) {
+/* makeVideoPlayableInline() */
+function index (video) {
 	var hasAudio = arguments.length <= 1 || arguments[1] === undefined ? true : arguments[1];
 	var onlyWhenNeeded = arguments.length <= 2 || arguments[2] === undefined ? true : arguments[2];
 
@@ -208,7 +208,6 @@ function index ( /* makeVideoPlayableInline*/video) {
 	}
 	addPlayer(video, hasAudio);
 	overloadAPI(video);
-	// console.log('Video will play inline');
 }
 
 export default index;
