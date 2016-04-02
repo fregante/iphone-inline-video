@@ -21,7 +21,7 @@ npm install --save iphone-inline-video
 import makeVideoPlayableInline from 'iphone-inline-video';
 ```
 
-In you don't use node/babel, include this:
+If you don't use node/babel, include this:
 
 ```html
 <script src="dist/iphone-inline-video.browser.js"></script>
@@ -62,7 +62,7 @@ If at some point you want to open the video in fullscreen, use the standard `req
 
 * Many events and other properties are still supported, but changing [`src` isn't yet](https://github.com/bfred-it/iphone-inline-video/issues/1), so you can't play videos back-to-back yet.
 * You need to `.play()` the video before `requestFullscreen()` if you still want that at some point.
-* Unknown behavior when the video file has no audio track and the file i slow to load
+* Unknown behavior when the video file has no audio track and the file is slow to load
 
 ## License
 
