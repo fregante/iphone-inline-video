@@ -50,7 +50,33 @@ function proxyProperty(object, propertyName, sourceObject) {
 	});
 }
 
+/*
+Poor man's Symbol implementation, not compliant
+Defaults to the browser's Symbol if available
+
+http://www.2ality.com/2014/12/es6-symbols.html#symbols_as_property_keys
+
+Ideal to be used instead of: obj.___hiddenProp
+as: obj[Symbol('hidden-prop')]
+
+Usage example:
+
+import Symbol from './poor-mans-symbol';
+const ಠ = Symbol('my-nice-module');
+el[ಠ] = 'Some private stuff';
+
+*/
+
+var _Symbol = window.Symbol || function (description) {
+	return '@' + (description ? description : '@') + Math.random().toString(26);
+};
+
 var isNeeded = /iPhone|iPod/i.test(navigator.userAgent);
+
+var ಠ = _Symbol('iiv');
+var ಠevent = _Symbol('iive');
+var ಠplay = _Symbol('native-play');
+var ಠpause = _Symbol('native-pause');
 
 /**
  * UTILS
@@ -61,6 +87,7 @@ function getAudioFromVideo(video) {
 	audio.src = video.currentSrc || video.src;
 	return audio;
 }
+
 function update(timeDiff) {
 	// console.log('update')
 	var player = this;
@@ -80,11 +107,11 @@ function update(timeDiff) {
 
 function startVideoBuffering(video) {
 	// this needs to be inside an event handler
-	video.iaAutomatedEvent = true;
-	video._play();
+	video[ಠevent] = true;
+	video[ಠplay]();
 	setTimeout(function () {
-		video.iaAutomatedEvent = true;
-		video._pause();
+		video[ಠevent] = true;
+		video[ಠpause]();
 	}, 0);
 }
 
@@ -95,7 +122,7 @@ function startVideoBuffering(video) {
 function play() {
 	// console.log('play')
 	var video = this;
-	var player = video.__ivp;
+	var player = video[ಠ];
 	if (!video.buffered.length) {
 		// console.log('Video not ready. Buffering')
 		startVideoBuffering(video);
@@ -114,7 +141,7 @@ function play() {
 function pause() {
 	// console.log('pause')
 	var video = this;
-	var player = video.__ivp;
+	var player = video[ಠ];
 	player.paused = true;
 	player.updater.stop();
 	if (player.audio) {
@@ -122,7 +149,7 @@ function pause() {
 	}
 	video.dispatchEvent(new Event('pause'));
 	if (video.ended) {
-		video.iaAutomatedEvent = true;
+		video[ಠevent] = true;
 		video.dispatchEvent(new Event('ended'));
 	}
 }
@@ -132,7 +159,7 @@ function pause() {
  */
 
 function addPlayer(video, hasAudio) {
-	var player = video.__ivp = {};
+	var player = video[ಠ] = {};
 	player.paused = true;
 	player.loop = video.loop;
 	player.muted = video.muted;
@@ -158,9 +185,9 @@ function addPlayer(video, hasAudio) {
 }
 
 function overloadAPI(video) {
-	var player = video.__ivp;
-	video._play = video.play;
-	video._pause = video.pause;
+	var player = video[ಠ];
+	video[ಠplay] = video.play;
+	video[ಠpause] = video.pause;
 	video.play = play;
 	video.pause = pause;
 	proxyProperty(video, 'paused', player);
@@ -168,10 +195,10 @@ function overloadAPI(video) {
 	proxyProperty(video, 'muted', player);
 	preventEvent(video, 'seeking');
 	preventEvent(video, 'seeked');
-	preventEvent(video, 'play', 'iaAutomatedEvent', true);
-	preventEvent(video, 'playing', 'iaAutomatedEvent', true);
-	preventEvent(video, 'pause', 'iaAutomatedEvent', true);
-	preventEvent(video, 'ended', 'iaAutomatedEvent', false); // prevent occasional native ended events
+	preventEvent(video, 'play', ಠevent, true);
+	preventEvent(video, 'playing', ಠevent, true);
+	preventEvent(video, 'pause', ಠevent, true);
+	preventEvent(video, 'ended', ಠevent, false); // prevent occasional native ended events
 }
 
 function index ( /* makeVideoPlayableInline*/video) {

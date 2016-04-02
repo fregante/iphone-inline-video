@@ -2,8 +2,14 @@
 import getIntervalometer from './lib/intervalometer';
 import preventEvent from './lib/prevent-event';
 import proxyProperty from './lib/proxy-property';
+import Symbol from './lib/poor-mans-symbol';
 
 const isNeeded = /iPhone|iPod/i.test(navigator.userAgent);
+
+const ಠ = Symbol('iiv');
+const ಠevent = Symbol('iive');
+const ಠplay = Symbol('native-play');
+const ಠpause = Symbol('native-pause');
 
 /**
  * UTILS
@@ -14,6 +20,7 @@ function getAudioFromVideo(video) {
 	audio.src = video.currentSrc || video.src;
 	return audio;
 }
+
 function update(timeDiff) {
 	// console.log('update')
 	const player = this;
@@ -33,11 +40,11 @@ function update(timeDiff) {
 
 function startVideoBuffering(video) {
 	// this needs to be inside an event handler
-	video.iaAutomatedEvent = true;
-	video._play();
+	video[ಠevent] = true;
+	video[ಠplay]();
 	setTimeout(() => {
-		video.iaAutomatedEvent = true;
-		video._pause();
+		video[ಠevent] = true;
+		video[ಠpause]();
 	}, 0);
 }
 
@@ -48,7 +55,7 @@ function startVideoBuffering(video) {
 function play() {
 	// console.log('play')
 	const video = this;
-	const player = video.__ivp;
+	const player = video[ಠ];
 	if (!video.buffered.length) {
 		// console.log('Video not ready. Buffering')
 		startVideoBuffering(video);
@@ -67,7 +74,7 @@ function play() {
 function pause() {
 	// console.log('pause')
 	const video = this;
-	const player = video.__ivp;
+	const player = video[ಠ];
 	player.paused = true;
 	player.updater.stop();
 	if (player.audio) {
@@ -75,7 +82,7 @@ function pause() {
 	}
 	video.dispatchEvent(new Event('pause'));
 	if (video.ended) {
-		video.iaAutomatedEvent = true;
+		video[ಠevent] = true;
 		video.dispatchEvent(new Event('ended'));
 	}
 }
@@ -85,7 +92,7 @@ function pause() {
  */
 
 function addPlayer(video, hasAudio) {
-	const player = video.__ivp = {};
+	const player = video[ಠ] = {};
 	player.paused = true;
 	player.loop = video.loop;
 	player.muted = video.muted;
@@ -109,9 +116,9 @@ function addPlayer(video, hasAudio) {
 }
 
 function overloadAPI(video) {
-	const player = video.__ivp;
-	video._play = video.play;
-	video._pause = video.pause;
+	const player = video[ಠ];
+	video[ಠplay] = video.play;
+	video[ಠpause] = video.pause;
 	video.play = play;
 	video.pause = pause;
 	proxyProperty(video, 'paused', player);
@@ -119,10 +126,10 @@ function overloadAPI(video) {
 	proxyProperty(video, 'muted', player);
 	preventEvent(video, 'seeking');
 	preventEvent(video, 'seeked');
-	preventEvent(video, 'play', 'iaAutomatedEvent', true);
-	preventEvent(video, 'playing', 'iaAutomatedEvent', true);
-	preventEvent(video, 'pause', 'iaAutomatedEvent', true);
-	preventEvent(video, 'ended', 'iaAutomatedEvent', false); // prevent occasional native ended events
+	preventEvent(video, 'play', ಠevent, true);
+	preventEvent(video, 'playing', ಠevent, true);
+	preventEvent(video, 'pause', ಠevent, true);
+	preventEvent(video, 'ended', ಠevent, false); // prevent occasional native ended events
 }
 
 export default function /* makeVideoPlayableInline*/ (video, hasAudio = true, onlyWhenNeeded = true) {

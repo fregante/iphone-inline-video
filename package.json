@@ -51,7 +51,10 @@
     "esnext": true,
     "env": [
       "browser"
-    ]
+    ],
+    "rules": {
+    	"prefer-template" : 0
+    }
   },
   "bugs": {
     "url": "https://github.com/bfred-it/iphone-inline-video/issues"
