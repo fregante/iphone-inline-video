@@ -106,16 +106,6 @@ function update(timeDiff) {
 	}
 }
 
-function startVideoBuffering(video) {
-	// this needs to be inside an event handler
-	video[ಠevent] = true;
-	video[ಠplay]();
-	setTimeout(function () {
-		video[ಠevent] = true;
-		video[ಠpause]();
-	}, 0);
-}
-
 /**
  * METHODS
  */
@@ -125,10 +115,7 @@ function play() {
 	var video = this;
 	var player = video[ಠ];
 	if (!video.buffered.length) {
-		// console.log('Video not ready. Buffering')
-		// TODO: maybe replace with .load()
-		// TODO: maybe .load() needs to be polyfilled to this
-		startVideoBuffering(video);
+		video.load();
 	}
 	player.driver.play();
 	player.updater.start();
@@ -204,9 +191,6 @@ function overloadAPI(video) {
 	proxyProperty(video, 'muted', player.driver);
 	preventEvent(video, 'seeking');
 	preventEvent(video, 'seeked');
-	preventEvent(video, 'play', ಠevent, true);
-	preventEvent(video, 'playing', ಠevent, true);
-	preventEvent(video, 'pause', ಠevent, true);
 	preventEvent(video, 'ended', ಠevent, false); // prevent occasional native ended events
 }
 
