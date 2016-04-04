@@ -46,8 +46,18 @@ video::-webkit-media-controls {
 And then run it on a single `<video>` element:
 
 ```js
-const video = document.querySelector('video');
 makeVideoPlayableInline(video);
+/* 
+
+Where "video" is a variable containg a video element, like
+
+var video = document.querySelector('video');
+
+or this if you're already using jQuery:
+
+var video = $('video').get(0);
+
+*/
 ```
 
 Done! You don't even need to check whether it's necessary, it's skipped outside iPhones and iPods.
@@ -69,7 +79,6 @@ If at some point you want to open the video in fullscreen, use the standard (but
 If your video doesn't have an audio track, then you need this:
 
 ```js
-const video = document.querySelector('video');
 makeVideoPlayableInline(video, /* hasAudio */ false);
 ```
 
@@ -80,7 +89,6 @@ This uses a different behavior to play the video, so it might not be particularl
 You can also have **silent** videos autoplay. This module can load and play the video without user interaction, but not play the audio, so you **have to** set the `hasAudio` to `false`
 
 ```js
-const video = document.querySelector('video');
 makeVideoPlayableInline(video, /* hasAudio */ false);
 ```
 
