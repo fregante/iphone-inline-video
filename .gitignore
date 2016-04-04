@@ -1,51 +1,12 @@
-# Development-time files
-bower_components
 node_modules
-build/
-public/assets
-*.css.map
-
-# OS files
 .DS_Store
 Desktop.ini
 ._*
 Thumbs.db
-
-# Software files
-.idea/
-*.iml
-*.sublime-project
-*.sublime-workspace
-
-# Caches, logs, and temps
-.sass-cache
-.sublime-grunt.cache
-.grunt # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
-.codekit-cache
-npm-debug.log
-.tmp
 *.tmp
 *.bak
 *.log
-/caches/
 logs
-.env # Ignore .env configuration files
 
-# Binaries
-*.psd
-psd
-docs
-*.gz
-/backups/
-
-
-# Laravel
-/bootstrap/compiled.php
-.env.*.php
-.env.php
-
-
-# Node Runtime data
-pids
-*.pid
-*.seed
+*.common-js.js
+*.es-modules.js
