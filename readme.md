@@ -38,7 +38,7 @@ If you don't use node/babel, include this:
 
 You will need this CSS to hide the play button overlay:
 ```css
-video::-webkit-media-controls {
+video::-webkit-media-controls-start-playback-button {
   display:none;
 }
 ```
