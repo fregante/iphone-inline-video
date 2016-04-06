@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Inline player test</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="../dist/iphone-inline-video.browser.js"></script>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<h2>
+		Silent video with <code>autoplay</code>
+	</h2>
+	<video autoplay preload="auto" src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"></video>
+	<button class='play'>Play/pause video</button>
+	<button class='fullscreen'>Go fullscreen</button>
+	<p>
+		Or <a href="index.html">play regular videos inline</a>
+	</p>
+	<p>
+		Made possible by <a href="https://github.com/bfred-it/iphone-inline-video">iphone-inline-video</a>
+	</p>
+
+	<script>
+		var video = document.querySelector('video');
+		window.makeVideoPlayableInline(video, /* mute necessary for autoplay*/ false);
+	</script>
+	<script src="buttons.js"></script>
+	<script src="debug.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+html, body {
+	margin: 0;
+	padding: 0;
+  background: #000;
+	color: #FFF;
+	text-align: center;
+	font-family: sans-serif;
+}
+video {
+  background: green;
+  width: 100%;
+}
+video::-webkit-media-controls-start-playback-button {
+    display:none;
+}
+button {
+  width: 100%;
+  height: 3em;
+  font-size: 1em;
+}
+p, h2, button {
+	margin: 1em 0;
+}
+p {
+	font-size: 1.2em;
+}
+a {
+	color: #FFF;
+}
+code {
+	font-size: 1.2em;
+}

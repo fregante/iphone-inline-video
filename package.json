@@ -32,7 +32,7 @@
     "build:size": "gzip-size dist/iphone-inline-video.browser.js",
     "build": "npm-run-all --silent test build:*",
     "jsfix": "xo --fix",
-    "watch:server": "browser-sync start --no-open --server --files '*.html,dist/*.browser.js'",
+    "watch:server": "browser-sync start --no-open --server --files '*.html,dist/*.browser.js,demo/**'",
     "watch:build": "onchange 'index.js' 'lib/*' -i -v -- npm run build -- -c",
     "watch": "npm-run-all --parallel --silent watch:*",
     "prepublish": "npm run build",
@@ -49,6 +49,9 @@
   },
   "xo": {
     "esnext": true,
+    "ignores": [
+    	"demo/**"
+    ],
     "env": [
       "browser"
     ],

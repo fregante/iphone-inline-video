@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Inline player test (all browsers)</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="../dist/iphone-inline-video.browser.js"></script>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<h2>
+		<code>iphone-inline-video</code> enabled in all browsers (test only)
+	</h2>
+	<video preload="auto" src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"></video>
+	<button class='play'>Play/pause video</button>
+	<button class='fullscreen'>Go fullscreen</button>
+	<p>
+		Or play videos inline <a href="index.html">on the iPhone/iPod only.</a>
+	</p>
+	<p>
+		A test for <a href="https://github.com/bfred-it/iphone-inline-video">iphone-inline-video</a>
+	</p>
+
+	<script>
+		var video = document.querySelector('video');
+		window.makeVideoPlayableInline(video, true, true);
+	</script>
+	<script src="buttons.js"></script>
+	<script src="debug.js"></script>
+</body>
+</html>
