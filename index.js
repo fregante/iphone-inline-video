@@ -21,16 +21,24 @@ function getAudioFromVideo(video) {
 	return audio;
 }
 
+const lastRequests = Array(3);
+lastRequests.i = 0;
+
+function setTime(video, time) {
+	time = Math.min(video.duration, time);
+	video.currentTime = time;
+	lastRequests[++lastRequests.i % 3] = time * 100 | 0 / 100;
+}
+
 function update(timeDiff) {
 	// console.log('update')
 	const player = this;
-	let nextTime;
 	if (player.hasAudio) {
-		nextTime = player.driver.currentTime;
+		setTime(player.video, player.driver.currentTime);
 	} else {
-		nextTime = player.video.currentTime + timeDiff / 1000;
+		setTime(player.video, player.video.currentTime + timeDiff / 1000);
 	}
-	player.video.currentTime = Math.min(player.video.duration, nextTime);
+
 	// console.assert(player.video.currentTime === nextTime, 'Video not updating!');
 
 	if (player.video.ended) {
@@ -136,6 +144,15 @@ function addPlayer(video, hasAudio) {
 			// sync audio to new video position
 			player.driver.currentTime = player.video.currentTime;
 			// console.assert(player.driver.currentTime === player.video.currentTime, 'Audio not synced');
+		});
+
+		// allow seeking
+		video.addEventListener('seeking', () => {
+			if (lastRequests.indexOf(player.video.currentTime * 100 | 0 / 100) >= 0) {
+				return;
+			}
+			// console.log('User-requested seeking');
+			player.driver.currentTime = player.video.currentTime;
 		});
 	}
 }
