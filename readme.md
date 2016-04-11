@@ -17,7 +17,7 @@ Try the demo: http://bfred-it.github.io/iphone-inline-video/
 
 This module plays the video inline by seeking it manually rather than technically _playing_ it. 
 
-Once you use it, you can keep using your `video` just like you would before, you can feed it to jPlayer or use it on a canvas if you want. Only issue is that [you can't seek it yet](https://github.com/bfred-it/iphone-inline-video/issues/2) (meaning you can't use the player's bar to go to 0:40, for example)
+Once you use it, you can keep using your `video` just like you would before, you can feed it to jPlayer or use it on a canvas if you want.
 
 ## Install
 
@@ -98,9 +98,10 @@ Once that's run, if `video` has the `autoplay` attribute, it will automatically 
 <video autoplay src="video.mp4"></video>
 ```
 
-## Known issues
+## Extras
 
-See the [known issues](https://github.com/bfred-it/iphone-inline-video/labels/known%20issue)
+* [Known issues](https://github.com/bfred-it/iphone-inline-video/labels/known%20issue)
+* [Changelog](CHANGELOG.md)
 
 ## License
 
