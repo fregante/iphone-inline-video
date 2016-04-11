@@ -25,7 +25,6 @@ const lastRequests = Array(3);
 lastRequests.i = 0;
 
 function setTime(video, time) {
-	time = Math.min(video.duration, time);
 	video.currentTime = time;
 	lastRequests[++lastRequests.i % 3] = time * 100 | 0 / 100;
 }
@@ -33,11 +32,15 @@ function setTime(video, time) {
 function update(timeDiff) {
 	// console.log('update')
 	const player = this;
-	if (player.hasAudio) {
-		setTime(player.video, player.driver.currentTime);
-	} else {
-		setTime(player.video, player.video.currentTime + timeDiff / 1000);
+	if (!player.hasAudio) {
+		player.driver.currentTime = player.video.currentTime + timeDiff / 1000;
+		if (player.video.loop) {
+			player.driver.currentTime %= player.video.duration;
+		} else {
+			player.driver.currentTime = Math.min(player.video.duration, player.driver.currentTime);
+		}
 	}
+	setTime(player.video, player.driver.currentTime);
 
 	// console.assert(player.video.currentTime === nextTime, 'Video not updating!');
 
@@ -157,14 +160,17 @@ function addPlayer(video, hasAudio) {
 	}
 }
 
-function overloadAPI(video) {
+function overloadAPI(video, hasAudio) {
 	const player = video[ಠ];
 	video[ಠplay] = video.play;
 	video[ಠpause] = video.pause;
 	video.play = play;
 	video.pause = pause;
 	proxyProperty(video, 'paused', player.driver);
-	proxyProperty(video, 'muted', player.driver);
+	proxyProperty(video, 'muted', player.driver, true);
+	if (hasAudio) {
+		proxyProperty(video, 'loop', player.driver, true);
+	}
 	preventEvent(video, 'seeking');
 	preventEvent(video, 'seeked');
 	preventEvent(video, 'ended', ಠevent, false); // prevent occasional native ended events
@@ -176,7 +182,7 @@ export default function (video, hasAudio = true, onlyWhenNeeded = true) {
 		return;
 	}
 	addPlayer(video, hasAudio);
-	overloadAPI(video);
+	overloadAPI(video, hasAudio);
 	if (!hasAudio && video.autoplay) {
 		video.play();
 	}
