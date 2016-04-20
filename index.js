@@ -36,8 +36,6 @@ function update(timeDiff) {
 		player.driver.currentTime = player.video.currentTime + timeDiff / 1000;
 		if (player.video.loop) {
 			player.driver.currentTime %= player.video.duration;
-		} else {
-			player.driver.currentTime = Math.min(player.video.duration, player.driver.currentTime);
 		}
 	}
 	setTime(player.video, player.driver.currentTime);
