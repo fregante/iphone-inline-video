@@ -13,7 +13,7 @@ Try the demo: http://bfred-it.github.io/iphone-inline-video/
 - No additional elements are created or necessary
 - No special API, it enhances the original `<video>` element so its methods and events are [mostly intact](https://github.com/bfred-it/iphone-inline-video/issues/1)
 - It doesn't use canvas, so no expensive paints
-- [**`autoplay` support**](#usage-with-autoplaying-videos) for silent videos
+- [`autoplay` support](#usage-with-autoplaying-videos) for silent videos
 
 This module plays the video inline by seeking it manually rather than technically _playing_ it. 
 
