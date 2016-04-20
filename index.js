@@ -63,6 +63,10 @@ function play() {
 		return;
 	}
 
+	if (!video.paused) {
+		return;
+	}
+
 	if (!video.buffered.length) {
 		video.load();
 	}
@@ -78,6 +82,11 @@ function pause() {
 	// console.log('pause')
 	const video = this;
 	const player = video[ಠ];
+
+	if (video.paused) {
+		return;
+	}
+
 	player.updater.stop();
 	player.driver.pause();
 
