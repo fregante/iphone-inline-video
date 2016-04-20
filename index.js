@@ -34,13 +34,13 @@ function update(timeDiff) {
 	const player = this;
 	if (!player.hasAudio) {
 		player.driver.currentTime = player.video.currentTime + timeDiff / 1000;
-		if (player.video.loop) {
-			player.driver.currentTime %= player.video.duration;
+		if (player.video.loop && player.driver.currentTime > player.video.duration) {
+			player.driver.currentTime = 0;
 		}
 	}
 	setTime(player.video, player.driver.currentTime);
 
-	// console.assert(player.video.currentTime === nextTime, 'Video not updating!');
+	// console.assert(player.video.currentTime === player.driver.currentTime, 'Video not updating!');
 
 	if (player.video.ended) {
 		player.video.pause();
