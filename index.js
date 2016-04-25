@@ -29,12 +29,16 @@ function setTime(video, time) {
 	lastRequests[++lastRequests.i % 3] = time * 100 | 0 / 100;
 }
 
+function isPlayerEnded(player) {
+	return player.driver.currentTime >= player.video.duration;
+}
+
 function update(timeDiff) {
 	// console.log('update')
 	const player = this;
 	if (!player.hasAudio) {
 		player.driver.currentTime = player.video.currentTime + timeDiff / 1000;
-		if (player.video.loop && player.driver.currentTime > player.video.duration) {
+		if (player.video.loop && isPlayerEnded(player)) {
 			player.driver.currentTime = 0;
 		}
 	}
@@ -70,6 +74,7 @@ function play() {
 	if (!video.buffered.length) {
 		video.load();
 	}
+
 	player.driver.play();
 	player.updater.start();
 
@@ -83,14 +88,13 @@ function pause() {
 	const video = this;
 	const player = video[ಠ];
 
+	player.driver.pause();
+	player.updater.stop();
+
 	if (video.paused) {
 		return;
 	}
 
-	player.updater.stop();
-	player.driver.pause();
-
-	// TODO: should not fire again if the VIDEO was already paused/ended
 	video.dispatchEvent(new Event('pause'));
 	if (video.ended) {
 		video[ಠevent] = true;
@@ -127,9 +131,12 @@ function addPlayer(video, hasAudio) {
 			play: () => {
 				player.driver.paused = false;
 				// media automatically goes to 0 if .play() is called when it's done
-				if (video.currentTime === video.duration) {
-					video.currentTime = 0;
+				if (isPlayerEnded(player)) {
+					setTime(video, 0);
 				}
+			},
+			get ended() {
+				return isPlayerEnded(player);
 			}
 		};
 	}
@@ -174,6 +181,7 @@ function overloadAPI(video) {
 	video.pause = pause;
 	proxyProperty(video, 'paused', player.driver);
 	proxyProperty(video, 'muted', player.driver, true);
+	proxyProperty(video, 'ended', player.driver); // TODO: read only (it fails automatically only when it has audio)
 	proxyProperty(video, 'loop', player.driver, true);
 	preventEvent(video, 'seeking');
 	preventEvent(video, 'seeked');
