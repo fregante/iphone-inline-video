@@ -158,11 +158,10 @@ function addPlayer(video, hasAudio) {
 
 		// allow seeking
 		video.addEventListener('seeking', () => {
-			if (lastRequests.indexOf(player.video.currentTime * 100 | 0 / 100) >= 0) {
-				return;
+			if (lastRequests.indexOf(player.video.currentTime * 100 | 0 / 100) < 0) {
+				// console.log('User-requested seeking');
+				player.driver.currentTime = player.video.currentTime;
 			}
-			// console.log('User-requested seeking');
-			player.driver.currentTime = player.video.currentTime;
 		});
 	}
 }
