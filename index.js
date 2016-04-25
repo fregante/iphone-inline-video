@@ -141,6 +141,18 @@ function addPlayer(video, hasAudio) {
 		};
 	}
 
+	// .load() causes the emptied event
+	// the alternative is .play()+.pause() but that triggers play/pause events, even worse
+	// possibly the alternative is preventing this event only once
+	video.addEventListener('emptied', () => {
+		if (player.driver.src && player.driver.src !== video.src) {
+			// console.log('src changed', video.src);
+			setTime(video, 0);
+			video.pause();
+			player.driver.src = video.src;
+		}
+	}, false);
+
 	// stop programmatic player when OS takes over
 	video.addEventListener('webkitbeginfullscreen', () => {
 		if (!video.paused) {
