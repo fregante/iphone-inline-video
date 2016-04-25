@@ -1,10 +1,10 @@
 # iphone-inline-video
 
-> Make videos playable inline on Safari on iPhone and iPod touch.
+> Make videos playable inline on Safari on iPhone (prevents automatic fullscreen)
 
 [![gzipped size](https://badges.herokuapp.com/size/github/bfred-it/iphone-inline-video/gh-pages/dist/iphone-inline-video.browser.js?gzip=true&label=gzipped%20size)](#readme) [![iOS 8 and 9.3 supported](https://img.shields.io/badge/iOS%20Safari-8%20%E2%80%93%209.3-brightgreen.svg)](#no-link) [![Travis build status](https://api.travis-ci.org/bfred-it/iphone-inline-video.svg?branch=gh-pages)](https://travis-ci.org/bfred-it/iphone-inline-video)  [![npm version](https://img.shields.io/npm/v/iphone-inline-video.svg)](https://www.npmjs.com/package/iphone-inline-video) 
 
-Try the demo: http://bfred-it.github.io/iphone-inline-video/
+[[DEMO]](http://bfred-it.github.io/iphone-inline-video/) - [[AUTOPLAY DEMO]](http://bfred-it.github.io/iphone-inline-video/)
 
 ## Main features
 
@@ -17,7 +17,7 @@ Try the demo: http://bfred-it.github.io/iphone-inline-video/
 
 This module plays the video inline by seeking it manually rather than technically _playing_ it. 
 
-Once you use it, you can keep using your `video` just like you would before, you can feed it to jPlayer or use it on a canvas if you want.
+Once you use it, you can keep using your `video` element just like you would before, you can feed it to jPlayer or use it on a canvas if you want.
 
 ## Install
 
