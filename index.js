@@ -6,10 +6,10 @@ import Symbol from './lib/poor-mans-symbol';
 
 const isNeeded = /iPhone|iPod/i.test(navigator.userAgent);
 
-const ಠ = Symbol('iiv');
-const ಠevent = Symbol('iive');
-const ಠplay = Symbol('native-play');
-const ಠpause = Symbol('native-pause');
+const ಠ = Symbol();
+const ಠevent = Symbol();
+const ಠplay = Symbol('nativeplay');
+const ಠpause = Symbol('nativepause');
 
 /**
  * UTILS
