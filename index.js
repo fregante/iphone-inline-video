@@ -47,7 +47,7 @@ function update(timeDiff) {
 	// console.assert(player.video.currentTime === player.driver.currentTime, 'Video not updating!');
 
 	if (player.video.ended) {
-		player.video.pause();
+		player.video.pause(true);
 		return false;
 	}
 }
@@ -83,7 +83,7 @@ function play() {
 	// TODO: should be fired later
 	video.dispatchEvent(new Event('playing'));
 }
-function pause() {
+function pause(forceEvents) {
 	// console.log('pause')
 	const video = this;
 	const player = video[ಠ];
@@ -91,7 +91,14 @@ function pause() {
 	player.driver.pause();
 	player.updater.stop();
 
-	if (video.paused) {
+	// if it's fullscreen, the developer the native player.pause()
+	// This is at the end of pause() because it also
+	// needs to make sure that the simulation is paused
+	if (video.webkitDisplayingFullscreen) {
+		video[ಠpause]();
+	}
+
+	if (video.paused && !forceEvents) {
 		return;
 	}
 
@@ -99,13 +106,6 @@ function pause() {
 	if (video.ended) {
 		video[ಠevent] = true;
 		video.dispatchEvent(new Event('ended'));
-	}
-
-	// if it's fullscreen, the developer the native player.pause()
-	// This is at the end of pause() because it also
-	// needs to make sure that the simulation is paused
-	if (video.webkitDisplayingFullscreen) {
-		video[ಠpause]();
 	}
 }
 
