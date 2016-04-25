@@ -1,5 +1,5 @@
 'use strict';
-import getIntervalometer from './lib/intervalometer';
+import Intervalometer from './lib/intervalometer';
 import preventEvent from './lib/prevent-event';
 import proxyProperty from './lib/proxy-property';
 import Symbol from './lib/poor-mans-symbol';
@@ -113,7 +113,7 @@ function addPlayer(video, hasAudio) {
 	const player = video[ಠ] = {};
 	player.hasAudio = hasAudio;
 	player.video = video;
-	player.updater = getIntervalometer(update.bind(player));
+	player.updater = new Intervalometer(update.bind(player));
 
 	if (hasAudio) {
 		player.driver = getAudioFromVideo(video);
