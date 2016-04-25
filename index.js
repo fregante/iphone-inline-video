@@ -25,6 +25,11 @@ const lastRequests = Array(3);
 lastRequests.i = 0;
 
 function setTime(video, time) {
+	// allow one timeupdate event every 200+ ms
+	if ((lastRequests.tue || 0) + 200 < Date.now()) {
+		video[ಠevent] = true;
+		lastRequests.tue = Date.now();
+	}
 	video.currentTime = time;
 	lastRequests[++lastRequests.i % 3] = time * 100 | 0 / 100;
 }
@@ -197,6 +202,7 @@ function overloadAPI(video) {
 	proxyProperty(video, 'loop', player.driver, true);
 	preventEvent(video, 'seeking');
 	preventEvent(video, 'seeked');
+	preventEvent(video, 'timeupdate', ಠevent, false);
 	preventEvent(video, 'ended', ಠevent, false); // prevent occasional native ended events
 }
 
