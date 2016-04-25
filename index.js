@@ -167,7 +167,7 @@ function addPlayer(video, hasAudio) {
 	}
 }
 
-function overloadAPI(video, hasAudio) {
+function overloadAPI(video) {
 	const player = video[ಠ];
 	video[ಠplay] = video.play;
 	video[ಠpause] = video.pause;
@@ -175,9 +175,7 @@ function overloadAPI(video, hasAudio) {
 	video.pause = pause;
 	proxyProperty(video, 'paused', player.driver);
 	proxyProperty(video, 'muted', player.driver, true);
-	if (hasAudio) {
-		proxyProperty(video, 'loop', player.driver, true);
-	}
+	proxyProperty(video, 'loop', player.driver, true);
 	preventEvent(video, 'seeking');
 	preventEvent(video, 'seeked');
 	preventEvent(video, 'ended', ಠevent, false); // prevent occasional native ended events
@@ -189,7 +187,7 @@ export default function (video, hasAudio = true, onlyWhenNeeded = true) {
 		return;
 	}
 	addPlayer(video, hasAudio);
-	overloadAPI(video, hasAudio);
+	overloadAPI(video);
 	if (!hasAudio && video.autoplay) {
 		video.play();
 	}
