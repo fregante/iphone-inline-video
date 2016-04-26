@@ -36,37 +36,37 @@ If you don't use node/babel, include this:
 
 ## Usage
 
-You will need this CSS to hide the play button overlay:
-```css
-video::-webkit-media-controls-start-playback-button {
-  display:none;
-}
-```
+You'll need a simple `<video>` element, the CSS to hide the play button overlay and the activation call:
 
-And then run it on a single `<video>` element:
+```html
+<video preload src="file.mp4"></video>
+<style>
+	video::-webkit-media-controls-start-playback-button {
+	  display:none;
+	}
+</style>
+<script>
+	// one video
+	var video = document.querySelector('video');
+	makeVideoPlayableInline(video);
 
-```js
-makeVideoPlayableInline(video);
-/* 
+	// or if you're already using jQuery:
+	var video = $('video').get(0);
+	makeVideoPlayableInline(video);
 
-Where "video" is a variable containg a video element, like
-
-var video = document.querySelector('video');
-
-or this if you're already using jQuery:
-
-var video = $('video').get(0);
-
-*/
+	// or if you have multiple videos:
+	$('video').get().forEach(makeVideoPlayableInline)
+</script>
 ```
 
 Done! You don't even need to check whether it's necessary, it's skipped outside iPhones and iPods.
 
 Once you enable the `video` element with that function, you can keep using it just like you would on a desktop. Run `video.play()`, `video.pause()`, listen to events with `video.addEventListener()` or `$(video).on()`, etc...
 
-*BUT* you still need user interaction to download and start playing it, so you'll need something like this:
+**BUT** you still need user interaction to play the audio, so do something like this:
 
 ```js
+makeVideoPlayableInline(video);
 video.addEventListener('touchstart', function () {
 	video.play();
 });
@@ -82,7 +82,7 @@ If your video doesn't have an audio track, then you need this:
 makeVideoPlayableInline(video, /* hasAudio */ false);
 ```
 
-This uses a different behavior to play the video, so it might not be particularly reliable on slow connections. It's untested.
+This uses a different behavior to play the video, so it might not be particularly reliable on slow connections. It's not thoroughly tested.
 
 ## Usage with autoplaying videos
 
@@ -95,7 +95,7 @@ makeVideoPlayableInline(video, /* hasAudio */ false);
 Once that's run, if `video` has the `autoplay` attribute, it will automatically start playing:
 
 ```html
-<video autoplay src="video.mp4"></video>
+<video autoplay preload muted src="video.mp4"></video>
 ```
 
 ## Extras
