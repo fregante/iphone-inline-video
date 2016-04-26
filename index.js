@@ -21,7 +21,7 @@ function getAudioFromVideo(video) {
 	return audio;
 }
 
-const lastRequests = Array(3);
+const lastRequests = [];
 lastRequests.i = 0;
 
 function setTime(video, time) {
