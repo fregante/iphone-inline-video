@@ -150,11 +150,12 @@ function addPlayer(video, hasAudio) {
 	// the alternative is .play()+.pause() but that triggers play/pause events, even worse
 	// possibly the alternative is preventing this event only once
 	video.addEventListener('emptied', () => {
-		if (player.driver.src && player.driver.src !== video.src) {
-			// console.log('src changed', video.src);
+		const src = video.currentSrc || video.src;
+		if (player.driver.src && player.driver.src !== src) {
+			// console.log('src changed', src);
 			setTime(video, 0);
 			video.pause();
-			player.driver.src = video.src;
+			player.driver.src = src;
 		}
 	}, false);
 
