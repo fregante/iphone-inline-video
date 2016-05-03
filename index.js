@@ -81,7 +81,7 @@ function play() {
 	}
 
 	player.driver.play();
-	player.updater.start();
+	player.updater.start(0);
 
 	video.dispatchEvent(new Event('play'));
 
