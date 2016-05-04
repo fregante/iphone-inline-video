@@ -42,7 +42,7 @@ function update(timeDiff) {
 	// console.log('update')
 	const player = this;
 	if (!player.hasAudio) {
-		player.driver.currentTime = player.video.currentTime + timeDiff / 1000;
+		player.driver.currentTime = player.video.currentTime + (timeDiff * player.video.playbackRate) / 1000;
 		if (player.video.loop && isPlayerEnded(player)) {
 			player.driver.currentTime = 0;
 		}
@@ -199,6 +199,7 @@ function overloadAPI(video) {
 	video.pause = pause;
 	proxyProperty(video, 'paused', player.driver);
 	proxyProperty(video, 'muted', player.driver, true);
+	proxyProperty(video, 'playbackRate', player.driver, true);
 	proxyProperty(video, 'ended', player.driver); // TODO: read only (it fails automatically only when it has audio)
 	proxyProperty(video, 'loop', player.driver, true);
 	preventEvent(video, 'seeking');
