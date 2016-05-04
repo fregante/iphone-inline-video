@@ -208,7 +208,7 @@ function overloadAPI(video) {
 }
 
 export default function enableInlineVideo(video, hasAudio = true, onlyWhenNeeded = true) {
-	if (onlyWhenNeeded && !isNeeded) {
+	if (onlyWhenNeeded && !isNeeded || video[ಠ]) {
 		return;
 	}
 	addPlayer(video, hasAudio);
