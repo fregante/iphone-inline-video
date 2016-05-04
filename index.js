@@ -176,15 +176,15 @@ function addPlayer(video, hasAudio) {
 	if (hasAudio) {
 		video.addEventListener('webkitendfullscreen', () => {
 			// sync audio to new video position
-			player.driver.currentTime = player.video.currentTime;
-			// console.assert(player.driver.currentTime === player.video.currentTime, 'Audio not synced');
+			player.driver.currentTime = video.currentTime;
+			// console.assert(player.driver.currentTime === video.currentTime, 'Audio not synced');
 		});
 
 		// allow seeking
 		video.addEventListener('seeking', () => {
-			if (lastRequests.indexOf(player.video.currentTime * 100 | 0 / 100) < 0) {
+			if (lastRequests.indexOf(video.currentTime * 100 | 0 / 100) < 0) {
 				// console.log('User-requested seeking');
-				player.driver.currentTime = player.video.currentTime;
+				player.driver.currentTime = video.currentTime;
 			}
 		});
 	}
