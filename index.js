@@ -207,8 +207,7 @@ function overloadAPI(video) {
 	preventEvent(video, 'ended', ಠevent, false); // prevent occasional native ended events
 }
 
-/* makeVideoPlayableInline() */
-export default function (video, hasAudio = true, onlyWhenNeeded = true) {
+export default function enableInlineVideo(video, hasAudio = true, onlyWhenNeeded = true) {
 	if (onlyWhenNeeded && !isNeeded) {
 		return;
 	}
