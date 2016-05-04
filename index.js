@@ -199,7 +199,7 @@ function overloadAPI(video) {
 	proxyProperty(video, 'paused', player.driver);
 	proxyProperty(video, 'muted', player.driver, true);
 	proxyProperty(video, 'playbackRate', player.driver, true);
-	proxyProperty(video, 'ended', player.driver); // TODO: read only (it fails automatically only when it has audio)
+	proxyProperty(video, 'ended', player.driver);
 	proxyProperty(video, 'loop', player.driver, true);
 	preventEvent(video, 'seeking');
 	preventEvent(video, 'seeked');
