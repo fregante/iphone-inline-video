@@ -72,7 +72,7 @@ video.addEventListener('touchstart', function () {
 });
 ```
 
-If at some point you want to open the video in fullscreen, use the standard (but still prefixed) `webkitEnterFullScreen()` API.
+If at some point you want to open the video in fullscreen, use the standard (but still prefixed) `webkitEnterFullScreen()` API, but it has some [caveats.](https://github.com/bfred-it/iphone-inline-video/issues/33)
 
 ## Usage with audio-less videos
 
