@@ -10,16 +10,20 @@ Try the [audio+video demo](http://bfred-it.github.io/iphone-inline-video/demo/) 
 
 ## Main features
 
-- No special setup needed, it works with a normal `mp4` file and a normal `<video>` element
-- It plays the video's audio in sync ([if present](#usage-with-audio-less-videos))
-- No additional elements are created or necessary
-- No special API, it enhances the original `<video>` element so its methods and events are [mostly intact](https://github.com/bfred-it/iphone-inline-video/issues/1)
-- It doesn't use canvas, so no expensive paints
-- [`autoplay` support](#usage-with-autoplaying-videos) for silent videos
+- ~1KB, standalone (no frameworks required)
+- No setup: include it, call `makeVideoPlayableInline(video)`, [done](#usage)
+- No custom API for playback, you can just call `video.play()` on `click`
+- Supports **audio**
+- Supports [autoplay](#usage-with-autoplaying-videos) on silent videos
+- Doesn't need canvas
+- Doesn't create new elements/wrappers
+- It works with existing players like jPlayer
 
-This module plays the video inline by seeking it manually rather than technically _playing_ it. 
+Limitations:
 
-Once you use it, you can keep using your `video` element just like you would before, you can feed it to jPlayer or use it on a canvas if you want.
+- Needs user interaction to play videos with sound (standard iOS limitation)
+- Currently limited to iPhone, untested on Android, [unneeded on iPad](https://github.com/bfred-it/iphone-inline-video/pull/22#issuecomment-211822532)
+- [Known issues](https://github.com/bfred-it/iphone-inline-video/labels/known%20issue)
 
 ## Install
 
@@ -38,32 +42,44 @@ If you don't use node/babel, include this:
 
 ## Usage
 
-You'll need a simple `<video>` element, the CSS to hide the play button overlay and the activation call:
+You will need:
 
-```html
-<video preload src="file.mp4"></video>
-<style>
+- a `<video>` element  
+
+	```html
+	<video src="file.mp4"></video>
+	```
+	
+- the CSS to hide the play button overlay  
+
+	```css
 	video::-webkit-media-controls-start-playback-button {
 	  display:none;
 	}
-</style>
-<script>
+	```
+	
+- the activation call  
+
+	```js
 	// one video
 	var video = document.querySelector('video');
 	makeVideoPlayableInline(video);
-
+	```
+	
+	```js
 	// or if you're already using jQuery:
 	var video = $('video').get(0);
 	makeVideoPlayableInline(video);
-
+	```
+	
+	```js
 	// or if you have multiple videos:
 	$('video').get().forEach(makeVideoPlayableInline)
-</script>
-```
+	```
 
-Done! You don't even need to check whether it's necessary, it's skipped outside iPhones and iPods.
+Done! It will only be enabled on iPhones and iPod Touch devices.
 
-Once you enable the `video` element with that function, you can keep using it just like you would on a desktop. Run `video.play()`, `video.pause()`, listen to events with `video.addEventListener()` or `$(video).on()`, etc...
+Now you can keep using it just like you would on a desktop. Run `video.play()`, `video.pause()`, listen to events with `video.addEventListener()` or `$(video).on()`, etc...
 
 **BUT** you still need user interaction to play the audio, so do something like this:
 
@@ -84,7 +100,7 @@ If your video doesn't have an audio track, then you need this:
 makeVideoPlayableInline(video, /* hasAudio */ false);
 ```
 
-This uses a different behavior to play the video, so it might not be particularly reliable on slow connections. It's not thoroughly tested.
+This uses a different behavior to play the video, so it might [not be particularly reliable](https://github.com/bfred-it/iphone-inline-video/issues/31) on slow connections. It's not thoroughly tested.
 
 ## Usage with autoplaying videos
 
@@ -97,13 +113,8 @@ makeVideoPlayableInline(video, /* hasAudio */ false);
 Once that's run, if `video` has the `autoplay` attribute, it will automatically start playing:
 
 ```html
-<video autoplay preload muted src="video.mp4"></video>
+<video autoplay muted src="video.mp4"></video>
 ```
-
-## Extras
-
-* [Known issues](https://github.com/bfred-it/iphone-inline-video/labels/known%20issue)
-* [Changelog](CHANGELOG.md)
 
 ## License
 
