@@ -6,7 +6,7 @@
 
 Try the [audio+video demo](http://bfred-it.github.io/iphone-inline-video/demo/) on your iPhone or the [silent autoplay demo](http://bfred-it.github.io/iphone-inline-video/demo/autoplay.html)
 
-[![Demo](demo/demo-preview.gif)](http://bfred-it.github.io/iphone-inline-video/demo/)
+[![Demo](http://bfred-it.github.io/iphone-inline-video/demo/demo-preview.gif)](http://bfred-it.github.io/iphone-inline-video/demo/)
 
 ## Main features
 
