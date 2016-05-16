@@ -216,6 +216,7 @@ export default function enableInlineVideo(video, hasAudio = true, onlyWhenNeeded
 	}
 	addPlayer(video, hasAudio);
 	overloadAPI(video);
+	video.classList.add('IIV');
 	if (!hasAudio && video.autoplay) {
 		video.play();
 	}
