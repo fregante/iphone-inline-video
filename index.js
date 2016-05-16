@@ -75,6 +75,7 @@ function play() {
 	if (!video.paused) {
 		return;
 	}
+	player.paused = false;
 
 	if (!video.buffered.length) {
 		video.load();
@@ -103,10 +104,11 @@ function pause(forceEvents) {
 		video[ಠpause]();
 	}
 
-	if (video.paused && !forceEvents) {
+	if (player.paused && !forceEvents) {
 		return;
 	}
 
+	player.paused = true;
 	video.dispatchEvent(new Event('pause'));
 	if (video.ended) {
 		video[ಠevent] = true;
@@ -120,6 +122,7 @@ function pause(forceEvents) {
 
 function addPlayer(video, hasAudio) {
 	const player = video[ಠ] = {};
+	player.paused = true; // track whether 'pause' events have been fired
 	player.hasAudio = hasAudio;
 	player.video = video;
 	player.updater = new Intervalometer(update.bind(player));
