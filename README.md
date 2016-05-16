@@ -50,11 +50,14 @@ You will need:
 	<video src="file.mp4"></video>
 	```
 	
-- the CSS to hide the play button overlay  
+- the native play buttons will still trigger the fullscreen, so it's best to hide them (without breaking the video `controls`)
 
 	```css
-	video::-webkit-media-controls-start-playback-button {
-	  display:none;
+	.IIV::-webkit-media-controls-play-button,
+	.IIV::-webkit-media-controls-start-playback-button {
+	    opacity: 0;
+	    pointer-events: none;
+	    width: 5px;
 	}
 	```
 	
