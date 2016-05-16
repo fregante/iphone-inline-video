@@ -4,7 +4,12 @@
 
 [![gzipped size](https://badges.herokuapp.com/size/github/bfred-it/iphone-inline-video/gh-pages/dist/iphone-inline-video.browser.js?gzip=true&label=gzipped%20size)](#readme) [![iOS 8 and 9.3 supported](https://img.shields.io/badge/iOS%20Safari-8%20%E2%80%93%209.3-brightgreen.svg)](#no-link) [![Travis build status](https://api.travis-ci.org/bfred-it/iphone-inline-video.svg?branch=gh-pages)](https://travis-ci.org/bfred-it/iphone-inline-video)  [![npm version](https://img.shields.io/npm/v/iphone-inline-video.svg)](https://www.npmjs.com/package/iphone-inline-video) 
 
-Try the [audio+video demo](http://bfred-it.github.io/iphone-inline-video/demo/) on your iPhone or the [silent autoplay demo](http://bfred-it.github.io/iphone-inline-video/demo/autoplay.html)
+This lets you:
+
+- Play videos without forcing the fullscreen on the iPhone ([demo](http://bfred-it.github.io/iphone-inline-video/demo/))
+- Play silent videos without user interaction
+- Autoplay silent videos with the `autoplay` attribute ([demo](http://bfred-it.github.io/iphone-inline-video/demo/autoplay.html))
+- Play multiple silent videos at the same time
 
 [![Demo](http://bfred-it.github.io/iphone-inline-video/demo/demo-preview.gif)](http://bfred-it.github.io/iphone-inline-video/demo/)
 
@@ -97,7 +102,7 @@ If at some point you want to open the video in fullscreen, use the standard (but
 
 ## Usage with audio-less videos
 
-If your video doesn't have an audio track, then you need this:
+If your video file doesn't have an audio track, then you need this:
 
 ```js
 makeVideoPlayableInline(video, /* hasAudio */ false);
