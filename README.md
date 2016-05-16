@@ -103,8 +103,6 @@ If your video doesn't have an audio track, then you need this:
 makeVideoPlayableInline(video, /* hasAudio */ false);
 ```
 
-This uses a different behavior to play the video, so it might [not be particularly reliable](https://github.com/bfred-it/iphone-inline-video/issues/31) on slow connections. It's not thoroughly tested.
-
 ## Usage with autoplaying videos
 
 You can also have **silent** videos autoplay. This module can load and play the video without user interaction, but not play the audio, so you **have to** set the `hasAudio` to `false`

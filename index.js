@@ -39,21 +39,22 @@ function isPlayerEnded(player) {
 }
 
 function update(timeDiff) {
-	// console.log('update')
+	// console.log('update');
 	const player = this;
-	if (!player.hasAudio) {
-		player.driver.currentTime = player.video.currentTime + (timeDiff * player.video.playbackRate) / 1000;
-		if (player.video.loop && isPlayerEnded(player)) {
-			player.driver.currentTime = 0;
+	if (player.video.readyState >= player.video.HAVE_FUTURE_DATA) {
+		if (!player.hasAudio) {
+			player.driver.currentTime = player.video.currentTime + (timeDiff * player.video.playbackRate) / 1000;
+			if (player.video.loop && isPlayerEnded(player)) {
+				player.driver.currentTime = 0;
+			}
 		}
+		setTime(player.video, player.driver.currentTime);
 	}
-	setTime(player.video, player.driver.currentTime);
 
 	// console.assert(player.video.currentTime === player.driver.currentTime, 'Video not updating!');
 
 	if (player.video.ended) {
 		player.video.pause(true);
-		return false;
 	}
 }
 
