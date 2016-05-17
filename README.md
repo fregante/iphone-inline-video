@@ -28,6 +28,7 @@ Limitations:
 
 - Needs user interaction to play videos with sound (standard iOS limitation)
 - Currently limited to iPhone, untested on Android, [unneeded on iPad](https://github.com/bfred-it/iphone-inline-video/pull/22#issuecomment-211822532)
+- The video framerate depends on `requestAnimationFrame`, so avoid expensive animations and similar while the video is playing. Try [stats.js](https://github.com/mrdoob/stats.js/) to visualize your page's framerate
 - [Known issues](https://github.com/bfred-it/iphone-inline-video/labels/known%20issue)
 
 ## Install
