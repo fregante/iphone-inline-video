@@ -1,6 +1,6 @@
 {
   "name": "iphone-inline-video",
-  "version": "1.8.1",
+  "version": "1.8.2",
   "description": "Make videos playable inline on the iPhone (prevents automatic fullscreen)",
   "license": "MIT",
   "repository": "bfred-it/iphone-inline-video",
@@ -12,9 +12,15 @@
     "play",
     "video",
     "inline",
-    "canvas",
     "fullscreen",
-    "ipod"
+    "full screen",
+    "ipod",
+    "autoplay",
+    "multiple",
+    "audio",
+    "sound",
+    "canvas",
+    "gif"
   ],
   "files": [
     "dist/iphone-inline-video.common-js.js",
