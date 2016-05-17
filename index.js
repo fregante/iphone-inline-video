@@ -18,6 +18,7 @@ const ಠpause = Symbol('nativepause');
 function getAudioFromVideo(video) {
 	const audio = new Audio();
 	audio.src = video.currentSrc || video.src;
+	audio.crossOrigin = video.crossOrigin;
 	return audio;
 }
 
