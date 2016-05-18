@@ -10,3 +10,15 @@ logs
 
 *.common-js.js
 *.es-modules.js
+
+.idea/workspace.xml
+
+.idea/encodings.xml
+
+.idea/iphone-inline-video.iml
+
+.idea/misc.xml
+
+.idea/modules.xml
+
+.idea/vcs.xml
