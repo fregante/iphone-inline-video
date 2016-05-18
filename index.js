@@ -4,7 +4,7 @@ import preventEvent from './lib/prevent-event';
 import proxyProperty from './lib/proxy-property';
 import Symbol from './lib/poor-mans-symbol';
 
-const isNeeded = /iPhone|iPod/i.test(navigator.userAgent);
+const isNeeded = /iPhone|iPod|iPad/i.test(navigator.userAgent);
 
 const ಠ = Symbol();
 const ಠevent = Symbol();
