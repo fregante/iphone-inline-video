@@ -74,6 +74,12 @@ function play() {
 		return;
 	}
 
+	if (player.driver.src !== video.currentSrc) {
+		player.driver.pause();
+		player.paused = true;
+		player.driver.src = video.currentSrc;
+	}
+
 	if (!video.paused) {
 		return;
 	}
