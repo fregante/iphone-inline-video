@@ -28,12 +28,12 @@
 		var behavior = document.querySelector('#behavior');
 		switch(location.search) {
 			case '?enabled=false':
-				behavior.textContent = 'Module disabled everywhere.';
+				behavior.textContent = 'Module disabled everywhere via URL parameter';
 				break;
 
 			case '?enabled=true':
 				window.makeVideoPlayableInline(video, null, false);
-				behavior.textContent = 'Module enabled everywhere (whether it’s necessary or not)';
+				behavior.textContent = 'Module enabled everywhere (whether it’s necessary or not) via URL parameter';
 				break;
 
 			default:
