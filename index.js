@@ -40,8 +40,8 @@ function isPlayerEnded(player) {
 }
 
 function update(timeDiff) {
-	// console.log('update');
 	const player = this;
+	// console.log('update', player.video.readyState, player.video.networkState);
 	if (player.video.readyState >= player.video.HAVE_FUTURE_DATA) {
 		if (!player.hasAudio) {
 			player.driver.currentTime = player.video.currentTime + (timeDiff * player.video.playbackRate) / 1000;
@@ -50,6 +50,13 @@ function update(timeDiff) {
 			}
 		}
 		setTime(player.video, player.driver.currentTime);
+	} else if (player.video.networkState === player.video.NETWORK_IDLE) {
+		// this should happen when the source is available but:
+		// - it's potentially playing (.paused === false)
+		// - it's not ready to play
+		// - it's not loading
+		// If it hasAudio, that will be loaded in the 'emptied' handler below
+		player.video.load();
 	}
 
 	// console.assert(player.video.currentTime === player.driver.currentTime, 'Video not updating!');
