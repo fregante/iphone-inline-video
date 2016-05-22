@@ -17,8 +17,16 @@ const ಠpause = Symbol('nativepause');
 
 function getAudioFromVideo(video) {
 	const audio = new Audio();
-	audio.src = video.currentSrc || video.src;
 	audio.crossOrigin = video.crossOrigin;
+
+	// 'data:' causes audio.networkState > 0
+	// which then allows to keep <audio> in a resumable playing state
+	// i.e. once you set a real src it will keep playing if it was if .play() was called
+	audio.src = video.src || video.currentSrc || 'data:';
+
+	// if (audio.src === 'data:') {
+	//   TODO: wait for video to be selected
+	// }
 	return audio;
 }
 
