@@ -4,7 +4,7 @@ import preventEvent from './lib/prevent-event';
 import proxyProperty from './lib/proxy-property';
 import Symbol from './lib/poor-mans-symbol';
 
-const isNeeded = /iPhone|iPod/i.test(navigator.userAgent);
+const isWhitelisted = /iPhone|iPod/i.test(navigator.userAgent);
 
 const ಠ = Symbol();
 const ಠevent = Symbol();
@@ -212,8 +212,11 @@ function overloadAPI(video) {
 	preventEvent(video, 'ended', ಠevent, false); // prevent occasional native ended events
 }
 
-export default function enableInlineVideo(video, hasAudio = true, onlyWhenNeeded = true) {
-	if (onlyWhenNeeded && !isNeeded || video[ಠ]) {
+function enableInlineVideo(video, hasAudio, onlyWhitelisted) {
+	hasAudio = typeof hasAudio === 'undefined' ? true : hasAudio;
+	onlyWhitelisted = typeof onlyWhitelisted === 'undefined' ? true : onlyWhitelisted;
+
+	if (onlyWhitelisted && !isWhitelisted || video[ಠ]) {
 		return;
 	}
 	addPlayer(video, hasAudio);
@@ -223,3 +226,7 @@ export default function enableInlineVideo(video, hasAudio = true, onlyWhenNeeded
 		video.play();
 	}
 }
+
+enableInlineVideo.isWhitelisted = isWhitelisted;
+
+export default enableInlineVideo;
