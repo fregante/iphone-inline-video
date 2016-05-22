@@ -41,7 +41,7 @@ function isPlayerEnded(player) {
 
 function update(timeDiff) {
 	const player = this;
-	// console.log('update', player.video.readyState, player.video.networkState);
+	// console.log('update', player.video.readyState, player.video.networkState, player.driver.readyState, player.driver.networkState, player.driver.paused);
 	if (player.video.readyState >= player.video.HAVE_FUTURE_DATA) {
 		if (!player.hasAudio) {
 			player.driver.currentTime = player.video.currentTime + (timeDiff * player.video.playbackRate) / 1000;
@@ -57,6 +57,7 @@ function update(timeDiff) {
 		// - it's not loading
 		// If it hasAudio, that will be loaded in the 'emptied' handler below
 		player.video.load();
+		// console.log('Will load');
 	}
 
 	// console.assert(player.video.currentTime === player.driver.currentTime, 'Video not updating!');
@@ -71,7 +72,7 @@ function update(timeDiff) {
  */
 
 function play() {
-	// console.log('play')
+	// console.log('play');
 	const video = this;
 	const player = video[ಠ];
 
@@ -87,6 +88,9 @@ function play() {
 	player.paused = false;
 
 	if (!video.buffered.length) {
+		// .load() causes the emptied event
+		// the alternative is .play()+.pause() but that triggers play/pause events, even worse
+		// possibly the alternative is preventing this event only once
 		video.load();
 	}
 
@@ -99,7 +103,7 @@ function play() {
 	video.dispatchEvent(new Event('playing'));
 }
 function pause(forceEvents) {
-	// console.log('pause')
+	// console.log('pause');
 	const video = this;
 	const player = video[ಠ];
 
@@ -159,8 +163,6 @@ function addPlayer(video, hasAudio) {
 	}
 
 	// .load() causes the emptied event
-	// the alternative is .play()+.pause() but that triggers play/pause events, even worse
-	// possibly the alternative is preventing this event only once
 	video.addEventListener('emptied', () => {
 		if (player.driver.src && player.driver.src !== video.currentSrc) {
 			// console.log('src changed', video.currentSrc);
