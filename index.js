@@ -2,6 +2,7 @@
 import Intervalometer from './lib/intervalometer';
 import preventEvent from './lib/prevent-event';
 import proxyProperty from './lib/proxy-property';
+import proxyEvent from './lib/proxy-event';
 import Symbol from './lib/poor-mans-symbol';
 
 const isWhitelisted = /iPhone|iPod/i.test(navigator.userAgent);
@@ -17,6 +18,9 @@ const ಠpause = Symbol('nativepause');
 
 function getAudioFromVideo(video) {
 	const audio = new Audio();
+	proxyEvent(video, 'play', audio);
+	proxyEvent(video, 'playing', audio);
+	proxyEvent(video, 'pause', audio);
 	audio.crossOrigin = video.crossOrigin;
 
 	// 'data:' causes audio.networkState > 0
@@ -113,10 +117,12 @@ function play() {
 	player.driver.play();
 	player.updater.start();
 
-	video.dispatchEvent(new Event('play'));
+	if (!player.hasAudio) {
+		video.dispatchEvent(new Event('play'));
 
-	// TODO: should be fired later
-	video.dispatchEvent(new Event('playing'));
+		// TODO: should be fired later
+		video.dispatchEvent(new Event('playing'));
+	}
 }
 function pause(forceEvents) {
 	// console.log('pause');
@@ -138,7 +144,9 @@ function pause(forceEvents) {
 	}
 
 	player.paused = true;
-	video.dispatchEvent(new Event('pause'));
+	if (!player.hasAudio) {
+		video.dispatchEvent(new Event('pause'));
+	}
 	if (video.ended) {
 		video[ಠevent] = true;
 		video.dispatchEvent(new Event('ended'));
