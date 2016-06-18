@@ -119,9 +119,10 @@ function play() {
 
 	if (!player.hasAudio) {
 		video.dispatchEvent(new Event('play'));
-
-		// TODO: should be fired later
-		video.dispatchEvent(new Event('playing'));
+		if (player.video.readyState >= player.video.HAVE_ENOUGH_DATA) {
+			// console.log('onplay');
+			video.dispatchEvent(new Event('playing'));
+		}
 	}
 }
 function pause(forceEvents) {
@@ -167,6 +168,12 @@ function addPlayer(video, hasAudio) {
 	if (hasAudio) {
 		player.driver = getAudioFromVideo(video);
 	} else {
+		video.addEventListener('canplay', () => {
+			if (!video.paused) {
+				// console.log('oncanplay');
+				video.dispatchEvent(new Event('playing'));
+			}
+		});
 		player.driver = {
 			src: video.src || video.currentSrc || 'data:',
 			muted: true,
