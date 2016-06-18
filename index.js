@@ -33,13 +33,15 @@ function getAudioFromVideo(video) {
 const lastRequests = [];
 lastRequests.i = 0;
 
-function setTime(video, time) {
+function setTime(video, time, rememberOnly) {
 	// allow one timeupdate event every 200+ ms
 	if ((lastRequests.tue || 0) + 200 < Date.now()) {
 		video[ಠevent] = true;
 		lastRequests.tue = Date.now();
 	}
-	video.currentTime = time;
+	if (!rememberOnly) {
+		video.currentTime = time;
+	}
 	lastRequests[++lastRequests.i % 3] = time * 100 | 0 / 100;
 }
 
@@ -58,7 +60,7 @@ function update(timeDiff) {
 			}
 		}
 		setTime(player.video, player.driver.currentTime);
-	} else if (player.video.networkState === player.video.NETWORK_IDLE) {
+	} else if (player.video.networkState === player.video.NETWORK_IDLE && !player.video.buffered.length) {
 		// this should happen when the source is available but:
 		// - it's potentially playing (.paused === false)
 		// - it's not ready to play
@@ -88,6 +90,12 @@ function play() {
 	if (video.webkitDisplayingFullscreen) {
 		video[ಠplay]();
 		return;
+	}
+
+	if (player.driver.src !== 'data:' && player.driver.src !== video.src) {
+		// console.log('src changed on play', video.src);
+		setTime(video, 0, true);
+		player.driver.src = video.src;
 	}
 
 	if (!video.paused) {
@@ -152,6 +160,7 @@ function addPlayer(video, hasAudio) {
 		player.driver = getAudioFromVideo(video);
 	} else {
 		player.driver = {
+			src: video.src || video.currentSrc || 'data:',
 			muted: true,
 			paused: true,
 			pause: () => {
@@ -172,11 +181,18 @@ function addPlayer(video, hasAudio) {
 
 	// .load() causes the emptied event
 	video.addEventListener('emptied', () => {
-		if (player.driver.src && player.driver.src !== video.currentSrc) {
-			// console.log('src changed', video.currentSrc);
-			setTime(video, 0);
-			video.pause();
-			player.driver.src = video.currentSrc;
+		// console.log('driver src is', player.driver.src);
+		const wasEmpty = !player.driver.src || player.driver.src === 'data:';
+		if (player.driver.src && player.driver.src !== video.src) {
+			// console.log('src changed to', video.src);
+			setTime(video, 0, true);
+			player.driver.src = video.src;
+			// playing videos will only keep playing if no src was present when .play()’ed
+			if (wasEmpty) {
+				player.driver.play();
+			} else {
+				player.updater.stop();
+			}
 		}
 	}, false);
 
