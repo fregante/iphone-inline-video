@@ -6,7 +6,9 @@ import proxyEvent from './lib/proxy-event';
 import dispatchEventAsync from './lib/dispatch-event-async';
 import Symbol from './lib/poor-mans-symbol';
 
-const isWhitelisted = /iPhone|iPod/i.test(navigator.userAgent);
+// iOS 10 adds support for native inline playback + silent autoplay
+// Also adds unprefixed css-grid. This check essentially excludes
+const isWhitelisted = /iPhone|iPod/i.test(navigator.userAgent) && document.head.style.grid === undefined;
 
 const ಠ = Symbol();
 const ಠevent = Symbol();
