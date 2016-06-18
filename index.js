@@ -3,6 +3,7 @@ import Intervalometer from './lib/intervalometer';
 import preventEvent from './lib/prevent-event';
 import proxyProperty from './lib/proxy-property';
 import proxyEvent from './lib/proxy-event';
+import dispatchEventAsync from './lib/dispatch-event-async';
 import Symbol from './lib/poor-mans-symbol';
 
 const isWhitelisted = /iPhone|iPod/i.test(navigator.userAgent);
@@ -77,6 +78,7 @@ function update(timeDiff) {
 	// console.assert(player.video.currentTime === player.driver.currentTime, 'Video not updating!');
 
 	if (player.video.ended) {
+		delete player.video[ಠevent]; // allow timeupdate event
 		player.video.pause(true);
 	}
 }
@@ -90,7 +92,7 @@ function play() {
 	const video = this;
 	const player = video[ಠ];
 
-	// if it's fullscreen, the developer the native player
+	// if it's fullscreen, use the native player
 	if (video.webkitDisplayingFullscreen) {
 		video[ಠplay]();
 		return;
@@ -118,10 +120,10 @@ function play() {
 	player.updater.start();
 
 	if (!player.hasAudio) {
-		video.dispatchEvent(new Event('play'));
+		dispatchEventAsync(video, 'play');
 		if (player.video.readyState >= player.video.HAVE_ENOUGH_DATA) {
 			// console.log('onplay');
-			video.dispatchEvent(new Event('playing'));
+			dispatchEventAsync(video, 'playing');
 		}
 	}
 }
@@ -146,11 +148,11 @@ function pause(forceEvents) {
 
 	player.paused = true;
 	if (!player.hasAudio) {
-		video.dispatchEvent(new Event('pause'));
+		dispatchEventAsync(video, 'pause');
 	}
 	if (video.ended) {
 		video[ಠevent] = true;
-		video.dispatchEvent(new Event('ended'));
+		dispatchEventAsync(video, 'ended');
 	}
 }
 
@@ -171,7 +173,7 @@ function addPlayer(video, hasAudio) {
 		video.addEventListener('canplay', () => {
 			if (!video.paused) {
 				// console.log('oncanplay');
-				video.dispatchEvent(new Event('playing'));
+				dispatchEventAsync(video, 'playing');
 			}
 		});
 		player.driver = {
