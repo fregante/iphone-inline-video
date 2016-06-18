@@ -24,7 +24,8 @@
   ],
   "files": [
     "dist/iphone-inline-video.common-js.js",
-    "dist/iphone-inline-video.es-modules.js"
+    "dist/iphone-inline-video.es-modules.js",
+    "dist/iphone-inline-video.browser.js"
   ],
   "main": "dist/iphone-inline-video.common-js.js",
   "jsnext:main": "dist/iphone-inline-video.es-modules.js",
