@@ -265,7 +265,7 @@ function overloadAPI(video) {
 }
 
 function enableInlineVideo(video, hasAudio, onlyWhitelisted) {
-	hasAudio = typeof hasAudio === 'undefined' ? true : hasAudio;
+	hasAudio = typeof hasAudio === 'undefined' || hasAudio === null ? true : hasAudio;
 	onlyWhitelisted = typeof onlyWhitelisted === 'undefined' ? true : onlyWhitelisted;
 
 	if (onlyWhitelisted && !isWhitelisted || video[ಠ]) {
