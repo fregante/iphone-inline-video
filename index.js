@@ -4,7 +4,7 @@ import preventEvent from './lib/prevent-event';
 import proxyProperty from './lib/proxy-property';
 import proxyEvent from './lib/proxy-event';
 import dispatchEventAsync from './lib/dispatch-event-async';
-import Symbol from './lib/poor-mans-symbol';
+import Symbol from 'poor-mans-symbol';
 
 // iOS 10 adds support for native inline playback + silent autoplay
 // Also adds unprefixed css-grid. This check essentially excludes

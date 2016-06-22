@@ -61,5 +61,8 @@
   "bugs": {
     "url": "https://github.com/bfred-it/iphone-inline-video/issues"
   },
-  "homepage": "https://github.com/bfred-it/iphone-inline-video#readme"
+  "homepage": "https://github.com/bfred-it/iphone-inline-video#readme",
+  "dependencies": {
+    "poor-mans-symbol": "^1.0.1"
+  }
 }
