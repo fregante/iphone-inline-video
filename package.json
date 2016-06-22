@@ -29,27 +29,19 @@
   ],
   "main": "dist/iphone-inline-video.common-js.js",
   "jsnext:main": "dist/iphone-inline-video.es-modules.js",
-  "babel": {
-    "presets": [
-      "es2015-rollup"
-    ]
-  },
   "scripts": {
     "build:js": "bfred-npm-bundler iphone-inline-video makeVideoPlayableInline",
-    "build:size": "gzip-size dist/iphone-inline-video.browser.js",
     "build": "npm-run-all --silent jsfix build:*",
     "jsfix": "xo --fix",
     "watch:server": "browser-sync start --startPath demo --no-ghost-mode --reload-delay 300 --no-open --server --files 'dist/*.browser.js,demo/**'",
-    "watch:build": "onchange 'index.js' 'lib/*' -i -- npm run build -- -c",
+    "watch:build": "onchange 'index.js' 'lib/*' -i -- npm run build",
     "watch": "npm-run-all --parallel --silent watch:*",
     "prepublish": "npm run build",
     "test": "xo; npm run build"
   },
   "devDependencies": {
-    "babel-preset-es2015-rollup": "^1.1.1",
-    "bfred-npm-bundler": "^5.0.0",
+    "bfred-npm-bundler": "^7.1.1",
     "browser-sync": "^2.11.2",
-    "gzip-size-cli": "^1.0.0",
     "npm-run-all": "^1.7.0",
     "onchange": "^2.2.0",
     "xo": "^0.13.0"
