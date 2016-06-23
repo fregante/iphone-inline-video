@@ -38,18 +38,19 @@ function getAudioFromVideo(video) {
 }
 
 const lastRequests = [];
-lastRequests.i = 0;
+let requestIndex = 0;
+let lastTimeupdateEvent;
 
 function setTime(video, time, rememberOnly) {
 	// allow one timeupdate event every 200+ ms
-	if ((lastRequests.tue || 0) + 200 < Date.now()) {
+	if ((lastTimeupdateEvent || 0) + 200 < Date.now()) {
 		video[ಠevent] = true;
-		lastRequests.tue = Date.now();
+		lastTimeupdateEvent = Date.now();
 	}
 	if (!rememberOnly) {
 		video.currentTime = time;
 	}
-	lastRequests[++lastRequests.i % 3] = time * 100 | 0 / 100;
+	lastRequests[++requestIndex % 3] = time * 100 | 0 / 100;
 }
 
 function isPlayerEnded(player) {
