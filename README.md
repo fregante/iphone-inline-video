@@ -11,11 +11,13 @@ This lets you:
 - Autoplay silent videos with the `autoplay` attribute ([demo](http://bfred-it.github.io/iphone-inline-video/demo/autoplay.html))
 - Play multiple silent videos at the same time
 
+This is essentially a polyfill for the upcoming [iOS 10's `webkit-playsinline`](#notes-about-ios-10)
+
 [![Demo](http://bfred-it.github.io/iphone-inline-video/demo/demo-preview.gif)](http://bfred-it.github.io/iphone-inline-video/demo/)
 
 ## Main features
 
-- ~1KB, standalone (no frameworks required)
+- <2KB, standalone (no frameworks required)
 - No setup: include it, call `makeVideoPlayableInline(video)`, [done](#usage)
 - No custom API for playback, you can just call `video.play()` on `click`
 - Supports **audio**
@@ -23,11 +25,12 @@ This lets you:
 - Doesn't need canvas
 - Doesn't create new elements/wrappers
 - It works with existing players like jPlayer
+- [Disabled automatically on iOS 10](#notes-about-ios-10)
 
 Limitations:
 
 - Needs user interaction to play videos with sound (standard iOS limitation)
-- Currently limited to iPhone, untested on Android, [unneeded on iPad](https://github.com/bfred-it/iphone-inline-video/pull/22#issuecomment-211822532)
+- Currently limited to iPhone, [unneeded on iPad](https://github.com/bfred-it/iphone-inline-video/issues/48), disabled on Android
 - The video framerate depends on `requestAnimationFrame`, so avoid expensive animations and similar while the video is playing. Try [stats.js](https://github.com/mrdoob/stats.js/) to visualize your page's framerate
 - [Known issues](https://github.com/bfred-it/iphone-inline-video/labels/known%20issue)
 
@@ -37,23 +40,19 @@ Limitations:
 npm install --save iphone-inline-video
 ```
 ```js
-import makeVideoPlayableInline from 'iphone-inline-video';
+const makeVideoPlayableInline = require('iphone-inline-video');
 ```
 
-If you don't use node/babel, include this:
-
-```html
-<script src="dist/iphone-inline-video.browser.js"></script>
-```
+If you don't use node, include the file `dist/iphone-inline-video.browser.js`
 
 ## Usage
 
 You will need:
 
-- a `<video>` element  
+- a `<video>` element with the attribute `webkit-playsinline` (this is needed on iOS 10)
 
 	```html
-	<video src="file.mp4"></video>
+	<video src="file.mp4" webkit-playsinline></video>
 	```
 	
 - the native play buttons will still trigger the fullscreen, so it's best to hide them (without breaking the video `controls`)
@@ -109,19 +108,54 @@ If your video file doesn't have an audio track, then you need this:
 makeVideoPlayableInline(video, /* hasAudio */ false);
 ```
 
+And the `muted` attribute
+
+```html
+<video muted webkit-playsinline src="video.mp4"></video>
+```
+
+Muted videos can also be played without user interaction (`video.play()` doesn't need to be called inside an event listener).
+
 ## Usage with autoplaying videos
 
-You can also have **silent** videos autoplay. This module can load and play the video without user interaction, but not play the audio, so you **have to** set the `hasAudio` to `false`
+Thanks to the above behavior, muted videos can also autoplay:
 
 ```js
 makeVideoPlayableInline(video, /* hasAudio */ false);
 ```
 
-Once that's run, if `video` has the `autoplay` attribute, it will automatically start playing:
+And the `autoplay` and `muted` attributes:
 
 ```html
-<video autoplay muted src="video.mp4"></video>
+<video autoplay muted webkit-playsinline src="video.mp4"></video>
 ```
+
+## Notes about iOS 10
+
+New features in iOS 10:
+
+* videos play inline:  
+
+    ```html
+    <video webkit-playsinline src="video.mp4"></video>
+    ```
+
+* muted videos play inline without user interaction:  
+
+    ```html
+    <video muted webkit-playsinline src="video.mp4"></video>
+    ```
+    ```js
+    setTimeout(function () { video.play(); }, 1000); // example
+    ```
+
+* muted videos autoplay inline:  
+
+    ```html
+    <video autoplay muted webkit-playsinline src="video.mp4"></video>
+    ```
+
+Essentially everything that this module does, so `iphone-inline-video` will be automatically disabled there. Make sure you have all the above attributes.
 
 ## License
 
