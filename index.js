@@ -62,7 +62,7 @@ function update(timeDiff) {
 	// console.log('update', player.video.readyState, player.video.networkState, player.driver.readyState, player.driver.networkState, player.driver.paused);
 	if (player.video.readyState >= player.video.HAVE_FUTURE_DATA) {
 		if (!player.hasAudio) {
-			player.driver.currentTime = player.video.currentTime + (timeDiff * player.video.playbackRate) / 1000;
+			player.driver.currentTime = player.video.currentTime + ((timeDiff * player.video.playbackRate) / 1000);
 			if (player.video.loop && isPlayerEnded(player)) {
 				player.driver.currentTime = 0;
 			}
