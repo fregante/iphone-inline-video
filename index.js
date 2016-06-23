@@ -1,10 +1,10 @@
 'use strict';
+import Symbol from 'poor-mans-symbol';
 import Intervalometer from './lib/intervalometer';
 import preventEvent from './lib/prevent-event';
 import proxyProperty from './lib/proxy-property';
 import proxyEvent from './lib/proxy-event';
 import dispatchEventAsync from './lib/dispatch-event-async';
-import Symbol from 'poor-mans-symbol';
 
 // iOS 10 adds support for native inline playback + silent autoplay
 // Also adds unprefixed css-grid. This check essentially excludes
@@ -268,7 +268,7 @@ function enableInlineVideo(video, hasAudio, onlyWhitelisted) {
 	hasAudio = typeof hasAudio === 'undefined' || hasAudio === null ? true : hasAudio;
 	onlyWhitelisted = typeof onlyWhitelisted === 'undefined' ? true : onlyWhitelisted;
 
-	if (onlyWhitelisted && !isWhitelisted || video[ಠ]) {
+	if ((onlyWhitelisted && !isWhitelisted) || video[ಠ]) {
 		return;
 	}
 	addPlayer(video, hasAudio);
