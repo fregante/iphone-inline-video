@@ -264,10 +264,7 @@ function overloadAPI(video) {
 	preventEvent(video, 'ended', ಠevent, false); // prevent occasional native ended events
 }
 
-function enableInlineVideo(video, hasAudio, onlyWhitelisted) {
-	hasAudio = typeof hasAudio === 'undefined' || hasAudio === null ? true : hasAudio;
-	onlyWhitelisted = typeof onlyWhitelisted === 'undefined' ? true : onlyWhitelisted;
-
+function enableInlineVideo(video, hasAudio = true, onlyWhitelisted = true) {
 	if ((onlyWhitelisted && !isWhitelisted) || video[ಠ]) {
 		return;
 	}
