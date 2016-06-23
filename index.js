@@ -57,7 +57,8 @@ function isPlayerEnded(player) {
 	return player.driver.currentTime >= player.video.duration;
 }
 
-function update(player, timeDiff) {
+function update(timeDiff) {
+	const player = this;
 	// console.log('update', player.video.readyState, player.video.networkState, player.driver.readyState, player.driver.networkState, player.driver.paused);
 	if (player.video.readyState >= player.video.HAVE_FUTURE_DATA) {
 		if (!player.hasAudio) {
@@ -167,7 +168,7 @@ function addPlayer(video, hasAudio) {
 	player.paused = true; // track whether 'pause' events have been fired
 	player.hasAudio = hasAudio;
 	player.video = video;
-	player.updater = new Intervalometer(() => update(player));
+	player.updater = new Intervalometer(update.bind(player));
 
 	if (hasAudio) {
 		player.driver = getAudioFromVideo(video);
