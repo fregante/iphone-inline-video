@@ -1,6 +1,6 @@
 html, body {
 	padding: 0;
-  background: #000;
+  background: #222;
 	color: #FFF;
 	text-align: center;
 	font-family: sans-serif;
@@ -8,8 +8,16 @@ html, body {
 	margin: auto;
 }
 video {
-  background: green;
+	display: block;
+	background: black;
   width: 100%;
+  height: calc(100vw / 16 * 9);
+  margin: auto;
+}
+@media (min-width: 500px) {
+	video {
+		height: calc(500px / 16 * 9)
+	}
 }
 .IIV::-webkit-media-controls-play-button,
 .IIV::-webkit-media-controls-start-playback-button {
@@ -17,20 +25,39 @@ video {
     pointer-events: none;
     width: 5px;
 }
-button {
-  width: 100%;
-  height: 3em;
-  font-size: 1em;
+figure {
+	width: 100%;
 }
-p, h2, button {
+.play {
+	float: left;
+}
+.fullscreen {
+	float: right;
+}
+.threejs-notice {
+
+}
+.threejs-notice a {
+	display: inline-block;
+	vertical-align: top;
+	text-align: left;
+}
+h2 {
 	margin: 1em 0;
 }
 p {
-	font-size: 1.2em;
+	line-height: 25px;
+	font-size: 0.75em;
+	margin: 0 0 1em;
 }
 a {
 	color: #FFF;
 }
 code {
 	font-size: 1.2em;
+}
+h2 span {
+	display: block;
+	font-size: 12px;
+	font-weight: normal;
 }

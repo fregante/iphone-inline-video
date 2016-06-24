@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="UTF-8" />
-	<title>Inline player test</title>
+	<title>iphone-inline-video demo with webkit-playsinline</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="../dist/iphone-inline-video.browser.js"></script>
 	<link rel="stylesheet" href="style.css">
@@ -11,37 +11,107 @@
 <body>
 	<h2>
 		Inline video on the iPhone
+		<span>
+			Made possible by
+			<a href="https://github.com/bfred-it/iphone-inline-video">iphone-inline-video</a>
+		</span>
+		<span id="behavior"></span>
 	</h2>
-	<video webkit-playsinline src="https://rawgit.com/bower-media-samples/big-buck-bunny-480p-30s/master/video.mp4"></video>
-	<button class='play'>Play/pause video</button>
-	<button class='fullscreen'>Go fullscreen</button>
-	<p>
-		It can also <a href="autoplay.html">autoplay silent videos</a>
-	</p>
-	<p>
-		Made possible by <a href="https://github.com/bfred-it/iphone-inline-video">iphone-inline-video</a>
-	</p>
-	<h2 id="behavior"></h2>
+
+	<div class="video-container">
+		<video webkit-playsinline src="https://rawgit.com/bower-media-samples/big-buck-bunny-480p-30s/master/video.mp4"></video>
+		<button class='play'>Play/pause</button>
+		<button class='fullscreen'>Fullscreen</button>
+		<p>Real <code>&lt;video&gt;</code> with audio</p>
+	</div>
+
+	<div class="video-container">
+		<video autoplay muted loop webkit-playsinline src="https://rawgit.com/bower-media-samples/big-buck-bunny-480p-30s/master/video.mp4"></video>
+		<button class='play'>Play/pause</button>
+		<button class='fullscreen'>Fullscreen</button>
+		<p>Autoplaying silent <code>&lt;video&gt;</code></p>
+	</div>
+
+	<div class="threejs-notice">
+		Also: <a href="threejs.html">use videos as WebGL textures<br>with Three.js on the iPhone</a>
+	</div>
 
 	<script>
-		var video = document.querySelector('video');
+		var videos = document.querySelectorAll('video');
 		var behavior = document.querySelector('#behavior');
-		switch(location.search) {
-			case '?enabled=false':
-				behavior.textContent = 'Module disabled everywhere via URL parameter';
-				break;
 
-			case '?enabled=true':
-				window.makeVideoPlayableInline(video, undefined, false);
-				behavior.textContent = 'Module enabled everywhere (whether it’s necessary or not) via URL parameter';
-				break;
+		if (location.search === '?enabled=false') {
+			behavior.innerHTML = '(module disabled everywhere via <code>?enabled=false</code>';
+		} else if (location.search === '?enabled=true') {
+			enableVideos(true);
+			behavior.innerHTML = '(module enabled everywhere (whether it’s necessary or not) via <code>?enabled=true</code>)';
+		} else {
+			enableVideos();
+		}
 
-			default:
-			case '?enabled=auto':
-				window.makeVideoPlayableInline(video);
-				break;
+		function enableButtons(video) {
+			var playBtn = video.parentNode.querySelector('.play');
+			var fullscreenButton = video.parentNode.querySelector('.fullscreen');
+
+			if (playBtn) {
+				playBtn.addEventListener('click', function () {
+					if (video.paused) {
+						video.play();
+					} else {
+						video.pause();
+					}
+				});
+			}
+
+			if (fullscreenButton) {
+				fullscreenButton.addEventListener('click', function () {
+					video.webkitEnterFullScreen();
+				});
+			}
+		}
+
+		// debug events
+		function debugEvents(video) {
+			[
+				'loadstart',
+				'progress',
+				'suspend',
+				'abort',
+				'error',
+				'emptied',
+				'stalled',
+				'loadedmetadata',
+				'loadeddata',
+				'canplay',
+				'canplaythrough',
+				'playing', // fake event
+				'waiting',
+				'seeking',
+				'seeked',
+				'ended',
+			// 'durationchange',
+				'timeupdate',
+				'play', // fake event
+				'pause', // fake event
+			// 'ratechange',
+			// 'resize',
+			// 'volumechange',
+				'webkitbeginfullscreen',
+				'webkitendfullscreen',
+			].forEach(function (event) {
+				video.addEventListener(event, function () {
+					console.info('@', event);
+				});
+			});
+		}
+
+		function enableVideos(everywhere) {
+			for (var i = 0; i < videos.length; i++) {
+				window.makeVideoPlayableInline(videos[i], !videos[i].hasAttribute('muted'), !everywhere);
+				enableButtons(videos[i]);
+				debugEvents(videos[i]);
+			}
 		}
 	</script>
-	<script src="demo.js"></script>
 </body>
 </html>
