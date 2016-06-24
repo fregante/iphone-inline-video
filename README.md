@@ -10,6 +10,7 @@ This lets you:
 - Play silent videos without user interaction
 - Autoplay silent videos with the `autoplay` attribute ([demo](http://bfred-it.github.io/iphone-inline-video/demo/autoplay.html))
 - Play multiple silent videos at the same time
+- Use videos as WebGL/ThreeJS textures ([demo](http://bfred-it.github.io/iphone-inline-video/demo/threejs.html))
 
 This is essentially a polyfill for the upcoming [iOS 10's `webkit-playsinline`](#notes-about-ios-10)
 
