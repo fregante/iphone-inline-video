@@ -1,6 +1,3 @@
-// Filename: index.js
-// Timestamp: 2016.06.27-17:21:04 (last modified)
-// Author(s): bumblehead <chris@bumblehead.com>
 'use strict';
 import Symbol from 'poor-mans-symbol';
 import Intervalometer from './lib/intervalometer';
