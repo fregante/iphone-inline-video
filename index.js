@@ -1,3 +1,6 @@
+// Filename: index.js
+// Timestamp: 2016.06.27-17:21:04 (last modified)
+// Author(s): bumblehead <chris@bumblehead.com>
 'use strict';
 import Symbol from 'poor-mans-symbol';
 import Intervalometer from './lib/intervalometer';
@@ -19,6 +22,19 @@ const ಠpause = Symbol('nativepause');
  * UTILS
  */
 
+function getVideoSrc(video) {
+	let src = video.src || video.currentSrc;
+	let sourceelemarr;
+
+	if (!src) {
+		sourceelemarr = video.getElementsByTagName('source');
+
+		src = sourceelemarr && sourceelemarr[0];
+	}
+
+	return src;
+}
+
 function getAudioFromVideo(video) {
 	const audio = new Audio();
 	proxyEvent(video, 'play', audio);
@@ -29,7 +45,7 @@ function getAudioFromVideo(video) {
 	// 'data:' causes audio.networkState > 0
 	// which then allows to keep <audio> in a resumable playing state
 	// i.e. once you set a real src it will keep playing if it was if .play() was called
-	audio.src = video.src || video.currentSrc || 'data:';
+	audio.src = getVideoSrc(video) || 'data:';
 
 	// if (audio.src === 'data:') {
 	//   TODO: wait for video to be selected
@@ -101,10 +117,10 @@ function play() {
 		return;
 	}
 
-	if (player.driver.src !== 'data:' && player.driver.src !== video.src) {
+	if (player.driver.src !== 'data:' && player.driver.src !== getVideoSrc(video)) {
 		// console.log('src changed on play', video.src);
 		setTime(video, 0, true);
-		player.driver.src = video.src;
+		player.driver.src = getVideoSrc(video);
 	}
 
 	if (!video.paused) {
@@ -180,7 +196,7 @@ function addPlayer(video, hasAudio) {
 			}
 		});
 		player.driver = {
-			src: video.src || video.currentSrc || 'data:',
+			src: getVideoSrc(video) || 'data:',
 			muted: true,
 			paused: true,
 			pause: () => {
@@ -203,10 +219,10 @@ function addPlayer(video, hasAudio) {
 	video.addEventListener('emptied', () => {
 		// console.log('driver src is', player.driver.src);
 		const wasEmpty = !player.driver.src || player.driver.src === 'data:';
-		if (player.driver.src && player.driver.src !== video.src) {
+		if (player.driver.src && player.driver.src !== getVideoSrc(video)) {
 			// console.log('src changed to', video.src);
 			setTime(video, 0, true);
-			player.driver.src = video.src;
+			player.driver.src = getVideoSrc(video);
 			// playing videos will only keep playing if no src was present when .play()’ed
 			if (wasEmpty) {
 				player.driver.play();
