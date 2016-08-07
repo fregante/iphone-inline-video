@@ -2,7 +2,17 @@
 
 > Make videos playable inline on Safari on iPhone (prevents automatic fullscreen)
 
-[![gzipped size](https://badges.herokuapp.com/size/github/bfred-it/iphone-inline-video/gh-pages/dist/iphone-inline-video.browser.js?gzip=true&label=gzipped%20size)](#readme) [![iOS 8 and 9.3 supported](https://img.shields.io/badge/iOS%20Safari-8%20%E2%80%93%209.3-brightgreen.svg)](#no-link) [![Travis build status](https://api.travis-ci.org/bfred-it/iphone-inline-video.svg?branch=gh-pages)](https://travis-ci.org/bfred-it/iphone-inline-video)  [![npm version](https://img.shields.io/npm/v/iphone-inline-video.svg)](https://www.npmjs.com/package/iphone-inline-video) 
+[![gzipped size][badge-gzip]](#no-link)
+[![iOS 8 and 9.3 supported][badge-ios]](#no-link)
+[![Travis build status][badge-travis]][link-travis]
+[![npm version][badge-version]][link-npm]
+
+  [badge-gzip]: https://badges.herokuapp.com/size/github/bfred-it/iphone-inline-video/gh-pages/dist/iphone-inline-video.browser.js?gzip=true&label=gzipped%20size
+  [badge-ios]: https://img.shields.io/badge/iOS%20Safari-8%20%E2%80%93%209.3-brightgreen.svg
+  [badge-travis]: https://api.travis-ci.org/bfred-it/iphone-inline-video.svg?branch=gh-pages
+  [badge-version]: https://img.shields.io/npm/v/iphone-inline-video.svg
+  [link-travis]: https://travis-ci.org/bfred-it/iphone-inline-video
+  [link-npm]: https://www.npmjs.com/package/iphone-inline-video
 
 This lets you:
 
