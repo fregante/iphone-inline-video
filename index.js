@@ -24,6 +24,9 @@ function getAudioFromVideo(video) {
 	proxyEvent(video, 'play', audio);
 	proxyEvent(video, 'playing', audio);
 	proxyEvent(video, 'pause', audio);
+	proxyEvent(video, 'timeupdate', audio);
+	proxyEvent(video, 'seeking', audio);
+	proxyEvent(video, 'seeked', audio);
 	audio.crossOrigin = video.crossOrigin;
 
 	// 'data:' causes audio.networkState > 0
@@ -239,7 +242,13 @@ function addPlayer(video, hasAudio) {
 		});
 
 		// allow seeking
-		video.addEventListener('seeking', () => {
+		video.addEventListener('seeking', event => {
+			// If this event was a proxied event (meaning it came from the `<audio>` element and not
+			// from the `<video?` element), then ignore this event completely.
+			if (event.detail && event.detail.proxied) {
+				return;
+			}
+
 			if (lastRequests.indexOf(video.currentTime * 100 | 0 / 100) < 0) {
 				// console.log('User-requested seeking');
 				player.driver.currentTime = video.currentTime;
