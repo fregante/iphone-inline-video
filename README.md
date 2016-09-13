@@ -93,7 +93,9 @@ You will need:
 	
 	```js
 	// or if you have multiple videos:
-	$('video').get().forEach(makeVideoPlayableInline)
+	$('video').each(function () {
+		makeVideoPlayableInline(this);
+	});
 	```
 
 Done! It will only be enabled on iPhones and iPod Touch devices.
