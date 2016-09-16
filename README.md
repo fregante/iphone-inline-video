@@ -22,7 +22,7 @@ This lets you:
 - Play multiple silent videos at the same time
 - Use videos as WebGL/ThreeJS textures ([demo](http://bfred-it.github.io/iphone-inline-video/demo/threejs.html))
 
-This is essentially a polyfill for the upcoming [iOS 10's `webkit-playsinline`](#notes-about-ios-10)
+This is essentially a polyfill for the upcoming [iOS 10's `playsinline`](#notes-about-ios-10)
 
 [![Demo](http://bfred-it.github.io/iphone-inline-video/demo/demo-preview.gif)](http://bfred-it.github.io/iphone-inline-video/demo/)
 
@@ -60,13 +60,13 @@ If you don't use node, include the file `dist/iphone-inline-video.browser.js`
 
 You will need:
 
-- a `<video>` element with the attribute `webkit-playsinline` (this is needed on iOS 10)
+- a `<video>` element with the attribute `playsinline` (this is needed on iOS 10)
 
 	```html
-	<video src="file.mp4" webkit-playsinline></video>
+	<video src="file.mp4" playsinline></video>
 	```
 	
-- the native play buttons will still trigger the fullscreen, so it's best to hide them (without breaking the video `controls`)
+- the native play buttons will still trigger the fullscreen, so it's best to hide them when iphone-inline-video is enabled. [More info on the `.IIV` CSS class](https://github.com/bfred-it/iphone-inline-video/issues/72#issuecomment-247629743)
 
 	```css
 	.IIV::-webkit-media-controls-play-button,
@@ -124,7 +124,7 @@ makeVideoPlayableInline(video, /* hasAudio */ false);
 And the `muted` attribute
 
 ```html
-<video muted webkit-playsinline src="video.mp4"></video>
+<video muted playsinline src="video.mp4"></video>
 ```
 
 Muted videos can also be played without user interaction (`video.play()` doesn't need to be called inside an event listener).
@@ -140,7 +140,7 @@ makeVideoPlayableInline(video, /* hasAudio */ false);
 And the `autoplay` and `muted` attributes:
 
 ```html
-<video autoplay muted webkit-playsinline src="video.mp4"></video>
+<video autoplay muted playsinline src="video.mp4"></video>
 ```
 
 ## Notes about iOS 10
@@ -150,13 +150,13 @@ New features in iOS 10:
 * videos play inline:  
 
     ```html
-    <video webkit-playsinline src="video.mp4"></video>
+    <video playsinline src="video.mp4"></video>
     ```
 
 * muted videos play inline without user interaction:  
 
     ```html
-    <video muted webkit-playsinline src="video.mp4"></video>
+    <video muted playsinline src="video.mp4"></video>
     ```
     ```js
     setTimeout(function () { video.play(); }, 1000); // example
@@ -165,7 +165,7 @@ New features in iOS 10:
 * muted videos autoplay inline:  
 
     ```html
-    <video autoplay muted webkit-playsinline src="video.mp4"></video>
+    <video autoplay muted playsinline src="video.mp4"></video>
     ```
 
 Essentially everything that this module does, so `iphone-inline-video` will be automatically disabled there. Make sure you have all the above attributes.
