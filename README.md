@@ -7,24 +7,24 @@
 [![Travis build status][badge-travis]][link-travis]
 [![npm version][badge-version]][link-npm]
 
-  [badge-gzip]: https://badges.herokuapp.com/size/github/bfred-it/iphone-inline-video/gh-pages/dist/iphone-inline-video.browser.js?gzip=true&label=gzipped%20size
+  [badge-gzip]: https://badges.herokuapp.com/size/github/bfred-it/iphone-inline-video/master/dist/iphone-inline-video.browser.js?gzip=true&label=gzipped%20size
   [badge-ios]: https://img.shields.io/badge/iOS%20Safari-8%20%E2%80%93%209.3-brightgreen.svg
-  [badge-travis]: https://api.travis-ci.org/bfred-it/iphone-inline-video.svg?branch=gh-pages
+  [badge-travis]: https://api.travis-ci.org/bfred-it/iphone-inline-video.svg
   [badge-version]: https://img.shields.io/npm/v/iphone-inline-video.svg
   [link-travis]: https://travis-ci.org/bfred-it/iphone-inline-video
   [link-npm]: https://www.npmjs.com/package/iphone-inline-video
 
 This lets you:
 
-- Play videos without forcing the fullscreen on the iPhone ([demo](http://bfred-it.github.io/iphone-inline-video/demo/))
+- Play videos without forcing the fullscreen on the iPhone ([demo](http://bfred-it.github.io/iphone-inline-video/))
 - Play silent videos without user interaction
-- Autoplay silent videos with the `autoplay` attribute ([demo](http://bfred-it.github.io/iphone-inline-video/demo/autoplay.html))
+- Autoplay silent videos with the `autoplay` attribute ([demo](http://bfred-it.github.io/iphone-inline-video/autoplay.html))
 - Play multiple silent videos at the same time
-- Use videos as WebGL/ThreeJS textures ([demo](http://bfred-it.github.io/iphone-inline-video/demo/threejs.html))
+- Use videos as WebGL/ThreeJS textures ([demo](http://bfred-it.github.io/iphone-inline-video/threejs.html))
 
 This is essentially a polyfill for the upcoming [iOS 10's `playsinline`](#notes-about-ios-10)
 
-[![Demo](http://bfred-it.github.io/iphone-inline-video/demo/demo-preview.gif)](http://bfred-it.github.io/iphone-inline-video/demo/)
+[![Demo](http://bfred-it.github.io/iphone-inline-video/demo-preview.gif)](http://bfred-it.github.io/iphone-inline-video/)
 
 ## Main features
 
