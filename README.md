@@ -16,15 +16,15 @@
 
 This lets you:
 
-- Play videos without forcing the fullscreen on the iPhone ([demo](http://bfred-it.github.io/iphone-inline-video/))
+- Play videos without forcing the fullscreen on the iPhone ([demo](http://bfred-it.github.io/iphone-inline-video/demo/))
 - Play silent videos without user interaction
-- Autoplay silent videos with the `autoplay` attribute ([demo](http://bfred-it.github.io/iphone-inline-video/autoplay.html))
+- Autoplay silent videos with the `autoplay` attribute ([demo](http://bfred-it.github.io/iphone-inline-video/demo/autoplay.html))
 - Play multiple silent videos at the same time
-- Use videos as WebGL/ThreeJS textures ([demo](http://bfred-it.github.io/iphone-inline-video/threejs.html))
+- Use videos as WebGL/ThreeJS textures ([demo](http://bfred-it.github.io/iphone-inline-video/demo/threejs.html))
 
 This is essentially a polyfill for the upcoming [iOS 10's `playsinline`](#notes-about-ios-10)
 
-[![Demo](http://bfred-it.github.io/iphone-inline-video/demo-preview.gif)](http://bfred-it.github.io/iphone-inline-video/)
+[![Demo](http://bfred-it.github.io/iphone-inline-video/demo/demo-preview.gif)](http://bfred-it.github.io/iphone-inline-video/demo/)
 
 ## Main features
 
