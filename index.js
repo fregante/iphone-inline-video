@@ -274,7 +274,7 @@ function enableInlineVideo(video, hasAudio = true, onlyWhitelisted = true) {
 	if (!hasAudio && video.autoplay) {
 		video.play();
 	}
-	if (navigator.platform === 'MacIntel' || navigator.platform === 'Windows') {
+	if (!/iPhone|iPod|iPad/.test(navigator.platform)) {
 		console.warn('iphone-inline-video is not guaranteed to work in emulated environments');
 	}
 }
