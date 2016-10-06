@@ -63,6 +63,7 @@
   },
   "homepage": "https://github.com/bfred-it/iphone-inline-video#readme",
   "dependencies": {
+    "intervalometer": "^1.0.0",
     "poor-mans-symbol": "^1.0.1"
   }
 }

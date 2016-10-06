@@ -1,6 +1,5 @@
-'use strict';
 import Symbol from 'poor-mans-symbol';
-import Intervalometer from './lib/intervalometer';
+import {frameIntervalometer} from 'intervalometer';
 import preventEvent from './lib/prevent-event';
 import proxyProperty from './lib/proxy-property';
 import proxyEvent from './lib/proxy-event';
@@ -168,7 +167,7 @@ function addPlayer(video, hasAudio) {
 	player.paused = true; // track whether 'pause' events have been fired
 	player.hasAudio = hasAudio;
 	player.video = video;
-	player.updater = new Intervalometer(update.bind(player));
+	player.updater = frameIntervalometer(update.bind(player));
 
 	if (hasAudio) {
 		player.driver = getAudioFromVideo(video);
