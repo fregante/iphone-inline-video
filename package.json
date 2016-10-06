@@ -4,7 +4,7 @@
   "description": "Make videos playable inline on the iPhone (prevents automatic fullscreen)",
   "license": "MIT",
   "repository": "bfred-it/iphone-inline-video",
-  "author": "Federico Brigante <bfred-it@users.noreply.github.com> (twitter.com/bfred_it)",
+  "author": "Federico Brigante <github@bfred.it> (bfred.it)",
   "keywords": [
     "browser",
     "iphone",
