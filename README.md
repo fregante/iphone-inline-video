@@ -3,7 +3,6 @@
 > Make videos playable inline on Safari on iPhone (prevents automatic fullscreen)
 
 [![gzipped size][badge-gzip]](#no-link)
-[![iOS 8 and 9.3 supported][badge-ios]](#no-link)
 [![Travis build status][badge-travis]][link-travis]
 [![npm version][badge-version]][link-npm]
 
@@ -22,7 +21,7 @@ This lets you:
 - Play multiple silent videos at the same time
 - Use videos as WebGL/ThreeJS textures ([demo](http://bfred-it.github.io/iphone-inline-video/demo/threejs.html))
 
-This is essentially a polyfill for the upcoming [iOS 10's `playsinline`](#notes-about-ios-10)
+This essentially enables [iOS 10's `playsinline` attribute](#notes-about-ios-10) on iOS 8 and iOS 9 (almost a polyfill)
 
 [![Demo](http://bfred-it.github.io/iphone-inline-video/demo/demo-preview.gif)](http://bfred-it.github.io/iphone-inline-video/demo/)
 
