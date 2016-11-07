@@ -5,6 +5,15 @@
     <meta charset="utf-8">
     <title>Aframe 360 Video with iOS Support</title>
     <meta name="description" content="360 Video — A-Frame">
+    <style>
+      #playoverlay { position: relative; }
+
+      #play-button {
+        position: absolute;
+        bottom: 30px;
+        left: 30px;
+      }
+    </style>
   </head>
   <body>
     <a-scene>
@@ -14,12 +23,25 @@
       <a-videosphere src="#video" rotation="0 180 0"></a-videosphere>
     </a-scene>
 
+    <div id="playoverlay">
+      <button id="play-button">Play / Pause</button>
+    </div>
+
     <script src="https://aframe.io/aframe/dist/aframe.js"></script>
     <script src="../dist/iphone-inline-video.browser.js"></script>
     <script>
       (function() {
         var video = document.querySelector('#video');
         window.makeVideoPlayableInline(video, /* mute necessary for autoplay*/ false);
+
+        var playButton = document.querySelector('#play-button');
+        playButton.addEventListener('click', function(e) {
+          if (video.paused) {
+            video.play();
+          } else {
+            video.pause();
+          }
+        });
       })();
     </script>
   </body>
