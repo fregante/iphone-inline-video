@@ -35,11 +35,6 @@ figure {
 	float: right;
 }
 .threejs-notice {
-
-}
-.threejs-notice a {
-	display: inline-block;
-	vertical-align: top;
 	text-align: left;
 }
 h2 {
