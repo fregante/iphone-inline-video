@@ -1,6 +1,6 @@
 {
   "name": "iphone-inline-video",
-  "version": "1.9.5-0",
+  "version": "1.9.5",
   "description": "Make videos playable inline on the iPhone (prevents automatic fullscreen)",
   "license": "MIT",
   "repository": "bfred-it/iphone-inline-video",
