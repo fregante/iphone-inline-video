@@ -6,7 +6,7 @@ import proxyEvent from './lib/proxy-event';
 import dispatchEventAsync from './lib/dispatch-event-async';
 
 // iOS 10 adds support for native inline playback + silent autoplay
-const isWhitelisted = 'MediaSource' in window && /iPhone|iPod/i.test(navigator.userAgent) && !matchMedia('(-webkit-video-playable-inline)').matches;
+const isWhitelisted = 'object-fit' in document.head.style && /iPhone|iPod/i.test(navigator.userAgent) && !matchMedia('(-webkit-video-playable-inline)').matches;
 
 const ಠ = Symbol();
 const ಠevent = Symbol();
