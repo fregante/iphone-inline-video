@@ -19,7 +19,7 @@ This lets you:
 - Play silent videos without user interaction
 - Autoplay silent videos with the `autoplay` attribute ([demo](http://bfred-it.github.io/iphone-inline-video/demo/autoplay.html))
 - Play multiple silent videos at the same time
-- Use videos as WebGL/ThreeJS textures ([demo](http://bfred-it.github.io/iphone-inline-video/demo/threejs.html))
+- Use videos as WebGL/ThreeJS textures ([demo](http://bfred-it.github.io/iphone-inline-video/demo/threejs.html)) and WebGL/Aframe textures ([demo](http://bfred-it.github.io/iphone-inline-video/demo/aframe.html))
 
 This essentially enables [iOS 10's `playsinline` attribute](#notes-about-ios-10) on iOS 8 and iOS 9 (almost a polyfill)
 
@@ -64,7 +64,7 @@ You will need:
 	```html
 	<video src="file.mp4" playsinline></video>
 	```
-	
+
 - the native play buttons will still trigger the fullscreen, so it's best to hide them when iphone-inline-video is enabled. [More info on the `.IIV` CSS class](https://github.com/bfred-it/iphone-inline-video/issues/72#issuecomment-247629743)
 
 	```css
@@ -75,7 +75,7 @@ You will need:
 	    width: 5px;
 	}
 	```
-	
+
 - the activation call  
 
 	```js
@@ -83,13 +83,13 @@ You will need:
 	var video = document.querySelector('video');
 	makeVideoPlayableInline(video);
 	```
-	
+
 	```js
 	// or if you're already using jQuery:
 	var video = $('video').get(0);
 	makeVideoPlayableInline(video);
 	```
-	
+
 	```js
 	// or if you have multiple videos:
 	$('video').each(function () {
