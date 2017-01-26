@@ -1,4 +1,3 @@
-import Symbol from 'poor-mans-symbol';
 import {frameIntervalometer} from 'intervalometer';
 import preventEvent from './lib/prevent-event';
 import proxyProperty from './lib/proxy-property';
@@ -8,10 +7,10 @@ import dispatchEventAsync from './lib/dispatch-event-async';
 // iOS 10 adds support for native inline playback + silent autoplay
 const isWhitelisted = 'object-fit' in document.head.style && /iPhone|iPod/i.test(navigator.userAgent) && !matchMedia('(-webkit-video-playable-inline)').matches;
 
-const ಠ = Symbol();
-const ಠevent = Symbol();
-const ಠplay = Symbol('nativeplay');
-const ಠpause = Symbol('nativepause');
+const ಠ = 'bfred-it:iphone-inline-video';
+const ಠevent = 'bfred-it:iphone-inline-video:event';
+const ಠplay = 'bfred-it:iphone-inline-video:nativeplay';
+const ಠpause = 'bfred-it:iphone-inline-video:nativepause';
 
 /**
  * UTILS
