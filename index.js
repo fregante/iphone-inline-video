@@ -262,17 +262,21 @@ function overloadAPI(video) {
 	preventEvent(video, 'ended', ಠevent, false); // prevent occasional native ended events
 }
 
-function enableInlineVideo(video, hasAudio = true, onlyWhitelisted = true) {
-	if ((onlyWhitelisted && !isWhitelisted) || video[ಠ]) {
+export default function enableInlineVideo(video, opts = {}) {
+	// Stop if already enabled
+	if (video[ಠ]) {
 		return;
 	}
 	if (!video.paused) {
 		video.pause();
 	}
-	addPlayer(video, hasAudio);
+
+	addPlayer(video, !video.muted);
 	overloadAPI(video);
 	video.classList.add('IIV');
-	if (!hasAudio && video.autoplay) {
+
+	// Autoplay
+	if (video.muted && video.autoplay) {
 		video.play();
 	}
 	if (!/iPhone|iPod|iPad/.test(navigator.platform)) {
