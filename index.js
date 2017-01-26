@@ -281,7 +281,7 @@ export default function enableInlineVideo(video, opts = {}) {
 	}
 
 	// Stop native playback
-	if (!video.paused) {
+	if (!video.paused && video.webkitDisplayingFullscreen) {
 		video.pause();
 	}
 
