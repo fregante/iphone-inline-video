@@ -1,5 +1,12 @@
 # Changelog
 
+* 2.0.0 
+	* Automatically detect muted videos via attribute
+	* Added native iPad detection via option
+	* Changed global from `makeVideoPlayableInline` to `enableInlineVideo`
+	* Included non-minified file
+	* Renamed minified file to `iphone-inline-video.min.js`
+	* If the video was natively playing, now it pauses automatically
 * 1.9.0 Improved support for changing the `src` (via property or attribute)
 * 1.8.0 Made muted playback more reliable on slower connections
 * 1.7.0 Added support for `playbackRate`
