@@ -266,6 +266,9 @@ function enableInlineVideo(video, hasAudio = true, onlyWhitelisted = true) {
 	if ((onlyWhitelisted && !isWhitelisted) || video[ಠ]) {
 		return;
 	}
+	if (!video.paused) {
+		video.pause();
+	}
 	addPlayer(video, hasAudio);
 	overloadAPI(video);
 	video.classList.add('IIV');
