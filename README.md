@@ -6,7 +6,7 @@
 [![Travis build status][badge-travis]][link-travis]
 [![npm version][badge-version]][link-npm]
 
-  [badge-gzip]: https://badges.herokuapp.com/size/github/bfred-it/iphone-inline-video/master/dist/iphone-inline-video.browser.js?gzip=true&label=gzipped%20size
+  [badge-gzip]: https://badges.herokuapp.com/size/github/bfred-it/iphone-inline-video/master/dist/iphone-inline-video.min.js?gzip=true&label=gzipped%20size
   [badge-ios]: https://img.shields.io/badge/iOS%20Safari-8%20%E2%80%93%209.3-brightgreen.svg
   [badge-travis]: https://api.travis-ci.org/bfred-it/iphone-inline-video.svg
   [badge-version]: https://img.shields.io/npm/v/iphone-inline-video.svg
@@ -53,7 +53,7 @@ npm install --save iphone-inline-video
 const makeVideoPlayableInline = require('iphone-inline-video');
 ```
 
-If you don't use node, include the file `dist/iphone-inline-video.browser.js`
+If you don't use node, include the file `dist/iphone-inline-video.min.js`
 
 ## Usage
 

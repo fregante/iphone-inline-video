@@ -23,11 +23,10 @@
     "gif"
   ],
   "files": [
-    "dist/iphone-inline-video.common-js.js",
-    "dist/iphone-inline-video.es-modules.js",
-    "dist/iphone-inline-video.browser.js"
+    "dist"
   ],
   "main": "dist/iphone-inline-video.common-js.js",
+  "module": "dist/iphone-inline-video.es-modules.js",
   "jsnext:main": "dist/iphone-inline-video.es-modules.js",
   "scripts": {
     "build:js": "bfred-npm-bundler iphone-inline-video makeVideoPlayableInline",
@@ -40,23 +39,19 @@
     "test": "xo; npm run build"
   },
   "devDependencies": {
-    "bfred-npm-bundler": "^7.1.1",
+    "bfred-npm-bundler": "^8.0.1",
     "browser-sync": "^2.11.2",
-    "npm-run-all": "^1.7.0",
-    "onchange": "^2.2.0",
-    "xo": "^0.13.0"
+    "npm-run-all": "^4.0.1",
+    "onchange": "^3.2.1",
+    "xo": "^0.17.1"
   },
   "xo": {
-    "esnext": true,
     "ignores": [
       "demo/**"
     ],
     "env": [
       "browser"
-    ],
-    "rules": {
-      "prefer-template": 0
-    }
+    ]
   },
   "bugs": {
     "url": "https://github.com/bfred-it/iphone-inline-video/issues"
