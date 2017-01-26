@@ -64,7 +64,7 @@ function update(timeDiff) {
 			}
 		}
 		setTime(player.video, player.driver.currentTime);
-	} else if (player.video.networkState === player.video.NETWORK_IDLE && !player.video.buffered.length) {
+	} else if (player.video.networkState === player.video.NETWORK_IDLE && player.video.buffered.length === 0) {
 		// this should happen when the source is available but:
 		// - it's potentially playing (.paused === false)
 		// - it's not ready to play
@@ -108,7 +108,7 @@ function play() {
 	}
 	player.paused = false;
 
-	if (!video.buffered.length) {
+	if (video.buffered.length === 0) {
 		// .load() causes the emptied event
 		// the alternative is .play()+.pause() but that triggers play/pause events, even worse
 		// possibly the alternative is preventing this event only once
@@ -220,7 +220,7 @@ function addPlayer(video, hasAudio) {
 
 			// play video natively
 			video[ಠplay]();
-		} else if (hasAudio && !player.driver.buffered.length) {
+		} else if (hasAudio && player.driver.buffered.length === 0) {
 			// if the first play is native,
 			// the <audio> needs to be buffered manually
 			// so when the fullscreen ends, it can be set to the same current time
