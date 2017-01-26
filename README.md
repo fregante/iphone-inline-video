@@ -7,21 +7,17 @@
 [![npm version][badge-version]][link-npm]
 
   [badge-gzip]: https://badges.herokuapp.com/size/github/bfred-it/iphone-inline-video/master/dist/iphone-inline-video.min.js?gzip=true&label=gzipped%20size
-  [badge-ios]: https://img.shields.io/badge/iOS%20Safari-8%20%E2%80%93%209.3-brightgreen.svg
   [badge-travis]: https://api.travis-ci.org/bfred-it/iphone-inline-video.svg
   [badge-version]: https://img.shields.io/npm/v/iphone-inline-video.svg
   [link-travis]: https://travis-ci.org/bfred-it/iphone-inline-video
   [link-npm]: https://www.npmjs.com/package/iphone-inline-video
 
-This lets you:
+This enables [iOS 10's `playsinline` attribute](#notes-about-ios-10) on iOS 8 and iOS 9 (almost a polyfill). It lets you:
 
 - Play videos without forcing the fullscreen on the iPhone ([demo](http://bfred-it.github.io/iphone-inline-video/demo/))
 - Play silent videos without user interaction
 - Autoplay silent videos with the `autoplay` attribute ([demo](http://bfred-it.github.io/iphone-inline-video/demo/autoplay.html))
-- Play multiple silent videos at the same time
 - Use videos as WebGL/ThreeJS textures ([demo](http://bfred-it.github.io/iphone-inline-video/demo/threejs.html))
-
-This essentially enables [iOS 10's `playsinline` attribute](#notes-about-ios-10) on iOS 8 and iOS 9 (almost a polyfill)
 
 [![Demo](http://bfred-it.github.io/iphone-inline-video/demo/demo-preview.gif)](http://bfred-it.github.io/iphone-inline-video/demo/)
 
@@ -188,7 +184,7 @@ New features in iOS 10:
     <video autoplay muted playsinline src="video.mp4"></video>
     ```
 
-Essentially everything that this module does, so `iphone-inline-video` will be automatically disabled there. Make sure you have all the above attributes.
+Essentially everything that this module does, so `iphone-inline-video` will be automatically disabled on iOS 10. Make sure you the `playsinline` attribute.
 
 ## License
 
