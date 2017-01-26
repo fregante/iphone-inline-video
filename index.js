@@ -4,8 +4,7 @@ import proxyProperty from './lib/proxy-property';
 import proxyEvent from './lib/proxy-event';
 import dispatchEventAsync from './lib/dispatch-event-async';
 
-// iOS 10 adds support for native inline playback + silent autoplay
-const isWhitelisted = 'object-fit' in document.head.style && /iPhone|iPod/i.test(navigator.userAgent) && !matchMedia('(-webkit-video-playable-inline)').matches;
+const iOS8or9 = 'object-fit' in document.head.style && !matchMedia('(-webkit-video-playable-inline)').matches;
 
 const ಠ = 'bfred-it:iphone-inline-video';
 const ಠevent = 'bfred-it:iphone-inline-video:event';
@@ -267,6 +266,21 @@ export default function enableInlineVideo(video, opts = {}) {
 	if (video[ಠ]) {
 		return;
 	}
+
+	// Allow the user to skip detection
+	if (!opts.everywhere) {
+		// Only iOS8 and 9 are supported
+		if (!iOS8or9) {
+			return;
+		}
+
+		// Stop if it's not an allowed device
+		if (!(opts.ipad ? /iPhone|iPod|iPad/ : /iPhone|iPod/).test(navigator.userAgent)) {
+			return;
+		}
+	}
+
+	// Stop native playback
 	if (!video.paused) {
 		video.pause();
 	}
@@ -279,11 +293,8 @@ export default function enableInlineVideo(video, opts = {}) {
 	if (video.muted && video.autoplay) {
 		video.play();
 	}
+
 	if (!/iPhone|iPod|iPad/.test(navigator.platform)) {
 		console.warn('iphone-inline-video is not guaranteed to work in emulated environments');
 	}
 }
-
-enableInlineVideo.isWhitelisted = isWhitelisted;
-
-export default enableInlineVideo;
