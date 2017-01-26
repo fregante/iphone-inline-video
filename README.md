@@ -28,7 +28,7 @@ This essentially enables [iOS 10's `playsinline` attribute](#notes-about-ios-10)
 ## Main features
 
 - <2KB, standalone (no frameworks required)
-- No setup: include it, call `makeVideoPlayableInline(video)`, [done](#usage)
+- No setup: include it, call `enableInlineVideo(video)`, [done](#usage)
 - No custom API for playback, you can just call `video.play()` on `click`
 - Supports **audio**
 - Supports [autoplay](#usage-with-autoplaying-videos) on silent videos
@@ -50,7 +50,7 @@ Limitations:
 npm install --save iphone-inline-video
 ```
 ```js
-const makeVideoPlayableInline = require('iphone-inline-video');
+const enableInlineVideo = require('iphone-inline-video');
 ```
 
 If you don't use node, include the file `dist/iphone-inline-video.min.js`
@@ -81,19 +81,19 @@ You will need:
 	```js
 	// one video
 	var video = document.querySelector('video');
-	makeVideoPlayableInline(video);
+	enableInlineVideo(video);
 	```
 	
 	```js
 	// or if you're already using jQuery:
 	var video = $('video').get(0);
-	makeVideoPlayableInline(video);
+	enableInlineVideo(video);
 	```
 	
 	```js
 	// or if you have multiple videos:
 	$('video').each(function () {
-		makeVideoPlayableInline(this);
+		enableInlineVideo(this);
 	});
 	```
 
@@ -104,7 +104,7 @@ Now you can keep using it just like you would on a desktop. Run `video.play()`, 
 **BUT** you still need user interaction to play the audio, so do something like this:
 
 ```js
-makeVideoPlayableInline(video);
+enableInlineVideo(video);
 video.addEventListener('touchstart', function () {
 	video.play();
 });
@@ -117,7 +117,7 @@ If at some point you want to open the video in fullscreen, use the standard (but
 If your video file doesn't have an audio track, then you need this:
 
 ```js
-makeVideoPlayableInline(video, /* hasAudio */ false);
+enableInlineVideo(video, /* hasAudio */ false);
 ```
 
 And the `muted` attribute
@@ -133,7 +133,7 @@ Muted videos can also be played without user interaction (`video.play()` doesn't
 Thanks to the above behavior, muted videos can also autoplay:
 
 ```js
-makeVideoPlayableInline(video, /* hasAudio */ false);
+enableInlineVideo(video, /* hasAudio */ false);
 ```
 
 And the `autoplay` and `muted` attributes:

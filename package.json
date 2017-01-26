@@ -29,7 +29,7 @@
   "module": "dist/iphone-inline-video.es-modules.js",
   "jsnext:main": "dist/iphone-inline-video.es-modules.js",
   "scripts": {
-    "build:js": "bfred-npm-bundler iphone-inline-video makeVideoPlayableInline",
+    "build:js": "bfred-npm-bundler iphone-inline-video enableInlineVideo",
     "build": "npm-run-all --silent jsfix build:*",
     "jsfix": "xo --fix",
     "watch:server": "browser-sync start --startPath demo --no-ghost-mode --reload-delay 300 --no-open --server --files 'dist/*.browser.js,demo/**'",

@@ -68,7 +68,7 @@ function debugEvents(video) {
 
 function enableVideos(everywhere) {
 	for (var i = 0; i < videos.length; i++) {
-		window.makeVideoPlayableInline(videos[i], !videos[i].hasAttribute('muted'), !everywhere);
+		window.enableInlineVideo(videos[i], !videos[i].hasAttribute('muted'), !everywhere);
 		enableButtons(videos[i]);
 		debugEvents(videos[i]);
 	}
