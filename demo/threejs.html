@@ -77,13 +77,13 @@
 					break;
 
 				case '?enabled=true':
-					window.enableInlineVideo(video, /* mute necessary for autoplay*/ false, false);
+					window.enableInlineVideo(video, {everywhere: true});
 					behavior.textContent = 'Module enabled everywhere (whether it’s necessary or not)';
 					break;
 
 				default:
 				case '?enabled=auto':
-					window.enableInlineVideo(video, /* mute necessary for autoplay*/ false);
+					window.enableInlineVideo(video);
 					break;
 			}
 		</script>

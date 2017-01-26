@@ -40,20 +40,29 @@ This essentially enables [iOS 10's `playsinline` attribute](#notes-about-ios-10)
 Limitations:
 
 - Needs user interaction to play videos with sound (standard iOS limitation)
-- Currently limited to iPhone, [unneeded on iPad](https://github.com/bfred-it/iphone-inline-video/issues/48), disabled on Android
+- Limited to iPhone with iOS 8 and 9. iPad support needs to be [enabled separately.](#usage-on-ipad) It's disabled on Android.
 - The video framerate depends on `requestAnimationFrame`, so avoid expensive animations and similar while the video is playing. Try [stats.js](https://github.com/mrdoob/stats.js/) to visualize your page's framerate
 - [Known issues](https://github.com/bfred-it/iphone-inline-video/labels/known%20issue)
 
 ## Install
 
+Pick your favorite:
+
+```html
+<script src="dist/iphone-inline-video.min.js"></script>
+```
+
 ```sh
 npm install --save iphone-inline-video
 ```
+
 ```js
-const enableInlineVideo = require('iphone-inline-video');
+var enableInlineVideo = require('iphone-inline-video');
 ```
 
-If you don't use node, include the file `dist/iphone-inline-video.min.js`
+```js
+import enableInlineVideo from 'iphone-inline-video';
+```
 
 ## Usage
 
@@ -114,32 +123,44 @@ If at some point you want to open the video in fullscreen, use the standard (but
 
 ## Usage with audio-less videos
 
-If your video file doesn't have an audio track, then you need this:
-
-```js
-enableInlineVideo(video, /* hasAudio */ false);
-```
-
-And the `muted` attribute
+If your video file doesn't have an audio track, then **you have to** set a `muted` attribute:
 
 ```html
 <video muted playsinline src="video.mp4"></video>
 ```
 
-Muted videos can also be played without user interaction (`video.play()` doesn't need to be called inside an event listener).
-
 ## Usage with autoplaying videos
 
-Thanks to the above behavior, muted videos can also autoplay:
-
-```js
-enableInlineVideo(video, /* hasAudio */ false);
-```
-
-And the `autoplay` and `muted` attributes:
+The `autoplay` attribute is also supported, if `muted` is set:
 
 ```html
 <video autoplay muted playsinline src="video.mp4"></video>
+```
+
+Muted videos can also be played without user interaction — which means that `video.play()` doesn't need to be called inside an event listener:
+
+```html
+<video muted playsinline src="video.mp4"></video>
+```
+```js
+setTimeout(function () { video.play(); }, 1000); // example
+```
+
+## Usage on iPad
+
+The iPad already supports inline videos so IIV is not enabled there.
+
+The only reason to enabled IIV on iPad:
+
+- you want muted videos to autoplay, or
+- you want to play videos without user interaction
+
+To enabled IIV on the iPad:
+
+```js
+enableInlineVideo(video, {
+	iPad: true // it's iPad, not ipad
+});
 ```
 
 ## Notes about iOS 10
