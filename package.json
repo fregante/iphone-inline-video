@@ -36,11 +36,12 @@
     "watch:build": "onchange 'index.js' 'lib/*' -i -- npm run build",
     "watch": "npm-run-all --parallel --silent watch:*",
     "prepublish": "npm run build",
-    "test": "xo; npm run build"
+    "version": "npm run build; git add dist",
+    "test": "npm run build"
   },
   "devDependencies": {
-    "bfred-npm-bundler": "^8.0.1",
-    "browser-sync": "^2.11.2",
+    "bfred-npm-bundler": "^8.0.3",
+    "browser-sync": "^2.18.7",
     "npm-run-all": "^4.0.1",
     "onchange": "^3.2.1",
     "xo": "^0.17.1"
