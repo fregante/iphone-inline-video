@@ -1,4 +1,4 @@
-/*! npm.im/iphone-inline-video */
+/*! npm.im/iphone-inline-video 2.0.0 */
 var enableInlineVideo = (function () {
 'use strict';
 
