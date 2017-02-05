@@ -1,4 +1,4 @@
-/*! npm.im/iphone-inline-video 2.0.0 */
+/*! npm.im/iphone-inline-video 2.0.1 */
 var enableInlineVideo = (function () {
 'use strict';
 
@@ -347,7 +347,7 @@ function enableInlineVideo(video, opts) {
 		}
 
 		// Stop if it's not an allowed device
-		if (!(opts.iPad ? /iPhone|iPod|iPad/ : /iPhone|iPod/).test(navigator.userAgent)) {
+		if (!(opts.iPad || opts.ipad ? /iPhone|iPod|iPad/ : /iPhone|iPod/).test(navigator.userAgent)) {
 			return;
 		}
 	}
