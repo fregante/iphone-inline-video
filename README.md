@@ -155,7 +155,7 @@ To enabled IIV on the iPad:
 
 ```js
 enableInlineVideo(video, {
-	iPad: true // it's iPad, not ipad
+	iPad: true
 });
 ```
 

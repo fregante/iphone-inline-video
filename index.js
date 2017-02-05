@@ -275,7 +275,7 @@ export default function enableInlineVideo(video, opts = {}) {
 		}
 
 		// Stop if it's not an allowed device
-		if (!(opts.iPad ? /iPhone|iPod|iPad/ : /iPhone|iPod/).test(navigator.userAgent)) {
+		if (!(opts.iPad || opts.ipad ? /iPhone|iPod|iPad/ : /iPhone|iPod/).test(navigator.userAgent)) {
 			return;
 		}
 	}
