@@ -1,4 +1,4 @@
-/*! npm.im/iphone-inline-video 2.0.1 */
+/*! npm.im/iphone-inline-video 2.0.2 */
 var enableInlineVideo = (function () {
 'use strict';
 
@@ -74,7 +74,7 @@ function dispatchEventAsync(element, type) {
 	});
 }
 
-var iOS8or9 = 'object-fit' in document.head.style && !matchMedia('(-webkit-video-playable-inline)').matches;
+var iOS8or9 = typeof document === 'object' && 'object-fit' in document.head.style && !matchMedia('(-webkit-video-playable-inline)').matches;
 
 var ಠ = 'bfred-it:iphone-inline-video';
 var ಠevent = 'bfred-it:iphone-inline-video:event';
