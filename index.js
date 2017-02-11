@@ -4,7 +4,7 @@ import proxyProperty from './lib/proxy-property';
 import proxyEvent from './lib/proxy-event';
 import dispatchEventAsync from './lib/dispatch-event-async';
 
-const iOS8or9 = 'object-fit' in document.head.style && !matchMedia('(-webkit-video-playable-inline)').matches;
+const iOS8or9 = typeof document === 'object' && 'object-fit' in document.head.style && !matchMedia('(-webkit-video-playable-inline)').matches;
 
 const ಠ = 'bfred-it:iphone-inline-video';
 const ಠevent = 'bfred-it:iphone-inline-video:event';
