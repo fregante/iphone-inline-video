@@ -184,7 +184,7 @@ New features in iOS 10:
     <video autoplay muted playsinline src="video.mp4"></video>
     ```
 
-Essentially everything that this module does, so `iphone-inline-video` will be automatically disabled on iOS 10. Make sure you the `playsinline` attribute.
+Essentially everything that this module does, so `iphone-inline-video` will be automatically disabled on iOS 10. Make sure you use the `playsinline` attribute.
 
 ## License
 
