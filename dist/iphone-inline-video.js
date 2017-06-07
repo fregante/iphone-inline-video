@@ -33,9 +33,15 @@ function frameIntervalometer(cb) {
 	return intervalometer(cb, requestAnimationFrame, cancelAnimationFrame);
 }
 
+var variables = {
+	inFullScreen: false // indicator shows if the video's under full screen mode
+};
+
 function preventEvent(element, eventName, toggleProperty, preventWithProperty) {
 	function handler(e) {
-		if (Boolean(element[toggleProperty]) === Boolean(preventWithProperty)) {
+		if (Boolean(element[toggleProperty]) === Boolean(preventWithProperty) && 
+			// add judgement so that evt could get in full screen mode
+			!variables.inFullScreen) {
 			e.stopImmediatePropagation();
 			// console.log(eventName, 'prevented on', element);
 		}
@@ -284,6 +290,7 @@ function addPlayer(video, hasAudio) {
 
 	// stop programmatic player when OS takes over
 	video.addEventListener('webkitbeginfullscreen', function () {
+		variables.inFullScreen = true;
 		if (!video.paused) {
 			// make sure that the <audio> and the syncer/updater are stopped
 			video.pause();
@@ -296,6 +303,9 @@ function addPlayer(video, hasAudio) {
 			// so when the fullscreen ends, it can be set to the same current time
 			player.driver.load();
 		}
+	});
+	video.addEventListener('webkitendfullscreen', function () {
+		variables.inFullScreen = false;
 	});
 	if (hasAudio) {
 		video.addEventListener('webkitendfullscreen', function () {

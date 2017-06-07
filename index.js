@@ -3,6 +3,7 @@ import preventEvent from './lib/prevent-event';
 import proxyProperty from './lib/proxy-property';
 import proxyEvent from './lib/proxy-event';
 import dispatchEventAsync from './lib/dispatch-event-async';
+import variables from './lib/variables';
 
 const iOS8or9 = typeof document === 'object' && 'object-fit' in document.head.style && !matchMedia('(-webkit-video-playable-inline)').matches;
 
@@ -214,6 +215,7 @@ function addPlayer(video, hasAudio) {
 
 	// stop programmatic player when OS takes over
 	video.addEventListener('webkitbeginfullscreen', () => {
+		variables.inFullScreen = true;
 		if (!video.paused) {
 			// make sure that the <audio> and the syncer/updater are stopped
 			video.pause();
@@ -226,6 +228,9 @@ function addPlayer(video, hasAudio) {
 			// so when the fullscreen ends, it can be set to the same current time
 			player.driver.load();
 		}
+	});
+	video.addEventListener('webkitendfullscreen', () => {
+		variables.inFullScreen = false;
 	});
 	if (hasAudio) {
 		video.addEventListener('webkitendfullscreen', () => {
