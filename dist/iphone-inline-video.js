@@ -1,4 +1,4 @@
-/*! npm.im/iphone-inline-video 2.0.2 */
+/*! npm.im/iphone-inline-video 2.1.0 */
 var enableInlineVideo = (function () {
 'use strict';
 
@@ -37,7 +37,7 @@ function preventEvent(element, eventName, toggleProperty, preventWithProperty) {
 	function handler(e) {
 		if (Boolean(element[toggleProperty]) === Boolean(preventWithProperty)) {
 			e.stopImmediatePropagation();
-			// console.log(eventName, 'prevented on', element);
+			// // console.log(eventName, 'prevented on', element);
 		}
 		delete element[toggleProperty];
 	}
@@ -97,9 +97,9 @@ function getAudioFromVideo(video) {
 	// i.e. once you set a real src it will keep playing if it was if .play() was called
 	audio.src = video.src || video.currentSrc || 'data:';
 
-	// if (audio.src === 'data:') {
+	// // if (audio.src === 'data:') {
 	//   TODO: wait for video to be selected
-	// }
+	// // }
 	return audio;
 }
 
@@ -108,7 +108,7 @@ var requestIndex = 0;
 var lastTimeupdateEvent;
 
 function setTime(video, time, rememberOnly) {
-	// allow one timeupdate event every 200+ ms
+	// Allow one timeupdate event every 200+ ms
 	if ((lastTimeupdateEvent || 0) + 200 < Date.now()) {
 		video[ಠevent] = true;
 		lastTimeupdateEvent = Date.now();
@@ -125,7 +125,7 @@ function isPlayerEnded(player) {
 
 function update(timeDiff) {
 	var player = this;
-	// console.log('update', player.video.readyState, player.video.networkState, player.driver.readyState, player.driver.networkState, player.driver.paused);
+	// // console.log('update', player.video.readyState, player.video.networkState, player.driver.readyState, player.driver.networkState, player.driver.paused);
 	if (player.video.readyState >= player.video.HAVE_FUTURE_DATA) {
 		if (!player.hasAudio) {
 			player.driver.currentTime = player.video.currentTime + ((timeDiff * player.video.playbackRate) / 1000);
@@ -135,19 +135,19 @@ function update(timeDiff) {
 		}
 		setTime(player.video, player.driver.currentTime);
 	} else if (player.video.networkState === player.video.NETWORK_IDLE && player.video.buffered.length === 0) {
-		// this should happen when the source is available but:
+		// This should happen when the source is available but:
 		// - it's potentially playing (.paused === false)
 		// - it's not ready to play
 		// - it's not loading
 		// If it hasAudio, that will be loaded in the 'emptied' handler below
 		player.video.load();
-		// console.log('Will load');
+		// // console.log('Will load');
 	}
 
-	// console.assert(player.video.currentTime === player.driver.currentTime, 'Video not updating!');
+	// // console.assert(player.video.currentTime === player.driver.currentTime, 'Video not updating!');
 
 	if (player.video.ended) {
-		delete player.video[ಠevent]; // allow timeupdate event
+		delete player.video[ಠevent]; // Allow timeupdate event
 		player.video.pause(true);
 	}
 }
@@ -157,18 +157,18 @@ function update(timeDiff) {
  */
 
 function play() {
-	// console.log('play');
+	// // console.log('play');
 	var video = this;
 	var player = video[ಠ];
 
-	// if it's fullscreen, use the native player
+	// If it's fullscreen, use the native player
 	if (video.webkitDisplayingFullscreen) {
 		video[ಠplay]();
 		return;
 	}
 
 	if (player.driver.src !== 'data:' && player.driver.src !== video.src) {
-		// console.log('src changed on play', video.src);
+		// // console.log('src changed on play', video.src);
 		setTime(video, 0, true);
 		player.driver.src = video.src;
 	}
@@ -191,20 +191,20 @@ function play() {
 	if (!player.hasAudio) {
 		dispatchEventAsync(video, 'play');
 		if (player.video.readyState >= player.video.HAVE_ENOUGH_DATA) {
-			// console.log('onplay');
+			// // console.log('onplay');
 			dispatchEventAsync(video, 'playing');
 		}
 	}
 }
 function pause(forceEvents) {
-	// console.log('pause');
+	// // console.log('pause');
 	var video = this;
 	var player = video[ಠ];
 
 	player.driver.pause();
 	player.updater.stop();
 
-	// if it's fullscreen, the developer the native player.pause()
+	// If it's fullscreen, the developer the native player.pause()
 	// This is at the end of pause() because it also
 	// needs to make sure that the simulation is paused
 	if (video.webkitDisplayingFullscreen) {
@@ -230,8 +230,9 @@ function pause(forceEvents) {
  */
 
 function addPlayer(video, hasAudio) {
-	var player = video[ಠ] = {};
-	player.paused = true; // track whether 'pause' events have been fired
+	var player = {};
+	video[ಠ] = player;
+	player.paused = true; // Track whether 'pause' events have been fired
 	player.hasAudio = hasAudio;
 	player.video = video;
 	player.updater = frameIntervalometer(update.bind(player));
@@ -241,7 +242,7 @@ function addPlayer(video, hasAudio) {
 	} else {
 		video.addEventListener('canplay', function () {
 			if (!video.paused) {
-				// console.log('oncanplay');
+				// // console.log('oncanplay');
 				dispatchEventAsync(video, 'playing');
 			}
 		});
@@ -254,7 +255,7 @@ function addPlayer(video, hasAudio) {
 			},
 			play: function () {
 				player.driver.paused = false;
-				// media automatically goes to 0 if .play() is called when it's done
+				// Media automatically goes to 0 if .play() is called when it's done
 				if (isPlayerEnded(player)) {
 					setTime(video, 0);
 				}
@@ -267,14 +268,14 @@ function addPlayer(video, hasAudio) {
 
 	// .load() causes the emptied event
 	video.addEventListener('emptied', function () {
-		// console.log('driver src is', player.driver.src);
+		// // console.log('driver src is', player.driver.src);
 		var wasEmpty = !player.driver.src || player.driver.src === 'data:';
 		if (player.driver.src && player.driver.src !== video.src) {
-			// console.log('src changed to', video.src);
+			// // console.log('src changed to', video.src);
 			setTime(video, 0, true);
 			player.driver.src = video.src;
-			// playing videos will only keep playing if no src was present when .play()’ed
-			if (wasEmpty) {
+			// Playing videos will only keep playing if no src was present when .play()’ed
+			if (wasEmpty || (!hasAudio && video.autoplay)) {
 				player.driver.play();
 			} else {
 				player.updater.stop();
@@ -282,16 +283,16 @@ function addPlayer(video, hasAudio) {
 		}
 	}, false);
 
-	// stop programmatic player when OS takes over
+	// Stop programmatic player when OS takes over
 	video.addEventListener('webkitbeginfullscreen', function () {
 		if (!video.paused) {
-			// make sure that the <audio> and the syncer/updater are stopped
+			// Make sure that the <audio> and the syncer/updater are stopped
 			video.pause();
 
-			// play video natively
+			// Play video natively
 			video[ಠplay]();
 		} else if (hasAudio && player.driver.buffered.length === 0) {
-			// if the first play is native,
+			// If the first play is native,
 			// the <audio> needs to be buffered manually
 			// so when the fullscreen ends, it can be set to the same current time
 			player.driver.load();
@@ -299,15 +300,15 @@ function addPlayer(video, hasAudio) {
 	});
 	if (hasAudio) {
 		video.addEventListener('webkitendfullscreen', function () {
-			// sync audio to new video position
+			// Sync audio to new video position
 			player.driver.currentTime = video.currentTime;
-			// console.assert(player.driver.currentTime === video.currentTime, 'Audio not synced');
+			// // console.assert(player.driver.currentTime === video.currentTime, 'Audio not synced');
 		});
 
-		// allow seeking
+		// Allow seeking
 		video.addEventListener('seeking', function () {
 			if (lastRequests.indexOf(video.currentTime * 100 | 0 / 100) < 0) {
-				// console.log('User-requested seeking');
+				// // console.log('User-requested seeking');
 				player.driver.currentTime = video.currentTime;
 			}
 		});
@@ -328,7 +329,7 @@ function overloadAPI(video) {
 	preventEvent(video, 'seeking');
 	preventEvent(video, 'seeked');
 	preventEvent(video, 'timeupdate', ಠevent, false);
-	preventEvent(video, 'ended', ಠevent, false); // prevent occasional native ended events
+	preventEvent(video, 'ended', ಠevent, false); // Prevent occasional native ended events
 }
 
 function enableInlineVideo(video, opts) {
@@ -352,18 +353,25 @@ function enableInlineVideo(video, opts) {
 		}
 	}
 
-	// Stop native playback
-	if (!video.paused && video.webkitDisplayingFullscreen) {
-		video.pause();
-	}
+	// Try to pause
+	video.pause();
+
+	// Prevent autoplay.
+	// An non-started autoplaying video can't be .pause()'d
+	var willAutoplay = video.autoplay;
+	video.autoplay = false;
 
 	addPlayer(video, !video.muted);
 	overloadAPI(video);
 	video.classList.add('IIV');
 
 	// Autoplay
-	if (video.muted && video.autoplay) {
+	if (video.muted && willAutoplay) {
 		video.play();
+		video.addEventListener('playing', function restoreAutoplay() {
+			video.autoplay = true;
+			video.removeEventListener('playing', restoreAutoplay);
+		});
 	}
 
 	if (!/iPhone|iPod|iPad/.test(navigator.platform)) {
