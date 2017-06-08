@@ -281,18 +281,25 @@ export default function enableInlineVideo(video, opts = {}) {
 		}
 	}
 
-	// Stop native playback
-	if (!video.paused && video.webkitDisplayingFullscreen) {
-		video.pause();
-	}
+	// Try to pause
+	video.pause();
+
+	// Prevent autoplay.
+	// An non-started autoplaying video can't be .pause()'d
+	const willAutoplay = video.autoplay;
+	video.autoplay = false;
 
 	addPlayer(video, !video.muted);
 	overloadAPI(video);
 	video.classList.add('IIV');
 
 	// Autoplay
-	if (video.muted && video.autoplay) {
+	if (video.muted && willAutoplay) {
 		video.play();
+		video.addEventListener('playing', function restoreAutoplay() {
+			video.autoplay = true;
+			video.removeEventListener('playing', restoreAutoplay);
+		});
 	}
 
 	if (!/iPhone|iPod|iPad/.test(navigator.platform)) {
