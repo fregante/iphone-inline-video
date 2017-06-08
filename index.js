@@ -205,7 +205,7 @@ function addPlayer(video, hasAudio) {
 			setTime(video, 0, true);
 			player.driver.src = video.src;
 			// Playing videos will only keep playing if no src was present when .play()’ed
-			if (wasEmpty) {
+			if (wasEmpty || (!hasAudio && video.autoplay)) {
 				player.driver.play();
 			} else {
 				player.updater.stop();
