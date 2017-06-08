@@ -1,4 +1,4 @@
-/*! npm.im/iphone-inline-video 2.1.0 */
+/*! npm.im/iphone-inline-video 2.2.0 */
 var enableInlineVideo = (function () {
 'use strict';
 
@@ -33,15 +33,14 @@ function frameIntervalometer(cb) {
 	return intervalometer(cb, requestAnimationFrame, cancelAnimationFrame);
 }
 
-function preventEvent(element, eventName, toggleProperty, preventWithProperty) {
+function preventEvent(element, eventName, test) {
 	function handler(e) {
-		if (Boolean(element[toggleProperty]) === Boolean(preventWithProperty)) {
+		if (!test || test(element, eventName)) {
 			e.stopImmediatePropagation();
 			// // console.log(eventName, 'prevented on', element);
 		}
-		delete element[toggleProperty];
 	}
-	element.addEventListener(eventName, handler, false);
+	element.addEventListener(eventName, handler);
 
 	// Return handler to allow to disable the prevention. Usage:
 	// const preventionHandler = preventEvent(el, 'click');
@@ -219,7 +218,9 @@ function pause(forceEvents) {
 	if (!player.hasAudio) {
 		dispatchEventAsync(video, 'pause');
 	}
-	if (video.ended) {
+
+	// Handle the 'ended' event only if it's not fullscreen
+	if (video.ended && !video.webkitDisplayingFullscreen) {
 		video[ಠevent] = true;
 		dispatchEventAsync(video, 'ended');
 	}
@@ -315,6 +316,12 @@ function addPlayer(video, hasAudio) {
 	}
 }
 
+function preventWithPropOrFullscreen(el) {
+	var isAllowed = el[ಠevent];
+	delete el[ಠevent];
+	return !el.webkitDisplayingFullscreen && !isAllowed;
+}
+
 function overloadAPI(video) {
 	var player = video[ಠ];
 	video[ಠplay] = video.play;
@@ -326,10 +333,17 @@ function overloadAPI(video) {
 	proxyProperty(video, 'playbackRate', player.driver, true);
 	proxyProperty(video, 'ended', player.driver);
 	proxyProperty(video, 'loop', player.driver, true);
-	preventEvent(video, 'seeking');
-	preventEvent(video, 'seeked');
-	preventEvent(video, 'timeupdate', ಠevent, false);
-	preventEvent(video, 'ended', ಠevent, false); // Prevent occasional native ended events
+
+	// IIV works by seeking 60 times per second.
+	// These events are now useless.
+	preventEvent(video, 'seeking', function (el) { return !el.webkitDisplayingFullscreen; });
+	preventEvent(video, 'seeked', function (el) { return !el.webkitDisplayingFullscreen; });
+
+	// Limit timeupdate events
+	preventEvent(video, 'timeupdate', preventWithPropOrFullscreen);
+
+	// Prevent occasional native ended events
+	preventEvent(video, 'ended', preventWithPropOrFullscreen);
 }
 
 function enableInlineVideo(video, opts) {
