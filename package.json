@@ -40,11 +40,11 @@
     "test": "npm run build"
   },
   "devDependencies": {
-    "bfred-npm-bundler": "^8.0.3",
-    "browser-sync": "^2.18.7",
-    "npm-run-all": "^4.0.1",
+    "bfred-npm-bundler": "^8.1.0",
+    "browser-sync": "^2.18.12",
+    "npm-run-all": "^4.0.2",
     "onchange": "^3.2.1",
-    "xo": "^0.17.1"
+    "xo": "^0.18.2"
   },
   "xo": {
     "ignores": [
@@ -59,7 +59,7 @@
   },
   "homepage": "https://github.com/bfred-it/iphone-inline-video#readme",
   "dependencies": {
-    "intervalometer": "^1.0.0",
+    "intervalometer": "^1.0.4",
     "poor-mans-symbol": "^1.0.1"
   }
 }
