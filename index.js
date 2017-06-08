@@ -149,7 +149,9 @@ function pause(forceEvents) {
 	if (!player.hasAudio) {
 		dispatchEventAsync(video, 'pause');
 	}
-	if (video.ended) {
+
+	// Handle the 'ended' event only if it's not fullscreen
+	if (video.ended && !video.webkitDisplayingFullscreen) {
 		video[ಠevent] = true;
 		dispatchEventAsync(video, 'ended');
 	}
@@ -245,6 +247,12 @@ function addPlayer(video, hasAudio) {
 	}
 }
 
+function preventWithPropOrFullscreen(el) {
+	const isAllowed = el[ಠevent];
+	delete el[ಠevent];
+	return !el.webkitDisplayingFullscreen && !isAllowed;
+}
+
 function overloadAPI(video) {
 	const player = video[ಠ];
 	video[ಠplay] = video.play;
@@ -256,10 +264,17 @@ function overloadAPI(video) {
 	proxyProperty(video, 'playbackRate', player.driver, true);
 	proxyProperty(video, 'ended', player.driver);
 	proxyProperty(video, 'loop', player.driver, true);
-	preventEvent(video, 'seeking');
-	preventEvent(video, 'seeked');
-	preventEvent(video, 'timeupdate', ಠevent, false);
-	preventEvent(video, 'ended', ಠevent, false); // Prevent occasional native ended events
+
+	// IIV works by seeking 60 times per second.
+	// These events are now useless.
+	preventEvent(video, 'seeking', el => !el.webkitDisplayingFullscreen);
+	preventEvent(video, 'seeked', el => !el.webkitDisplayingFullscreen);
+
+	// Limit timeupdate events
+	preventEvent(video, 'timeupdate', preventWithPropOrFullscreen);
+
+	// Prevent occasional native ended events
+	preventEvent(video, 'ended', preventWithPropOrFullscreen);
 }
 
 export default function enableInlineVideo(video, opts = {}) {
