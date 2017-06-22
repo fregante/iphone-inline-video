@@ -75,10 +75,10 @@ function dispatchEventAsync(element, type) {
 
 var iOS8or9 = typeof document === 'object' && 'object-fit' in document.head.style && !matchMedia('(-webkit-video-playable-inline)').matches;
 
-var ಠ = 'bfred-it:iphone-inline-video';
-var ಠevent = 'bfred-it:iphone-inline-video:event';
-var ಠplay = 'bfred-it:iphone-inline-video:nativeplay';
-var ಠpause = 'bfred-it:iphone-inline-video:nativepause';
+var IIV = 'bfred-it:iphone-inline-video';
+var IIVEvent = 'bfred-it:iphone-inline-video:event';
+var IIVPlay = 'bfred-it:iphone-inline-video:nativeplay';
+var IIVPause = 'bfred-it:iphone-inline-video:nativepause';
 
 /**
  * UTILS
@@ -109,7 +109,7 @@ var lastTimeupdateEvent;
 function setTime(video, time, rememberOnly) {
 	// Allow one timeupdate event every 200+ ms
 	if ((lastTimeupdateEvent || 0) + 200 < Date.now()) {
-		video[ಠevent] = true;
+		video[IIVEvent] = true;
 		lastTimeupdateEvent = Date.now();
 	}
 	if (!rememberOnly) {
@@ -146,7 +146,7 @@ function update(timeDiff) {
 	// // console.assert(player.video.currentTime === player.driver.currentTime, 'Video not updating!');
 
 	if (player.video.ended) {
-		delete player.video[ಠevent]; // Allow timeupdate event
+		delete player.video[IIVEvent]; // Allow timeupdate event
 		player.video.pause(true);
 	}
 }
@@ -158,11 +158,11 @@ function update(timeDiff) {
 function play() {
 	// // console.log('play');
 	var video = this;
-	var player = video[ಠ];
+	var player = video[IIV];
 
 	// If it's fullscreen, use the native player
 	if (video.webkitDisplayingFullscreen) {
-		video[ಠplay]();
+		video[IIVPlay]();
 		return;
 	}
 
@@ -198,7 +198,7 @@ function play() {
 function pause(forceEvents) {
 	// // console.log('pause');
 	var video = this;
-	var player = video[ಠ];
+	var player = video[IIV];
 
 	player.driver.pause();
 	player.updater.stop();
@@ -207,7 +207,7 @@ function pause(forceEvents) {
 	// This is at the end of pause() because it also
 	// needs to make sure that the simulation is paused
 	if (video.webkitDisplayingFullscreen) {
-		video[ಠpause]();
+		video[IIVPause]();
 	}
 
 	if (player.paused && !forceEvents) {
@@ -221,7 +221,7 @@ function pause(forceEvents) {
 
 	// Handle the 'ended' event only if it's not fullscreen
 	if (video.ended && !video.webkitDisplayingFullscreen) {
-		video[ಠevent] = true;
+		video[IIVEvent] = true;
 		dispatchEventAsync(video, 'ended');
 	}
 }
@@ -232,7 +232,7 @@ function pause(forceEvents) {
 
 function addPlayer(video, hasAudio) {
 	var player = {};
-	video[ಠ] = player;
+	video[IIV] = player;
 	player.paused = true; // Track whether 'pause' events have been fired
 	player.hasAudio = hasAudio;
 	player.video = video;
@@ -291,7 +291,7 @@ function addPlayer(video, hasAudio) {
 			video.pause();
 
 			// Play video natively
-			video[ಠplay]();
+			video[IIVPlay]();
 		} else if (hasAudio && player.driver.buffered.length === 0) {
 			// If the first play is native,
 			// the <audio> needs to be buffered manually
@@ -317,15 +317,15 @@ function addPlayer(video, hasAudio) {
 }
 
 function preventWithPropOrFullscreen(el) {
-	var isAllowed = el[ಠevent];
-	delete el[ಠevent];
+	var isAllowed = el[IIVEvent];
+	delete el[IIVEvent];
 	return !el.webkitDisplayingFullscreen && !isAllowed;
 }
 
 function overloadAPI(video) {
-	var player = video[ಠ];
-	video[ಠplay] = video.play;
-	video[ಠpause] = video.pause;
+	var player = video[IIV];
+	video[IIVPlay] = video.play;
+	video[IIVPause] = video.pause;
 	video.play = play;
 	video.pause = pause;
 	proxyProperty(video, 'paused', player.driver);
@@ -350,7 +350,7 @@ function enableInlineVideo(video, opts) {
 	if ( opts === void 0 ) opts = {};
 
 	// Stop if already enabled
-	if (video[ಠ]) {
+	if (video[IIV]) {
 		return;
 	}
 
