@@ -14,7 +14,7 @@
 
 This enables [iOS 10's `playsinline` attribute](#notes-about-ios-10) on iOS 8 and iOS 9 (almost a polyfill). It lets you:
 
-- Play videos without forcing the fullscreen on the iPhone ([demo](http://bfred-it.github.io/iphone-inline-video/demo/))
+- Play videos without going fullscreen on the iPhone ([demo](http://bfred-it.github.io/iphone-inline-video/demo/))
 - Play silent videos without user interaction
 - Autoplay silent videos with the `autoplay` attribute ([demo](http://bfred-it.github.io/iphone-inline-video/demo/autoplay.html))
 - Use videos as WebGL/ThreeJS textures ([demo](http://bfred-it.github.io/iphone-inline-video/demo/threejs.html))
@@ -31,7 +31,7 @@ This enables [iOS 10's `playsinline` attribute](#notes-about-ios-10) on iOS 8 an
 - Doesn't need canvas
 - Doesn't create new elements/wrappers
 - It works with existing players like jPlayer
-- [Disabled automatically on iOS 10](#notes-about-ios-10)
+- [Disabled automatically on iOS 10+](#notes-about-ios-10)
 
 Limitations:
 
@@ -64,13 +64,13 @@ import enableInlineVideo from 'iphone-inline-video';
 
 You will need:
 
-- a `<video>` element with the attribute `playsinline` (this is needed on iOS 10)
+- a `<video>` element with the attribute `playsinline` **(required on iOS 10 and iOS 11. [Why?](#notes-about-ios-10))**
 
 	```html
 	<video src="file.mp4" playsinline></video>
 	```
 	
-- the native play buttons will still trigger the fullscreen, so it's best to hide them when iphone-inline-video is enabled. [More info on the `.IIV` CSS class](https://github.com/bfred-it/iphone-inline-video/issues/72#issuecomment-247629743)
+- the native play buttons will still trigger the fullscreen, so it's best to hide them when `iphone-inline-video` is enabled. [More info on the `.IIV` CSS class](https://github.com/bfred-it/iphone-inline-video/issues/72#issuecomment-247629743)
 
 	```css
 	.IIV::-webkit-media-controls-play-button,
@@ -119,7 +119,7 @@ If at some point you want to open the video in fullscreen, use the standard (but
 
 ## Usage with audio-less videos
 
-If your video file doesn't have an audio track, then **you have to** set a `muted` attribute:
+If your video file doesn't have an audio track, then **must** set a `muted` attribute:
 
 ```html
 <video muted playsinline src="video.mp4"></video>
@@ -161,7 +161,7 @@ enableInlineVideo(video, {
 
 ## Notes about iOS 10
 
-New features in iOS 10:
+New features in iOS 10 and iOS 11:
 
 * videos play inline:  
 
@@ -184,7 +184,7 @@ New features in iOS 10:
     <video autoplay muted playsinline src="video.mp4"></video>
     ```
 
-Essentially everything that this module does, so `iphone-inline-video` will be automatically disabled on iOS 10. Make sure you use the `playsinline` attribute.
+Essentially everything that this module does, so `iphone-inline-video` will be automatically disabled on iOS 10-11. Make sure you use the `playsinline` attribute.
 
 ## License
 
