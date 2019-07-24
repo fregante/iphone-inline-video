@@ -6,10 +6,10 @@ import dispatchEventAsync from './lib/dispatch-event-async';
 
 const iOS8or9 = typeof document === 'object' && 'object-fit' in document.head.style && !matchMedia('(-webkit-video-playable-inline)').matches;
 
-const IIV = 'bfred-it:iphone-inline-video';
-const IIVEvent = 'bfred-it:iphone-inline-video:event';
-const IIVPlay = 'bfred-it:iphone-inline-video:nativeplay';
-const IIVPause = 'bfred-it:iphone-inline-video:nativepause';
+const IIV = 'fregante:iphone-inline-video';
+const IIVEvent = 'fregante:iphone-inline-video:event';
+const IIVPlay = 'fregante:iphone-inline-video:nativeplay';
+const IIVPause = 'fregante:iphone-inline-video:nativepause';
 
 /**
  * UTILS

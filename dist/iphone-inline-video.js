@@ -75,10 +75,10 @@ function dispatchEventAsync(element, type) {
 
 var iOS8or9 = typeof document === 'object' && 'object-fit' in document.head.style && !matchMedia('(-webkit-video-playable-inline)').matches;
 
-var IIV = 'bfred-it:iphone-inline-video';
-var IIVEvent = 'bfred-it:iphone-inline-video:event';
-var IIVPlay = 'bfred-it:iphone-inline-video:nativeplay';
-var IIVPause = 'bfred-it:iphone-inline-video:nativepause';
+var IIV = 'fregante:iphone-inline-video';
+var IIVEvent = 'fregante:iphone-inline-video:event';
+var IIVPlay = 'fregante:iphone-inline-video:nativeplay';
+var IIVPause = 'fregante:iphone-inline-video:nativepause';
 
 /**
  * UTILS

@@ -6,20 +6,20 @@
 [![Travis build status][badge-travis]][link-travis]
 [![npm version][badge-version]][link-npm]
 
-  [badge-gzip]: https://badges.herokuapp.com/size/github/bfred-it/iphone-inline-video/master/dist/iphone-inline-video.min.js?gzip=true&label=gzipped%20size
-  [badge-travis]: https://api.travis-ci.org/bfred-it/iphone-inline-video.svg
+  [badge-gzip]: https://badges.herokuapp.com/size/github/fregante/iphone-inline-video/master/dist/iphone-inline-video.min.js?gzip=true&label=gzipped%20size
+  [badge-travis]: https://api.travis-ci.org/fregante/iphone-inline-video.svg
   [badge-version]: https://img.shields.io/npm/v/iphone-inline-video.svg
-  [link-travis]: https://travis-ci.org/bfred-it/iphone-inline-video
+  [link-travis]: https://travis-ci.org/fregante/iphone-inline-video
   [link-npm]: https://www.npmjs.com/package/iphone-inline-video
 
 This enables [iOS 10's `playsinline` attribute](#notes-about-ios-10) on iOS 8 and iOS 9 (almost a polyfill). It lets you:
 
-- Play videos without going fullscreen on the iPhone ([demo](http://bfred-it.github.io/iphone-inline-video/demo/))
+- Play videos without going fullscreen on the iPhone ([demo](http://fregante.github.io/iphone-inline-video/demo/))
 - Play silent videos without user interaction
-- Autoplay silent videos with the `autoplay` attribute ([demo](http://bfred-it.github.io/iphone-inline-video/demo/autoplay.html))
-- Use videos as WebGL/ThreeJS textures ([demo](http://bfred-it.github.io/iphone-inline-video/demo/threejs.html))
+- Autoplay silent videos with the `autoplay` attribute ([demo](http://fregante.github.io/iphone-inline-video/demo/autoplay.html))
+- Use videos as WebGL/ThreeJS textures ([demo](http://fregante.github.io/iphone-inline-video/demo/threejs.html))
 
-[![Demo](http://bfred-it.github.io/iphone-inline-video/demo/demo-preview.gif)](http://bfred-it.github.io/iphone-inline-video/demo/)
+[![Demo](http://fregante.github.io/iphone-inline-video/demo/demo-preview.gif)](http://fregante.github.io/iphone-inline-video/demo/)
 
 ## Main features
 
@@ -38,7 +38,7 @@ Limitations:
 - Needs user interaction to play videos with sound (standard iOS limitation)
 - Limited to iPhone with iOS 8 and 9. iPad support needs to be [enabled separately.](#usage-on-ipad) It's disabled on Android.
 - The video framerate depends on `requestAnimationFrame`, so avoid expensive animations and similar while the video is playing. Try [stats.js](https://github.com/mrdoob/stats.js/) to visualize your page's framerate
-- [Known issues](https://github.com/bfred-it/iphone-inline-video/labels/known%20issue)
+- [Known issues](https://github.com/fregante/iphone-inline-video/labels/known%20issue)
 
 ## Install
 
@@ -69,8 +69,8 @@ You will need:
 	```html
 	<video src="file.mp4" playsinline></video>
 	```
-	
-- the native play buttons will still trigger the fullscreen, so it's best to hide them when `iphone-inline-video` is enabled. [More info on the `.IIV` CSS class](https://github.com/bfred-it/iphone-inline-video/issues/72#issuecomment-247629743)
+
+- the native play buttons will still trigger the fullscreen, so it's best to hide them when `iphone-inline-video` is enabled. [More info on the `.IIV` CSS class](https://github.com/fregante/iphone-inline-video/issues/72#issuecomment-247629743)
 
 	```css
 	.IIV::-webkit-media-controls-play-button,
@@ -80,21 +80,21 @@ You will need:
 	    width: 5px;
 	}
 	```
-	
-- the activation call  
+
+- the activation call
 
 	```js
 	// one video
 	var video = document.querySelector('video');
 	enableInlineVideo(video);
 	```
-	
+
 	```js
 	// or if you're already using jQuery:
 	var video = $('video').get(0);
 	enableInlineVideo(video);
 	```
-	
+
 	```js
 	// or if you have multiple videos:
 	$('video').each(function () {
@@ -115,7 +115,7 @@ video.addEventListener('touchstart', function () {
 });
 ```
 
-If at some point you want to open the video in fullscreen, use the standard (but still prefixed) `webkitEnterFullScreen()` API, but it has some [caveats.](https://github.com/bfred-it/iphone-inline-video/issues/33)
+If at some point you want to open the video in fullscreen, use the standard (but still prefixed) `webkitEnterFullScreen()` API, but it has some [caveats.](https://github.com/fregante/iphone-inline-video/issues/33)
 
 ## Usage with audio-less videos
 
@@ -163,13 +163,13 @@ enableInlineVideo(video, {
 
 New features in iOS 10 and iOS 11:
 
-* videos play inline:  
+* videos play inline:
 
     ```html
     <video playsinline src="video.mp4"></video>
     ```
 
-* muted videos play inline without user interaction:  
+* muted videos play inline without user interaction:
 
     ```html
     <video muted playsinline src="video.mp4"></video>
@@ -178,7 +178,7 @@ New features in iOS 10 and iOS 11:
     setTimeout(function () { video.play(); }, 1000); // example
     ```
 
-* muted videos autoplay inline:  
+* muted videos autoplay inline:
 
     ```html
     <video autoplay muted playsinline src="video.mp4"></video>
@@ -188,4 +188,4 @@ Essentially everything that this module does, so `iphone-inline-video` will be a
 
 ## License
 
-MIT © [Federico Brigante](http://twitter.com/bfred_it)
+MIT © [Federico Brigante](https://bfred.it)
