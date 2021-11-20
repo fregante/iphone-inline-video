@@ -1,3 +1,7 @@
+# No longer needed :tada:
+
+iOS now supports this [natively since v10](https://github.com/fregante/iphone-inline-video#notes-about-ios-10). So long, and thanks for all the videos!
+
 # iphone-inline-video
 
 > Make videos playable inline on Safari on iPhone (prevents automatic fullscreen)
